@@ -23,3 +23,7 @@ app_cours_ajouter:
 app_cours_supprimer:
     path: /cours/supprimer/{id}
     controller: App\Controller\CoursController::supprimerCours
+
+app_cours_modifier:
+    path: /cours/modifier/{id}
+    controller: App\Controller\CoursController::modifierCours
