@@ -13,7 +13,7 @@
 		<table>
 		{% for c in pCours %}
 		<tr>
-			<td>{{ c.libelle }}</a></td>
+			<td><a href="{{ path('app_cours_consulter', { 'id': c.id }) }}">{{ c.libelle }}</a></td>
 	{% else %}
 		<tr>
 		<td>Aucun cours n'a été trouvé.</td>

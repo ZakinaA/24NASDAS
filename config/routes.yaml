@@ -11,3 +11,7 @@ app_cours:
 app_cours_lister:
     path: /cours/lister
     controller: App\Controller\CoursController::listerCours
+
+app_cours_consulter:
+    path: /cours/consulter/{id}
+    controller: App\Controller\CoursController::consulterCours
