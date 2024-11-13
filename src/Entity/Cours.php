@@ -26,6 +26,9 @@ class Cours
     #[ORM\Column(type: Types::TIME_MUTABLE)]
     private ?\DateTimeInterface $heureFin = null;
 
+    #[ORM\ManyToOne(inversedBy: 'cours')]
+    private ?Professeur $professeur = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -75,6 +78,18 @@ class Cours
     public function setHeureFin(\DateTimeInterface $heureFin): static
     {
         $this->heureFin = $heureFin;
+
+        return $this;
+    }
+
+    public function getProfesseur(): ?Professeur
+    {
+        return $this->professeur;
+    }
+
+    public function setProfesseur(?Professeur $professeur): static
+    {
+        $this->professeur = $professeur;
 
         return $this;
     }
