@@ -64,4 +64,19 @@ class CoursController extends AbstractController
                 return $this->render('cours/ajouter.html.twig', array('form' => $form->createView(),));
         }
     }
+
+    public function supprimerCours(ManagerRegistry $doctrine, int $id): Response
+    {
+        $cours = $doctrine->getRepository(Cours::class)->find($id);
+
+        if (!$cours) {
+            throw $this->createNotFoundException('Aucun cours trouvé avec l\'ID '.$id);
+        }
+
+        $entityManager = $doctrine->getManager();
+        $entityManager->remove($cours); 
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_cours_lister');
+    }
 }
