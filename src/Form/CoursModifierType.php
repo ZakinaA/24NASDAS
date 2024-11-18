@@ -3,6 +3,10 @@
 namespace App\Form;
 
 use App\Entity\Cours;
+use App\Entity\Jour;
+use App\Entity\Professeur;
+use App\Entity\TypeCours;
+use App\Entity\TypeInstrument;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -29,6 +33,12 @@ class CoursModifierType extends AbstractType
                 'input' => 'datetime',
                 'with_seconds' => false,  
             ])
+
+            ->add('professeur', EntityType::class, array('class' => 'App\Entity\Professeur','choice_label' => 'nom' ))
+            ->add('typeCours', EntityType::class, array('class' => 'App\Entity\TypeCours','choice_label' => 'libelle' ))
+            ->add('typeInstrument', EntityType::class, array('class' => 'App\Entity\TypeInstrument','choice_label' => 'libelle' ))
+            ->add('jour', EntityType::class, array('class' => 'App\Entity\Jour','choice_label' => 'libelle' ))
+
             ->add('enregistrer', SubmitType::class, [
                 'label' => 'Modifier Cours'
             ])
