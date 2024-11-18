@@ -40,3 +40,7 @@ app_eleve_consulter:
 app_eleve_supprimer:
     path: /eleve/supprimer/{id}
     controller: App\Controller\EleveController::supprimerEleve
+
+app_eleve_ajouter:
+    path: /eleve/ajouter
+    controller: App\Controller\EleveController::ajouterEleve

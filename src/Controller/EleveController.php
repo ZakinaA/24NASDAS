@@ -8,6 +8,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\Eleve;
 use Symfony\Component\HttpFoundation\Request;
+use App\Form\EleveType;
 
 class EleveController extends AbstractController
 {
@@ -42,6 +43,27 @@ class EleveController extends AbstractController
 		return $this->render('eleve/consulter.html.twig', [
             'eleve' => $eleve,]);
 	}
+
+    public function ajouterEleve(ManagerRegistry $doctrine,Request $request){
+        $eleve = new eleve();
+        $form = $this->createForm(EleveType::class, $eleve);
+        $form->handleRequest($request);
+    
+        if ($form->isSubmitted() && $form->isValid()) {
+    
+                $eleve = $form->getData();
+    
+                $entityManager = $doctrine->getManager();
+                $entityManager->persist($eleve);
+                $entityManager->flush();
+    
+            return $this->render('eleve/consulter.html.twig', ['eleve' => $eleve,]);
+        }
+        else
+            {
+                return $this->render('eleve/ajouter.html.twig', array('form' => $form->createView(),));
+        }
+    }
 
     public function supprimerEleve(ManagerRegistry $doctrine, int $id): Response
     {
