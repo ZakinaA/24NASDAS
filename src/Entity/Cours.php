@@ -35,6 +35,9 @@ class Cours
     #[ORM\ManyToOne(inversedBy: 'cours')]
     private ?TypeInstrument $typeInstrument = null;
 
+    #[ORM\ManyToOne(inversedBy: 'cours')]
+    private ?Jour $jour = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -120,6 +123,18 @@ class Cours
     public function setTypeInstrument(?TypeInstrument $typeInstrument): static
     {
         $this->typeInstrument = $typeInstrument;
+
+        return $this;
+    }
+
+    public function getJour(): ?Jour
+    {
+        return $this->jour;
+    }
+
+    public function setJour(?Jour $jour): static
+    {
+        $this->jour = $jour;
 
         return $this;
     }
