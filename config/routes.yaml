@@ -44,3 +44,7 @@ app_eleve_supprimer:
 app_eleve_ajouter:
     path: /eleve/ajouter
     controller: App\Controller\EleveController::ajouterEleve
+
+app_eleve_modifier:
+    path: /eleve/modifier/{id}
+    controller: App\Controller\EleveController::modifierEleve

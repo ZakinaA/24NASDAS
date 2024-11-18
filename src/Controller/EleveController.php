@@ -9,6 +9,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\Eleve;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\EleveType;
+use App\Form\EleveModifierType;
 
 class EleveController extends AbstractController
 {
@@ -79,4 +80,30 @@ class EleveController extends AbstractController
 
         return $this->redirectToRoute('app_eleve_lister');
     }
+
+    public function modifierEleve(ManagerRegistry $doctrine, $id, Request $request){
+ 
+        $eleve = $doctrine->getRepository(Eleve::class)->find($id);
+     
+        if (!$eleve) {
+            throw $this->createNotFoundException('Aucun élève trouvé avec le numéro '.$id);
+        }
+        else
+        {
+                $form = $this->createForm(EleveModifierType::class, $eleve);
+                $form->handleRequest($request);
+     
+                if ($form->isSubmitted() && $form->isValid()) {
+     
+                     $eleve = $form->getData();
+                     $entityManager = $doctrine->getManager();
+                     $entityManager->persist($eleve);
+                     $entityManager->flush();
+                     return $this->render('eleve/consulter.html.twig', ['eleve' => $eleve,]);
+               }
+               else{
+                    return $this->render('eleve/ajouter.html.twig', array('form' => $form->createView(),));
+               }
+            }
+     }
 }
