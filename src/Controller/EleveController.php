@@ -42,4 +42,19 @@ class EleveController extends AbstractController
 		return $this->render('eleve/consulter.html.twig', [
             'eleve' => $eleve,]);
 	}
+
+    public function supprimerEleve(ManagerRegistry $doctrine, int $id): Response
+    {
+        $eleve = $doctrine->getRepository(Eleve::class)->find($id);
+
+        if (!$eleve) {
+            throw $this->createNotFoundException('Aucun élève trouvé avec l\'ID '.$id);
+        }
+
+        $entityManager = $doctrine->getManager();
+        $entityManager->remove($eleve); 
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_eleve_lister');
+    }
 }

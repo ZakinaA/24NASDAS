@@ -35,3 +35,8 @@ app_eleve_lister:
 app_eleve_consulter:
     path: /eleve/consulter/{id}
     controller: App\Controller\EleveController::consulterEleve
+
+
+app_eleve_supprimer:
+    path: /eleve/supprimer/{id}
+    controller: App\Controller\EleveController::supprimerEleve

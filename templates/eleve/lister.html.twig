@@ -16,7 +16,7 @@
 			<td><a href="{{ path('app_eleve_consulter', { 'id': e.id }) }}">{{ e.nom }}</a></td>
             <td>{{ e.prenom }}</a></td>
 			<td>
-				<a href="" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet élève ?');">
+				<a href="{{ path('app_eleve_supprimer', {'id': e.id}) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet élève ?');">
 					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="black" viewBox="0 0 24 24" stroke-width="2" class="icon icon-tabler icon-tabler-trash">
 						<path stroke-linecap="round" stroke-linejoin="round" d="M3 6h18M9 6V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M10 11v6M14 11v6M5 6l1 14h12l1-14"></path>
 					</svg>
