@@ -31,3 +31,7 @@ app_cours_modifier:
 app_eleve_lister:
     path: /eleve/lister
     controller: App\Controller\EleveController::listerEleves
+
+app_eleve_consulter:
+    path: /eleve/consulter/{id}
+    controller: App\Controller\EleveController::consulterEleve

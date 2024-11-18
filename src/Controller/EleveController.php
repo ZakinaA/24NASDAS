@@ -28,4 +28,18 @@ class EleveController extends AbstractController
             'pEleves' => $eleves,]);	
             
     }
+
+    public function consulterEleve(ManagerRegistry $doctrine, int $id){
+
+		$eleve= $doctrine->getRepository(Eleve::class)->find($id);
+
+		if (!$eleve) {
+			throw $this->createNotFoundException(
+            'Aucun élève trouvé avec le numéro '.$id
+			);
+		}
+
+		return $this->render('eleve/consulter.html.twig', [
+            'eleve' => $eleve,]);
+	}
 }

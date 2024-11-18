@@ -13,7 +13,7 @@
 		<table>
 		{% for e in pEleves %}
 		<tr>
-			<td><a href="">{{ e.nom }}</a></td>
+			<td><a href="{{ path('app_eleve_consulter', { 'id': e.id }) }}">{{ e.nom }}</a></td>
             <td>{{ e.prenom }}</a></td>
 			<td>
 				<a href="" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet élève ?');">
