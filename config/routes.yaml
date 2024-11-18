@@ -48,3 +48,7 @@ app_eleve_ajouter:
 app_eleve_modifier:
     path: /eleve/modifier/{id}
     controller: App\Controller\EleveController::modifierEleve
+
+app_instrument_lister:
+    path: /instrument/lister
+    controller: App\Controller\InstrumentController::listerInstrument
