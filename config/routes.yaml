@@ -27,3 +27,7 @@ app_cours_supprimer:
 app_cours_modifier:
     path: /cours/modifier/{id}
     controller: App\Controller\CoursController::modifierCours
+
+app_eleve_lister:
+    path: /eleve/lister
+    controller: App\Controller\EleveController::listerEleves
