@@ -10,6 +10,7 @@ use App\Entity\Eleve;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\EleveType;
 use App\Entity\Cours;
+use App\Entity\Inscription;
 use App\Form\EleveModifierType;
 
 class EleveController extends AbstractController
@@ -46,6 +47,13 @@ class EleveController extends AbstractController
         // Récupérer tous les cours disponibles
         $coursDisponibles = $doctrine->getRepository(Cours::class)->findAll();
 
+        // Récupérer les inscriptions de l'élève et les cours auxquels il est inscrit
+        $inscriptions = $doctrine->getRepository(Inscription::class)->findBy(['eleve' => $eleve]);
+        $coursInscrits = [];
+        foreach ($inscriptions as $inscription) {
+            $coursInscrits[] = $inscription->getCours();
+        }
+
         // Gérer l'inscription (si le formulaire est soumis)
         if ($request->isMethod('POST')) {
             $coursIds = $request->request->get('coursIds');
@@ -69,12 +77,14 @@ class EleveController extends AbstractController
             }
         }
 
-        // Retourner la page de consultation de l'élève avec les cours disponibles
+        // Retourner la page de consultation de l'élève avec les cours disponibles et inscrits
         return $this->render('eleve/consulter.html.twig', [
             'eleve' => $eleve,
-            'coursDisponibles' => $coursDisponibles,  // Passer la variable coursDisponibles
+            'coursDisponibles' => $coursDisponibles, // Passer la variable des cours disponibles
+            'coursInscrits' => $coursInscrits, // Passer les cours auxquels l'élève est inscrit
         ]);
     }
+
 
     public function ajouterEleve(ManagerRegistry $doctrine,Request $request){
         $eleve = new eleve();
