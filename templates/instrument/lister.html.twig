@@ -13,6 +13,8 @@
 		<table>
 		{% for i in pInstruments %}
 		<tr>
+			<td><a href="{{ path('app_instrument_consulter', { 'id': i.id }) }}">{{ i.TypeInstrument.libelle }}</a></td>
+			<td>-</td>
 			<td><a href="{{ path('app_instrument_consulter', { 'id': i.id }) }}">{{ i.NumSerie }}</a></td>
 			<td>
 				<a href="" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet instrument ?');">
@@ -35,7 +37,7 @@
 	{% endfor %}
 </table>
 	<div class="bouton">
-    <a href="" style="
+    <a href="ajouter" style="
         display: inline-block;
         background-color: black;
         color: white;

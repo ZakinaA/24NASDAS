@@ -10,7 +10,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
-class InstrumentType extends AbstractType
+class InstrumentModifierType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -24,18 +24,20 @@ class InstrumentType extends AbstractType
             ->add('cheminImage')
             ->add('type_instrument', EntityType::class, [
                 'class' => TypeInstrument::class,
-                'choice_label' => 'libelle',
+                'choice_label' => 'id',
             ])
-            ->add('enregistrer', SubmitType::class, [
-                'label' => 'Nouvel Instrument'
-            ])
+            ->add('enregistrer', SubmitType::class, array('label' => 'Modifier'));
         ;
     }
 
-    public function configureOptions(OptionsResolver $resolver): void
-    {
-        $resolver->setDefaults([
-            'data_class' => Instrument::class,
-        ]);
-    }
+    public function getParent(){
+        return InstrumentType::class;
+      }
+   
+      public function configureOptions(OptionsResolver $resolver)
+      {
+          $resolver->setDefaults([
+              'data_class' => Instrument::class,
+          ]);
+      }
 }
