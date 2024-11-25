@@ -8,6 +8,8 @@ use Symfony\Component\Routing\Attribute\Route;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\Instrument;
 use Symfony\Component\HttpFoundation\Request;
+use App\Form\InstrumentType;
+use App\Repository\TypeInstrumentRepository;
 
 class InstrumentController extends AbstractController
 {
@@ -55,6 +57,28 @@ class InstrumentController extends AbstractController
             'instrument' => $instrument,
             'formattedDate' => $formattedDate,
         ]);
+    }
+
+    #[Route('/instrument/ajouter', name: 'app_instrument_ajouter')]
+    public function ajouterInstrument(ManagerRegistry $doctrine,Request $request){
+        $instrument = new instrument();
+        $form = $this->createForm(InstrumentType::class, $instrument);
+        $form->handleRequest($request);
+    
+        if ($form->isSubmitted() && $form->isValid()) {
+    
+                $instrument = $form->getData();
+    
+                $entityManager = $doctrine->getManager();
+                $entityManager->persist($cours);
+                $entityManager->flush();
+    
+            return $this->render('instrument/consulter.html.twig', ['instrument' => $instrument,]);
+        }
+        else
+            {
+                return $this->render('instrument/ajouter.html.twig', array('form' => $form->createView(),));
+        }
     }
 
 }
