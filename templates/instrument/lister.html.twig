@@ -13,7 +13,7 @@
 		<table>
 		{% for i in pInstruments %}
 		<tr>
-			<td><a href="">{{ i.NumSerie }}</a></td>
+			<td><a href="{{ path('app_instrument_consulter', { 'id': i.id }) }}">{{ i.NumSerie }}</a></td>
 			<td>
 				<a href="" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet instrument ?');">
 					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="black" viewBox="0 0 24 24" stroke-width="2" class="icon icon-tabler icon-tabler-trash">

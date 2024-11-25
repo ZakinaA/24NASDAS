@@ -38,7 +38,7 @@ class CoursModifierType extends AbstractType
             ->add('typeCours', EntityType::class, array('class' => 'App\Entity\TypeCours','choice_label' => 'libelle' ))
             ->add('typeInstrument', EntityType::class, array('class' => 'App\Entity\TypeInstrument','choice_label' => 'libelle' ))
             ->add('jour', EntityType::class, array('class' => 'App\Entity\Jour','choice_label' => 'libelle' ))
-
+ 
             ->add('enregistrer', SubmitType::class, [
                 'label' => 'Modifier Cours'
             ])
