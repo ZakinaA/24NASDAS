@@ -34,8 +34,15 @@ class Instrument
     #[ORM\ManyToOne]
     private ?TypeInstrument $type_instrument = null;
 
+    /**
+     * @var Collection<int, Accessoire>
+     */
+    #[ORM\ManyToMany(targetEntity: Accessoire::class, inversedBy: 'instrument')]
+    private Collection $accessoire;
+
     public function __construct()
     {
+        $this->accessoire = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -111,6 +118,30 @@ class Instrument
     public function setTypeInstrument(?TypeInstrument $type_instrument): static
     {
         $this->type_instrument = $type_instrument;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Accessoire>
+     */
+    public function getAccessoire(): Collection
+    {
+        return $this->accessoire;
+    }
+
+    public function addAccessoire(Accessoire $accessoire): static
+    {
+        if (!$this->accessoire->contains($accessoire)) {
+            $this->accessoire->add($accessoire);
+        }
+
+        return $this;
+    }
+
+    public function removeAccessoire(Accessoire $accessoire): static
+    {
+        $this->accessoire->removeElement($accessoire);
 
         return $this;
     }
