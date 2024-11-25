@@ -110,4 +110,20 @@ class InstrumentController extends AbstractController
             }
      }
 
+    #[Route('/instrument/supprimer/{id}', name: 'app_instrument_supprimer')]
+    public function supprimerCours(ManagerRegistry $doctrine, int $id): Response
+    {
+        $instrument = $doctrine->getRepository(Instrument::class)->find($id);
+
+        if (!$instrument) {
+            throw $this->createNotFoundException('Aucun instrument trouvé avec l\'ID '.$id);
+        }
+
+        $entityManager = $doctrine->getManager();
+        $entityManager->remove($instrument); 
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_instrument_lister');
+    }
+
 }
