@@ -1,23 +1,26 @@
 <!DOCTYPE html>
 <html>
     <head>
-        
+        <title>Consultation de l'élève</title>
     </head>
     <body>       
-		<h5>PAGE DE CONSULTATION D'UN ELEVE</h5>
+        <h5>PAGE DE CONSULTATION D'UN ELEVE</h5>
 
-    <table >
-        <tr><td>Id : </td><td>{{eleve.id}} </td></tr>
-        <tr><td>Nom : </td><td>{{eleve.nom}}</td>
-        <tr><td>Prenom : </td><td>{{ eleve.prenom }}</td></tr></tr>
-        <tr><td>Numéro rue : </td><td>{{ eleve.numRue }}</td></tr></tr>
-        <tr><td>Rue : </td><td>{{ eleve.rue }}</td></tr></tr>
-        <tr><td>Code Postal :</td><td>{{ eleve.copos }}</td></tr></tr>
-        <tr><td>Ville :</td><td>{{ eleve.ville }}</td></tr></tr>
-        <tr><td>Téléphone  :</td><td>{{ eleve.tel }}</td></tr></tr>
-        <tr><td>Mail :</td><td>{{ eleve.mail }}</td></tr></tr>
-    </table>
-	
-	 
+        <table>
+            <tr><td>Id : </td><td>{{ eleve.id }} </td></tr>
+            <tr><td>Nom : </td><td>{{ eleve.nom }}</td></tr>
+            <tr><td>Prénom : </td><td>{{ eleve.prenom }}</td></tr>
+            <tr><td>Numéro rue : </td><td>{{ eleve.numRue }}</td></tr>
+            <tr><td>Rue : </td><td>{{ eleve.rue }}</td></tr>
+            <tr><td>Code Postal : </td><td>{{ eleve.copos }}</td></tr>
+            <tr><td>Ville : </td><td>{{ eleve.ville }}</td></tr>
+            <tr><td>Téléphone :</td><td>{{ eleve.tel }}</td></tr>
+            <tr><td>Email :</td><td>{{ eleve.mail }}</td></tr>
+        </table>
+
+        <!-- Bouton pour accéder à la page d'inscription aux cours -->
+        <form action="{{ path('app_inscription', { 'eleveId': eleve.id }) }}" method="get">
+            <button type="submit">S'inscrire à un ou plusieurs cours</button>
+        </form>
     </body>
 </html>

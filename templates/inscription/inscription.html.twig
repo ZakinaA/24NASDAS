@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Inscription aux Cours</title>
+    </head>
+    <body>
+        <h2>Inscrire {{ eleve.prenom }} {{ eleve.nom }} à des cours</h2>
+
+        <form action="{{ path('app_inscription', { eleveId: eleve.id }) }}" method="post">
+            <p>Sélectionnez les cours :</p>
+            
+            {% for cours in coursDisponibles %}
+                <div>
+                    <input type="checkbox" id="cours_{{ cours.id }}" name="coursIds[]" value="{{ cours.id }}">
+                    <label for="cours_{{ cours.id }}">{{ cours.libelle }}</label>
+                </div>
+            {% endfor %}
+
+            <button type="submit">S'inscrire</button>
+        </form>
+
+        <a href="{{ path('app_eleve_consulter', { id: eleve.id }) }}">Retour à la page de consultation</a>
+    </body>
+</html>
