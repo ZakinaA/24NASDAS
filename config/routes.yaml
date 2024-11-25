@@ -56,3 +56,4 @@ app_instrument_lister:
 app_instrument_consulter:
     path: /instrument/consulter/{id}
     controller: App\Controller\InstrumentController::consulterInstrument
+
