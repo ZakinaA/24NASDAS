@@ -9,6 +9,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\Instrument;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\InstrumentType;
+use App\Form\InstrumentModifierType;
 use App\Repository\TypeInstrumentRepository;
 
 class InstrumentController extends AbstractController
@@ -66,17 +67,47 @@ class InstrumentController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
     
                 $instrument = $form->getData();
-    
+
+                $formattedDate = $instrument->getDateAchat()->format('Y-m-d');
+                
                 $entityManager = $doctrine->getManager();
-                $entityManager->persist($cours);
+                $entityManager->persist($instrument);
                 $entityManager->flush();
     
-            return $this->render('instrument/consulter.html.twig', ['instrument' => $instrument,]);
+            return $this->render('instrument/consulter.html.twig', ['instrument' => $instrument,'formattedDate' => $formattedDate,]);
         }
         else
             {
                 return $this->render('instrument/ajouter.html.twig', array('form' => $form->createView(),));
         }
     }
+
+    #[Route('/instrument/modifier/{id}', name: 'app_instrument_modifier')]
+    public function modifierCours(ManagerRegistry $doctrine, $id, Request $request){
+ 
+        $instrument = $doctrine->getRepository(Instrument::class)->find($id);
+        $formattedDate = $instrument->getDateAchat()->format('Y-m-d');
+     
+        if (!$instrument) {
+            throw $this->createNotFoundException('Aucun cours trouvé avec le numéro '.$id);
+        }
+        else
+        {
+                $form = $this->createForm(InstrumentModifierType::class, $instrument);
+                $form->handleRequest($request);
+     
+                if ($form->isSubmitted() && $form->isValid()) {
+     
+                     $instrument = $form->getData();
+                     $entityManager = $doctrine->getManager();
+                     $entityManager->persist($instrument);
+                     $entityManager->flush();
+                     return $this->render('instrument/consulter.html.twig', ['instrument' => $instrument,'formattedDate' => $formattedDate,]);
+               }
+               else{
+                    return $this->render('instrument/ajouter.html.twig', array('form' => $form->createView(),));
+               }
+            }
+     }
 
 }
