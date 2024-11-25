@@ -13,7 +13,7 @@ use App\Entity\Inscription;
 
 class InscriptionController extends AbstractController
 {
-    #[Route('/inscription', name: 'app_inscription')]
+    #[Route('/inscription', name: 'app_inscription_index')]
     public function index(): Response
     {
         return $this->render('inscription/index.html.twig', [

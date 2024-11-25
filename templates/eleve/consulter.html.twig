@@ -18,6 +18,31 @@
             <tr><td>Email :</td><td>{{ eleve.mail }}</td></tr>
         </table>
 
+                <h5>COURS AUXQUELS CET ELEVE EST INSCRIT :</h5>
+        <table>
+            <thead>
+                <tr>
+                    <th>Libellé</th>
+                    <th>Professeur</th>
+                    <th>Horaires</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for cours in coursInscrits %}
+                    <tr>
+                        <td>{{ cours.libelle }}</td>
+                        <td>{{ cours.professeur.nom }}</td>
+                        <td>{{ cours.heureDebut|date('H:i') }} - {{ cours.heureFin|date('H:i') }}</td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="3">Aucun cours inscrit</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <br>
+
         <!-- Bouton pour accéder à la page d'inscription aux cours -->
         <form action="{{ path('app_inscription', { 'eleveId': eleve.id }) }}" method="get">
             <button type="submit">S'inscrire à un ou plusieurs cours</button>
