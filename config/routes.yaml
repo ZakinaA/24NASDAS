@@ -53,6 +53,7 @@ app_instrument_lister:
     path: /instrument/lister
     controller: App\Controller\InstrumentController::listerInstrument
 
-pp_contratPret_lister:
-    path: /contratPret/lister
-    controller: App\Controller\ContratPretController::listerContratPret
+app_instrument_consulter:
+    path: /instrument/consulter/{id}
+    controller: App\Controller\InstrumentController::consulterInstrument
+

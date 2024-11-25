@@ -8,6 +8,9 @@ use Symfony\Component\Routing\Attribute\Route;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\Instrument;
 use Symfony\Component\HttpFoundation\Request;
+use App\Form\InstrumentType;
+use App\Form\InstrumentModifierType;
+use App\Repository\TypeInstrumentRepository;
 
 class InstrumentController extends AbstractController
 {
@@ -28,4 +31,83 @@ class InstrumentController extends AbstractController
             'pInstruments' => $instrument,]);	
             
     }
+
+    public function consulterInstrument(ManagerRegistry $doctrine, int $id)
+    {
+        // Récupérer l'instrument par son ID
+        $instrument = $doctrine->getRepository(Instrument::class)->find($id);
+
+        if (!$instrument) {
+            throw $this->createNotFoundException(
+                'Aucun instrument trouvé avec le numéro ' . $id
+            );
+        }
+
+        // Vérification et formatage de la date d'achat
+        $formattedDate = null;
+        if ($instrument->getDateAchat() !== null) {
+            $formattedDate = $instrument->getDateAchat()->format('Y-m-d'); // Formater la date au format 'YYYY-MM-DD'
+        } else {
+            $formattedDate = "Date non définie"; // Si la date n'est pas définie
+        }
+
+        // Passer l'instrument et la date formatée à la vue
+        return $this->render('instrument/consulter.html.twig', [
+            'instrument' => $instrument,
+            'formattedDate' => $formattedDate,
+        ]);
+    }
+
+    #[Route('/instrument/ajouter', name: 'app_instrument_ajouter')]
+    public function ajouterInstrument(ManagerRegistry $doctrine,Request $request){
+        $instrument = new instrument();
+        $form = $this->createForm(InstrumentType::class, $instrument);
+        $form->handleRequest($request);
+    
+        if ($form->isSubmitted() && $form->isValid()) {
+    
+                $instrument = $form->getData();
+
+                $formattedDate = $instrument->getDateAchat()->format('Y-m-d');
+                
+                $entityManager = $doctrine->getManager();
+                $entityManager->persist($instrument);
+                $entityManager->flush();
+    
+            return $this->render('instrument/consulter.html.twig', ['instrument' => $instrument,'formattedDate' => $formattedDate,]);
+        }
+        else
+            {
+                return $this->render('instrument/ajouter.html.twig', array('form' => $form->createView(),));
+        }
+    }
+
+    #[Route('/instrument/modifier/{id}', name: 'app_instrument_modifier')]
+    public function modifierCours(ManagerRegistry $doctrine, $id, Request $request){
+ 
+        $instrument = $doctrine->getRepository(Instrument::class)->find($id);
+        $formattedDate = $instrument->getDateAchat()->format('Y-m-d');
+     
+        if (!$instrument) {
+            throw $this->createNotFoundException('Aucun cours trouvé avec le numéro '.$id);
+        }
+        else
+        {
+                $form = $this->createForm(InstrumentModifierType::class, $instrument);
+                $form->handleRequest($request);
+     
+                if ($form->isSubmitted() && $form->isValid()) {
+     
+                     $instrument = $form->getData();
+                     $entityManager = $doctrine->getManager();
+                     $entityManager->persist($instrument);
+                     $entityManager->flush();
+                     return $this->render('instrument/consulter.html.twig', ['instrument' => $instrument,'formattedDate' => $formattedDate,]);
+               }
+               else{
+                    return $this->render('instrument/ajouter.html.twig', array('form' => $form->createView(),));
+               }
+            }
+     }
+
 }

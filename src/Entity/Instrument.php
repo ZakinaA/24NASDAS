@@ -36,7 +36,6 @@ class Instrument
 
     public function __construct()
     {
-        $this->type_instrument = new ArrayCollection();
     }
 
     public function getId(): ?int

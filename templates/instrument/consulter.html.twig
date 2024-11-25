@@ -7,10 +7,23 @@
 		<h5>PAGE DE CONSULTATION D'UN INSTRUMENT</h5>
 
     <table >
-        <tr><td>Id : </td><td>{{instrument.id}} </td></tr>
-        <tr><td>Nom : </td><td>{{instrument.libelle}}</td>
+        <tr><td>Numéro de Série : </td><td>{{instrument.numSerie}}</td>
+        <tr><td>Date d'achat : </td><td>{{ formattedDate }}</td></tr></tr>
+        <tr><td>Prix Achat : </td><td>{{ instrument.prixAchat }}€</td></tr></tr>
+        <tr><td>Utilisé ? </td><td>{{ instrument.utilisation == 1 ? 'Oui' : 'Non' }}</td></tr>
+        <tr><td>Type d'instrument :</td><td>{{ instrument.TypeInstrument.libelle }}</td></tr></tr>
+        
+        {# Affichage de l'image #}
+            <tr>
+                <td>
+                    {% if instrument.cheminImage %}
+                        <img src="{{ asset('images/' ~ instrument.cheminImage) }}" alt="Image de l'instrument" width="200" height="200">
+                    {% else %}
+                        <p>Aucune image disponible</p>
+                    {% endif %}
+                </td>
+            </tr>
     </table>
 	
-	 
     </body>
 </html>
