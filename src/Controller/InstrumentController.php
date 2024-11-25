@@ -19,7 +19,6 @@ class InstrumentController extends AbstractController
         ]);
     }
 
-    #[Route('/instrument/lister', name: 'app_instrument_lister')]
     public function listerInstrument(ManagerRegistry $doctrine){
 
         $repository = $doctrine->getRepository(Instrument::class);
@@ -30,7 +29,6 @@ class InstrumentController extends AbstractController
             
     }
 
-    #[Route('/instrument/consulter/{id}', name: 'app_instrument_consulter')]
     public function consulterInstrument(ManagerRegistry $doctrine, int $id)
     {
         // Récupérer l'instrument par son ID
