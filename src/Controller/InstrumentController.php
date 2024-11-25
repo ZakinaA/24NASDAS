@@ -23,9 +23,9 @@ class InstrumentController extends AbstractController
 
         $repository = $doctrine->getRepository(Instrument::class);
 
-        $cours= $repository->findAll();
+        $instrument= $repository->findAll();
         return $this->render('instrument/lister.html.twig', [
-            'pInstruments' => $cours,]);	
+            'pInstruments' => $instrument,]);	
             
     }
 }
