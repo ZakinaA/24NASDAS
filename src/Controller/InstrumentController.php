@@ -19,6 +19,7 @@ class InstrumentController extends AbstractController
         ]);
     }
 
+    #[Route('/instrument/lister', name: 'app_instrument_lister')]
     public function listerInstrument(ManagerRegistry $doctrine){
 
         $repository = $doctrine->getRepository(Instrument::class);
@@ -28,4 +29,32 @@ class InstrumentController extends AbstractController
             'pInstruments' => $instrument,]);	
             
     }
+
+    #[Route('/instrument/consulter/{id}', name: 'app_instrument_consulter')]
+    public function consulterInstrument(ManagerRegistry $doctrine, int $id)
+    {
+        // Récupérer l'instrument par son ID
+        $instrument = $doctrine->getRepository(Instrument::class)->find($id);
+
+        if (!$instrument) {
+            throw $this->createNotFoundException(
+                'Aucun instrument trouvé avec le numéro ' . $id
+            );
+        }
+
+        // Vérification et formatage de la date d'achat
+        $formattedDate = null;
+        if ($instrument->getDateAchat() !== null) {
+            $formattedDate = $instrument->getDateAchat()->format('Y-m-d'); // Formater la date au format 'YYYY-MM-DD'
+        } else {
+            $formattedDate = "Date non définie"; // Si la date n'est pas définie
+        }
+
+        // Passer l'instrument et la date formatée à la vue
+        return $this->render('instrument/consulter.html.twig', [
+            'instrument' => $instrument,
+            'formattedDate' => $formattedDate,
+        ]);
+    }
+
 }
