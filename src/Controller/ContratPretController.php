@@ -22,7 +22,7 @@ class ContratPretController extends AbstractController
         ]);
     }
 
-    #[Route('/contratPret/lister', name: 'app_contratpret_lister')]
+    #[Route('/contratPret/lister', name: 'app_contratPret_lister')]
     public function listerContratPret(ManagerRegistry $doctrine){
 
         $repository = $doctrine->getRepository(ContratPret::class);
