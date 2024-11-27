@@ -42,6 +42,9 @@ class Responsable
     #[ORM\OneToMany(targetEntity: Eleve::class, mappedBy: 'responsable')]
     private Collection $eleves;
 
+    #[ORM\OneToOne(inversedBy: 'responsable', cascade: ['persist', 'remove'])]
+    private ?User $compte = null;
+
     public function __construct()
     {
         $this->eleves = new ArrayCollection();
@@ -162,6 +165,18 @@ class Responsable
                 $elefe->setResponsable(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCompte(): ?User
+    {
+        return $this->compte;
+    }
+
+    public function setCompte(?User $compte): self
+    {
+        $this->compte = $compte;
 
         return $this;
     }

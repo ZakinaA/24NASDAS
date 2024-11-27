@@ -33,6 +33,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
+    #[ORM\OneToOne(mappedBy: 'compte', cascade: ['persist', 'remove'])]
+    private ?Responsable $responsable = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -106,5 +109,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getResponsable(): ?Responsable
+    {
+        return $this->responsable;
+    }
+
+    public function setResponsable(?Responsable $responsable): self
+    {
+        $this->responsable = $responsable;
+
+        // set the owning side of the relation if necessary
+        if ($responsable->getCompte() !== $this) {
+            $responsable->setCompte($this);
+        }
+
+        return $this;
     }
 }
