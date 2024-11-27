@@ -33,8 +33,8 @@ class ContratPretController extends AbstractController
             
     }
 
-    /*
-    #[Route('/contratPret/consulter', name: 'app_contratpret_consulter')]
+    
+    #[Route('/contratPret/consulter', name: 'app_contratPret_consulter')]
 
     public function consulterContratPret(ManagerRegistry $doctrine, int $id){
 
