@@ -36,9 +36,6 @@ class Responsable
     #[ORM\Column]
     private ?int $tel = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $mail = null;
-
     /**
      * @var Collection<int, Eleve>
      */
@@ -138,19 +135,7 @@ class Responsable
 
         return $this;
     }
-
-    public function getMail(): ?string
-    {
-        return $this->mail;
-    }
-
-    public function setMail(string $mail): static
-    {
-        $this->mail = $mail;
-
-        return $this;
-    }
-
+    
     /**
      * @return Collection<int, Eleve>
      */
