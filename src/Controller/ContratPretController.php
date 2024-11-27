@@ -72,5 +72,5 @@ class ContratPretController extends AbstractController
             {
                 return $this->render('contratPret/ajouter.html.twig', array('form' => $form->createView(),));
         }
-    }*/
+    }
 }
