@@ -57,3 +57,8 @@ app_instrument_consulter:
     path: /instrument/consulter/{id}
     controller: App\Controller\InstrumentController::consulterInstrument
 
+app_logout:
+    path:
+        en: /logout
+        fr: /deconnexion
+    methods: GET
