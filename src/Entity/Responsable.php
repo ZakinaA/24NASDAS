@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\EleveRepository;
+use App\Repository\ResponsableRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: EleveRepository::class)]
-class Eleve
+#[ORM\Entity(repositoryClass: ResponsableRepository::class)]
+class Responsable
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -40,17 +40,14 @@ class Eleve
     private ?string $mail = null;
 
     /**
-     * @var Collection<int, Inscription>
+     * @var Collection<int, Eleve>
      */
-    #[ORM\OneToMany(targetEntity: Inscription::class, mappedBy: 'eleve')]
-    private Collection $inscriptions;
-
-    #[ORM\ManyToOne(inversedBy: 'eleves')]
-    private ?Responsable $responsable = null;
+    #[ORM\OneToMany(targetEntity: Eleve::class, mappedBy: 'responsable')]
+    private Collection $eleves;
 
     public function __construct()
     {
-        $this->inscriptions = new ArrayCollection();
+        $this->eleves = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -155,43 +152,31 @@ class Eleve
     }
 
     /**
-     * @return Collection<int, Inscription>
+     * @return Collection<int, Eleve>
      */
-    public function getInscriptions(): Collection
+    public function getEleves(): Collection
     {
-        return $this->inscriptions;
+        return $this->eleves;
     }
 
-    public function addInscription(Inscription $inscription): static
+    public function addElefe(Eleve $elefe): static
     {
-        if (!$this->inscriptions->contains($inscription)) {
-            $this->inscriptions->add($inscription);
-            $inscription->setEleve($this);
+        if (!$this->eleves->contains($elefe)) {
+            $this->eleves->add($elefe);
+            $elefe->setResponsable($this);
         }
 
         return $this;
     }
 
-    public function removeInscription(Inscription $inscription): static
+    public function removeElefe(Eleve $elefe): static
     {
-        if ($this->inscriptions->removeElement($inscription)) {
+        if ($this->eleves->removeElement($elefe)) {
             // set the owning side to null (unless already changed)
-            if ($inscription->getEleve() === $this) {
-                $inscription->setEleve(null);
+            if ($elefe->getResponsable() === $this) {
+                $elefe->setResponsable(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getResponsable(): ?Responsable
-    {
-        return $this->responsable;
-    }
-
-    public function setResponsable(?Responsable $responsable): static
-    {
-        $this->responsable = $responsable;
 
         return $this;
     }
