@@ -9,6 +9,8 @@ use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\ContratPret;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\ContratPretType;
+use App\Form\ContratPretModifierType;
+
 
 
 
@@ -74,9 +76,6 @@ class ContratPretController extends AbstractController
         }
     }
 
-
-
-/*
     #[Route('/contratPret/modifier/{id}', name: 'app_contratPret_modifier')]
     public function modifierContratPret(ManagerRegistry $doctrine, $id, Request $request){
  
@@ -103,8 +102,23 @@ class ContratPretController extends AbstractController
                }
             }
      }
-    
-    */
+     #[Route('/contratPret/supprimer/{id}', name: 'app_contratPret_supprimer')]
+     public function supprimerContratPret(ManagerRegistry $doctrine, int $id): Response
+    {
+        $contratPret = $doctrine->getRepository(ContratPret::class)->find($id);
+
+        if (!$contratPret) {
+            throw $this->createNotFoundException('Aucun contrat trouvé avec l\'ID '.$id);
+        }
+
+        $entityManager = $doctrine->getManager();
+        $entityManager->remove($contratPret); 
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_contratPret_lister');
+    }
+
+ 
     
     
     
