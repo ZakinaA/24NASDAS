@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 use App\Entity\Professeur;
 use App\Form\ProfesseurType;
+use App\Form\ProfesseurModifierType;
 
 class ProfController extends AbstractController
 {
@@ -74,4 +75,31 @@ class ProfController extends AbstractController
                 return $this->render('professeur/ajouter.html.twig', array('form' => $form->createView(),));
         }
     }
+
+    #[Route('/professeur/modifier/{id}', name: 'app_professeur_modifier')]
+    public function modifierProfesseur(ManagerRegistry $doctrine, $id, Request $request){
+ 
+        $professeur = $doctrine->getRepository(Professeur::class)->find($id);
+     
+        if (!$professeur) {
+            throw $this->createNotFoundException('Aucun professeur trouvé avec le numéro '.$id);
+        }
+        else
+        {
+                $form = $this->createForm(ProfesseurModifierType::class, $professeur);
+                $form->handleRequest($request);
+     
+                if ($form->isSubmitted() && $form->isValid()) {
+     
+                     $professeur = $form->getData();
+                     $entityManager = $doctrine->getManager();
+                     $entityManager->persist($professeur);
+                     $entityManager->flush();
+                     return $this->render('professeur/consulter.html.twig', ['professeur' => $professeur,]);
+               }
+               else{
+                    return $this->render('professeur/ajouter.html.twig', array('form' => $form->createView(),));
+               }
+            }
+     }
 }
