@@ -18,6 +18,17 @@ class TypeInstrument
     #[ORM\Column(length: 255)]
     private ?string $libelle = null;
 
+    /**
+     * @var Collection<int, Professeur>
+     */
+    #[ORM\OneToMany(targetEntity: Professeur::class, mappedBy: 'type_instrument')]
+    private Collection $professeur;
+
+    public function __construct()
+    {
+        $this->professeur = new ArrayCollection();
+    }
+
     // Méthodes getter et setter...
     public function getId(): ?int
     {
@@ -32,6 +43,36 @@ class TypeInstrument
     public function setLibelle(string $libelle): static
     {
         $this->libelle = $libelle;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Professeur>
+     */
+    public function getProfesseur(): Collection
+    {
+        return $this->professeur;
+    }
+
+    public function addProfesseur(Professeur $professeur): static
+    {
+        if (!$this->professeur->contains($professeur)) {
+            $this->professeur->add($professeur);
+            $professeur->setTypeInstrument($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProfesseur(Professeur $professeur): static
+    {
+        if ($this->professeur->removeElement($professeur)) {
+            // set the owning side to null (unless already changed)
+            if ($professeur->getTypeInstrument() === $this) {
+                $professeur->setTypeInstrument(null);
+            }
+        }
 
         return $this;
     }

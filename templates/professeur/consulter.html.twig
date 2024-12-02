@@ -79,58 +79,32 @@
         </style>
     </head>
     <body>
-        <h4>PAGE DE CONSULTATION D'UN INSTRUMENT</h4>
+        <h4>PAGE DE CONSULTATION D'UN PROFESSEUR</h4>
 
         <!-- Conteneur principal -->
         <div class="container">
-            <!-- Détails de l'instrument et interventions -->
+            <!-- Détails du professeur -->
             <div class="details">
                 <table>
                     <tr>
-                        <td><strong>Date d'achat :</strong></td>
-                        <td>{{ formattedDateAchat }}</td>
+                        <td><strong>Nom :</strong></td>
+                        <td>{{ professeur.nom }}</td>
                     </tr>
                     <tr>
-                        <td><strong>Prix Achat :</strong></td>
-                        <td>{{ instrument.prixAchat }}€</td>
+                        <td><strong>Prénom :</strong></td>
+                        <td>{{ professeur.prenom }}</td>
                     </tr>
                     <tr>
-                        <td><strong>Marque :</strong></td>
-                        <td>
-                            {% if instrument.marque is not null %}
-                                {{ instrument.marque.libelle }}
-                            {% else %}
-                                /
-                            {% endif %}
-                        </td>
+                        <td><strong>Rue :</strong></td>
+                        <td>{{ professeur.numRue }} {{ professeur.rue }},{{ professeur.copos }} {{ professeur.ville }}</td>
                     </tr>
                     <tr>
-                        <td><strong>Modèle :</strong></td>
-                        <td>
-                            {% if instrument.modele is not null %}
-                                {{ instrument.modele.nom }}
-                            {% else %}
-                                /
-                            {% endif %}
-                        </td>
+                        <td><strong>Téléphone :</strong></td>
+                        <td>{{ professeur.tel }}</td>
                     </tr>
                     <tr>
-                        <td><strong>Numéro de Série :</strong></td>
-                        <td>{{ instrument.numSerie }}</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Couleur :</strong></td>
-                        <td>
-                            {% if instrument.couleur is not null %}
-                                {{ instrument.couleur.libelle }}
-                            {% else %}
-                                /
-                            {% endif %}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><strong>Utilisé ? :</strong></td>
-                        <td>{{ instrument.utilisation == 1 ? 'Oui' : 'Non' }}</td>
+                        <td><strong>E-Mail :</strong></td>
+                        <td>{{ professeur.mail }}</td>
                     </tr>
                 </table>
 
@@ -140,8 +114,8 @@
                     <tr>
                         <td><strong>Type d'instrument :</strong></td>
                         <td>
-                            {% if instrument.TypeInstrument is not null %}
-                                {{ instrument.TypeInstrument.libelle }}
+                            {% if professeur.TypeInstrument is not null %}
+                                {{ professeur.TypeInstrument.libelle }}
                             {% else %}
                                 /
                             {% endif %}
@@ -151,41 +125,32 @@
 
                 <!-- Section des interventions -->
                 <div class="interventions">
-                    <h4>Interventions</h4>
+                    <h4>Cours</h4>
                     <table>
                         <thead>
                             <tr>
                                 <th>N°</th>
-                                <th>Date Début</th>
-                                <th>Date Fin</th>
-                                <th>Professionnel</th>
-                                <th>Descriptif</th>
-                                <th>Prix</th>
+                                <th>Libelle</th>
+                                <th>Jours</th>
+                                <th>Heures</th>
+                                <th>Type de Cours</th>
+                                <th>Type d'Instrument</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {% for intervention in instrument.getIntervention() %}
+                            {% for cours in professeur.getCours() %}
                                 <tr>
-                                    <td>{{ intervention.id }}</td>
-                                    <td>{{ intervention.dateDebut|date('d/m/Y') }}</td>
-                                    <td>{{ intervention.dateFin|date('d/m/Y') }}</td>
-                                    <td>Information Indisponible</td>
-                                    <td>{{ intervention.descriptif }}</td>
-                                    <td>{{ intervention.prix }}€</td>
+                                    <td>{{ cours.id }}</td>
+                                    <td>{{ cours.libelle }}</td>
+                                    <td>{{ cours.jour.libelle }}</td>
+                                    <td>{{ cours.heureDebut|date('H:i') }} > {{ cours.heureFin|date('H:i') }}</td>
+                                    <td>{{ cours.TypeCours.libelle }}</td>
+                                    <td>{{ cours.TypeInstrument.libelle }}</td>
                                 </tr>
                             {% endfor %}
                         </tbody>
                     </table>
                 </div>
-            </div>
-
-            <!-- Image de l'instrument -->
-            <div class="image-container">
-                {% if instrument.cheminImage %}
-                    <img src="{{ asset('images/' ~ instrument.cheminImage) }}" alt="Image de l'instrument">
-                {% else %}
-                    <p>Aucune image disponible</p>
-                {% endif %}
             </div>
         </div>
     </body>
