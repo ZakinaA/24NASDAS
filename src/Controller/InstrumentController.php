@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\Instrument;
+use App\Entity\Intervention;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\InstrumentType;
 use App\Form\InstrumentModifierType;
@@ -43,18 +44,21 @@ class InstrumentController extends AbstractController
             );
         }
 
+        $interventions = $instrument->getIntervention();
+
         // Vérification et formatage de la date d'achat
-        $formattedDate = null;
+        $formattedDateAchat = null;
         if ($instrument->getDateAchat() !== null) {
-            $formattedDate = $instrument->getDateAchat()->format('Y-m-d'); // Formater la date au format 'YYYY-MM-DD'
+            $formattedDateAchat = $instrument->getDateAchat()->format('d/m/Y'); // Formater la date au format 'YYYY-MM-DD'
         } else {
-            $formattedDate = "Date non définie"; // Si la date n'est pas définie
+            $formattedDateAchat = "Date non définie"; // Si la date n'est pas définie
         }
 
         // Passer l'instrument et la date formatée à la vue
         return $this->render('instrument/consulter.html.twig', [
             'instrument' => $instrument,
-            'formattedDate' => $formattedDate,
+            'formattedDateAchat' => $formattedDateAchat,
+            'interventions' => $interventions,
         ]);
     }
 
@@ -109,5 +113,21 @@ class InstrumentController extends AbstractController
                }
             }
      }
+
+    #[Route('/instrument/supprimer/{id}', name: 'app_instrument_supprimer')]
+    public function supprimerCours(ManagerRegistry $doctrine, int $id): Response
+    {
+        $instrument = $doctrine->getRepository(Instrument::class)->find($id);
+
+        if (!$instrument) {
+            throw $this->createNotFoundException('Aucun instrument trouvé avec l\'ID '.$id);
+        }
+
+        $entityManager = $doctrine->getManager();
+        $entityManager->remove($instrument); 
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_instrument_lister');
+    }
 
 }

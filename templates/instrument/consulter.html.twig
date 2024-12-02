@@ -1,29 +1,168 @@
 <!DOCTYPE html>
 <html>
     <head>
-        
-    </head>
-    <body>       
-		<h5>PAGE DE CONSULTATION D'UN INSTRUMENT</h5>
+        <style>
+            /* Styles de base pour l'alignement */
+            body {
+                font-family: Arial, sans-serif;
+                margin: 20px;
+            }
 
-    <table >
-        <tr><td>Numéro de Série : </td><td>{{instrument.numSerie}}</td>
-        <tr><td>Date d'achat : </td><td>{{ formattedDate }}</td></tr></tr>
-        <tr><td>Prix Achat : </td><td>{{ instrument.prixAchat }}€</td></tr></tr>
-        <tr><td>Utilisé ? </td><td>{{ instrument.utilisation == 1 ? 'Oui' : 'Non' }}</td></tr>
-        <tr><td>Type d'instrument :</td><td>{{ instrument.TypeInstrument.libelle }}</td></tr></tr>
-        
-        {# Affichage de l'image #}
-            <tr>
-                <td>
-                    {% if instrument.cheminImage %}
-                        <img src="{{ asset('images/' ~ instrument.cheminImage) }}" alt="Image de l'instrument" width="200" height="200">
-                    {% else %}
-                        <p>Aucune image disponible</p>
-                    {% endif %}
-                </td>
-            </tr>
-    </table>
-	
+            h4 {
+                text-align: center;
+                margin-bottom: 20px;
+            }
+
+            /* Cadre principal pour contenir tout */
+            .container {
+                display: flex;
+                justify-content: space-between;
+                border: 2px solid #ccc;
+                padding: 20px;
+                border-radius: 10px;
+                margin-bottom: 20px;
+            }
+
+            /* Détails et image à droite */
+            .details {
+                width: 65%;
+                padding-right: 20px;
+            }
+
+            /* Image à droite */
+            .image-container {
+                width: 30%;
+                text-align: center;
+                padding: 10px;
+            }
+
+            .image-container img {
+                width: 100%;
+                height: auto;
+                max-width: 200px;
+                border-radius: 5px;
+            }
+
+            /* Table des informations de l'instrument */
+            table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+
+            table, th, td {
+                border: 1px solid #ddd;
+            }
+
+            th, td {
+                padding: 8px;
+                text-align: left;
+            }
+
+            th {
+                background-color: #f2f2f2;
+            }
+
+            /* Table des interventions */
+            .interventions {
+                width: 100%;
+                margin-top: 20px;
+            }
+
+            .interventions th, .interventions td {
+                padding: 8px;
+                text-align: left;
+            }
+
+            .interventions th {
+                background-color: #f9f9f9;
+            }
+        </style>
+    </head>
+    <body>
+        <h4>PAGE DE CONSULTATION D'UN INSTRUMENT</h4>
+
+        <!-- Conteneur principal -->
+        <div class="container">
+            <!-- Détails de l'instrument et interventions -->
+            <div class="details">
+                <table>
+                    <tr>
+                        <td><strong>Date d'achat :</strong></td>
+                        <td>{{ formattedDateAchat }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Prix Achat :</strong></td>
+                        <td>{{ instrument.prixAchat }}€</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Marque :</strong></td>
+                        <td>/</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Modèle :</strong></td>
+                        <td>/</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Numéro de Série :</strong></td>
+                        <td>{{ instrument.numSerie }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Couleur :</strong></td>
+                        <td>/</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Utilisé ? :</strong></td>
+                        <td>{{ instrument.utilisation == 1 ? 'Oui' : 'Non' }}</td>
+                    </tr>
+                </table>
+
+                <br>
+
+                <table>
+                    <tr>
+                        <td><strong>Type d'instrument :</strong></td>
+                        <td>{{ instrument.TypeInstrument.libelle }}</td>
+                    </tr>
+                </table>
+
+                <!-- Section des interventions -->
+                <div class="interventions">
+                    <h4>Interventions</h4>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>N°</th>
+                                <th>Date Début</th>
+                                <th>Date Fin</th>
+                                <th>Professionnel</th>
+                                <th>Descriptif</th>
+                                <th>Prix</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for intervention in instrument.getIntervention() %}
+                                <tr>
+                                    <td>{{ intervention.id }}</td>
+                                    <td>{{ intervention.dateDebut|date('d/m/Y') }}</td>
+                                    <td>{{ intervention.dateFin|date('d/m/Y') }}</td>
+                                    <td>Information Indisponible</td>
+                                    <td>{{ intervention.descriptif }}</td>
+                                    <td>{{ intervention.prix }}€</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Image de l'instrument -->
+            <div class="image-container">
+                {% if instrument.cheminImage %}
+                    <img src="{{ asset('images/' ~ instrument.cheminImage) }}" alt="Image de l'instrument">
+                {% else %}
+                    <p>Aucune image disponible</p>
+                {% endif %}
+            </div>
+        </div>
     </body>
 </html>

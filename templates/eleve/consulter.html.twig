@@ -16,6 +16,15 @@
             <tr><td>Ville : </td><td>{{ eleve.ville }}</td></tr>
             <tr><td>Téléphone :</td><td>{{ eleve.tel }}</td></tr>
             <tr><td>Email :</td><td>{{ eleve.mail }}</td></tr>
+            <tr><td>Responsable :</td>
+            <td>
+                {% if eleve.responsable is not null and eleve.responsable.nom is not empty and eleve.responsable.prenom is not empty %}
+                    {{ eleve.responsable.nom }} {{ eleve.responsable.prenom }}
+                {% else %}
+                    Aucun
+                {% endif %}
+            </td>
+            </tr>
         </table>
 
                 <h5>COURS AUXQUELS CET ELEVE EST INSCRIT :</h5>
