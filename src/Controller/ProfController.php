@@ -22,7 +22,7 @@ class ProfController extends AbstractController
         ]);
     }
 
-    #[Route('/professeur/lister', name: 'app_pofesseur_lister')]
+    #[Route('/professeur/lister', name: 'app_professeur_lister')]
     public function listerProfesseur(ManagerRegistry $doctrine){
 
         $repository = $doctrine->getRepository(Professeur::class);
@@ -102,4 +102,20 @@ class ProfController extends AbstractController
                }
             }
      }
+
+    #[Route('/professeur/supprimer/{id}', name: 'app_professeur_supprimer')]
+    public function supprimerProfesseur(ManagerRegistry $doctrine, int $id): Response
+    {
+        $professeur = $doctrine->getRepository(Professeur::class)->find($id);
+
+        if (!$professeur) {
+            throw $this->createNotFoundException('Aucun professeur trouvé avec l\'ID '.$id);
+        }
+
+        $entityManager = $doctrine->getManager();
+        $entityManager->remove($professeur); 
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_professeur_lister');
+    }
 }
