@@ -1,0 +1,159 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #0A0D12;
+    color: #fff;
+}
+
+.icon {
+    width: 40px;
+    height: 40px;
+}
+
+
+.container {
+    display: flex;
+    max-width: 900px;
+    width: 100%;
+    height: 500px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.left-panel {
+    flex: 1;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%; 
+    overflow: hidden; 
+}
+
+.carousel {
+    width: 100%;
+    height: 100%;
+    position: absolute; 
+    display: flex;
+}
+
+.carousel-slide {
+    display: flex;
+    width: 100%; 
+    transition: transform 1s ease;
+}
+
+.carousel-slide img {
+    width: 100%;
+    height: 100%; 
+    object-fit: cover; 
+    flex-shrink: 0;
+    object-position: center center; 
+}
+
+
+.logo {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 2; 
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.logo-icon {
+    width: 40px;
+    height: 40px;
+}
+
+.logo span {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.right-panel {
+    flex: 1;
+    background-color: #181b22;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+h1 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+p {
+    margin-bottom: 35px;
+    font-size: 0.9rem;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+input, button {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    border: none;
+    font-size: 1rem;
+}
+
+input[type="email"], input[type="password"] {
+    background-color: #313237;
+    color: #a0a1a3;
+    border-radius: 20px;
+    height: 50px;
+}
+
+input::placeholder {
+    color: #a0a1a3;
+}
+
+input:focus {
+    outline: none;
+    box-shadow: 0 0 5px #07090c;
+}
+
+button {
+    margin-top:20px;
+    background-color: #0A0D12;
+    color: white;
+    cursor: pointer;
+    border-radius: 17px;
+    height: 46px;
+    transition: background-color 0.1s ease;
+}
+
+button:hover {
+    background-color: #0f1014;
+}
+
+@keyframes slide {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-100%); }
+}
+
+.inscrire {
+    color: #a0a1a3;
+    text-decoration: underline;
+}
