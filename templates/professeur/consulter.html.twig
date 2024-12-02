@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            /* Styles de base pour l'alignement */
+            body {
+                font-family: Arial, sans-serif;
+                margin: 20px;
+            }
+
+            h4 {
+                text-align: center;
+                margin-bottom: 20px;
+            }
+
+            /* Cadre principal pour contenir tout */
+            .container {
+                display: flex;
+                justify-content: space-between;
+                border: 2px solid #ccc;
+                padding: 20px;
+                border-radius: 10px;
+                margin-bottom: 20px;
+            }
+
+            /* Détails et image à droite */
+            .details {
+                width: 65%;
+                padding-right: 20px;
+            }
+
+            /* Image à droite */
+            .image-container {
+                width: 30%;
+                text-align: center;
+                padding: 10px;
+            }
+
+            .image-container img {
+                width: 100%;
+                height: auto;
+                max-width: 200px;
+                border-radius: 5px;
+            }
+
+            /* Table des informations de l'instrument */
+            table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+
+            table, th, td {
+                border: 1px solid #ddd;
+            }
+
+            th, td {
+                padding: 8px;
+                text-align: left;
+            }
+
+            th {
+                background-color: #f2f2f2;
+            }
+
+            /* Table des interventions */
+            .interventions {
+                width: 100%;
+                margin-top: 20px;
+            }
+
+            .interventions th, .interventions td {
+                padding: 8px;
+                text-align: left;
+            }
+
+            .interventions th {
+                background-color: #f9f9f9;
+            }
+        </style>
+    </head>
+    <body>
+        <h4>PAGE DE CONSULTATION D'UN PROFESSEUR</h4>
+
+        <!-- Conteneur principal -->
+        <div class="container">
+            <!-- Détails du professeur -->
+            <div class="details">
+                <table>
+                    <tr>
+                        <td><strong>Nom :</strong></td>
+                        <td>{{ professeur.nom }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Prénom :</strong></td>
+                        <td>{{ professeur.prenom }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Rue :</strong></td>
+                        <td>{{ professeur.numRue }} {{ professeur.rue }},{{ professeur.copos }} {{ professeur.ville }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Téléphone :</strong></td>
+                        <td>{{ professeur.tel }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>E-Mail :</strong></td>
+                        <td>{{ professeur.mail }}</td>
+                    </tr>
+                </table>
+
+                <br>
+
+                <table>
+                    <tr>
+                        <td><strong>Type d'instrument :</strong></td>
+                        <td>
+                            {% if professeur.TypeInstrument is not null %}
+                                {{ professeur.TypeInstrument.libelle }}
+                            {% else %}
+                                /
+                            {% endif %}
+                        </td>
+                    </tr>
+                </table>
+
+                <!-- Section des interventions -->
+                <div class="interventions">
+                    <h4>Cours</h4>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>N°</th>
+                                <th>Libelle</th>
+                                <th>Jours</th>
+                                <th>Heures</th>
+                                <th>Type de Cours</th>
+                                <th>Type d'Instrument</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for cours in professeur.getCours() %}
+                                <tr>
+                                    <td>{{ cours.id }}</td>
+                                    <td>{{ cours.libelle }}</td>
+                                    <td>{{ cours.jour.libelle }}</td>
+                                    <td>{{ cours.heureDebut|date('H:i') }} > {{ cours.heureFin|date('H:i') }}</td>
+                                    <td>{{ cours.TypeCours.libelle }}</td>
+                                    <td>{{ cours.TypeInstrument.libelle }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

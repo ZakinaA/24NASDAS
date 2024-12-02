@@ -13,10 +13,8 @@
 		<table>
 		{% for i in pProfesseurs %}
 		<tr>
-			<td>{{ i.id }}</td>
-			<td>||</td>
-			<td>{{ i.nom }}</td>
-			<td>{{ i.prenom }}</td>
+			<td><a href="{{ path('app_professeur_consulter', { 'id': i.id }) }}">{{ i.nom }}</a></td>
+			<td><a href="{{ path('app_professeur_consulter', { 'id': i.id }) }}">{{ i.prenom }}</a></td>
 			<td>||</td>
 			<td>{{ i.tel }}</td>
 			<td>{{ i.mail }}</td>
