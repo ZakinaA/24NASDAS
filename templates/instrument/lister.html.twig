@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}Emusic - INSTRUMENTS{% endblock %}</title>
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
@@ -13,9 +13,9 @@
 		<table>
 		{% for i in pInstruments %}
 		<tr>
-			<td><a href="{{ path('app_instrument_consulter', { 'id': i.id }) }}">{{ i.TypeInstrument.libelle }}</a></td>
-			<td>-</td>
-			<td><a href="{{ path('app_instrument_consulter', { 'id': i.id }) }}">{{ i.NumSerie }}</a></td>
+			<td><a href="{{ path('app_instrument_consulter', { 'id': i.id }) }}">{{ i.TypeInstrument.libelle }}.{{ i.modele.nom }}</a></td>
+			<td>||</td>
+			<td>n°{{ i.NumSerie }}</td>
 			<td>
 				<a href="{{ path('app_instrument_supprimer', {'id': i.id}) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet instrument ?');">
 					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="black" viewBox="0 0 24 24" stroke-width="2" class="icon icon-tabler icon-tabler-trash">
@@ -50,8 +50,5 @@
         Ajouter un instrument
     </a>
 </div>
-
-	
-	 
     </body>
 </html>
