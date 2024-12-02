@@ -13,9 +13,15 @@
 		<table>
 		{% for i in pContratsPret %}
 		<tr>
-			<td><a href="">{{ i.id }}</a></td>
+			<td><a href="{{ path('app_contratPret_consulter', { 'id': i.id }) }}">{{ i.id }}</a></td>
 			<td>-</td>
-			<td><a href="">{{ i.description }}</a></td>
+			<td>{{ i.description }}</td>
+			<td>-</td>
+			<td>{{ i.eleve.prenom}}</td>
+			<td>-</td>
+			<td>{{ i.eleve.nom}}</td>
+			<td>-</td>
+			<td>{{ i.instrument.TypeInstrument.libelle}}</td>
 			<td>
 				<a href="" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce contrat ?');">
 					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="black" viewBox="0 0 24 24" stroke-width="2" class="icon icon-tabler icon-tabler-trash">

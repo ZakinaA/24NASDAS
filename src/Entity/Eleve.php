@@ -44,6 +44,11 @@ class Eleve
      */
     #[ORM\OneToMany(targetEntity: Inscription::class, mappedBy: 'eleve')]
     private Collection $inscriptions;
+    /**
+     * @var Collection<int, ContratPret>
+     */
+    #[ORM\OneToMany(targetEntity: ContratPret::class, mappedBy: 'eleve')]
+    private Collection $contratPrets;
 
     #[ORM\ManyToOne(inversedBy: 'eleves')]
     private ?Responsable $responsable = null;
@@ -51,6 +56,7 @@ class Eleve
     public function __construct()
     {
         $this->inscriptions = new ArrayCollection();
+        $this->contratPrets = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -183,6 +189,7 @@ class Eleve
 
         return $this;
     }
+
 
     public function getResponsable(): ?Responsable
     {
