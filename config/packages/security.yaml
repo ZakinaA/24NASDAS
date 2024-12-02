@@ -19,7 +19,7 @@ security:
             form_login:
                 login_path: app_login
                 check_path: app_login
-                default_target_path: mes_eleves
+                default_target_path: app_accueil_uti
                 enable_csrf: true
             logout:
                 path: app_logout
