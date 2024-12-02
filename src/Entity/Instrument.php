@@ -46,6 +46,15 @@ class Instrument
     #[ORM\OneToMany(targetEntity: Intervention::class, mappedBy: 'instrument')]
     private Collection $intervention;
 
+    #[ORM\ManyToOne(inversedBy: 'instrument')]
+    private ?Modele $modele = null;
+
+    #[ORM\ManyToOne(inversedBy: 'instrument')]
+    private ?Marque $marque = null;
+
+    #[ORM\ManyToOne(inversedBy: 'instrument')]
+    private ?Couleur $couleur = null;
+
     public function __construct()
     {
         $this->accessoire = new ArrayCollection();
@@ -179,6 +188,86 @@ class Instrument
                 $intervention->setInstrument(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getMarque(): ?Marque
+    {
+        return $this->marque;
+    }
+
+    public function addMarque(marque $marque): static
+    {
+        if (!$this->marque->contains($marque)) {
+            $this->marque->add($marque);
+            $marque->setInstrument($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMarque(marque $marque): static
+    {
+        if ($this->marque->removeElement($marque)) {
+            // set the owning side to null (unless already changed)
+            if ($marque->getInstrument() === $this) {
+                $marque->setInstrument(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getModele(): ?Modele
+    {
+        return $this->modele;
+    }
+
+    public function addModele(modele $modele): static
+    {
+        if (!$this->modele->contains($modele)) {
+            $this->modele->add($modele);
+            $modele->setInstrument($this);
+        }
+
+        return $this;
+    }
+
+    public function removeModele(modele $modele): static
+    {
+        if ($this->modele->removeElement($modele)) {
+            // set the owning side to null (unless already changed)
+            if ($modele->getInstrument() === $this) {
+                $modele->setInstrument(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function setModele(?modele $modele): static
+    {
+        $this->modele = $modele;
+
+        return $this;
+    }
+
+    public function setMarque(?marque $marque): static
+    {
+        $this->marque = $marque;
+
+        return $this;
+    }
+
+    public function getCouleur(): ?Couleur
+    {
+        return $this->couleur;
+    }
+
+    public function setCouleur(?Couleur $couleur): static
+    {
+        $this->couleur = $couleur;
 
         return $this;
     }
