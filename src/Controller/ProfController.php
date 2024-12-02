@@ -6,8 +6,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\HttpFoundation\Request;
 
 use App\Entity\Professeur;
+use App\Form\ProfesseurType;
 
 class ProfController extends AbstractController
 {
@@ -49,5 +51,27 @@ class ProfController extends AbstractController
             'professeur' => $professeur,
             'cours' => $cours,
         ]);
+    }
+
+    #[Route('/professeur/ajouter', name: 'app_professeur_ajouter')]
+    public function ajouterProfesseur(ManagerRegistry $doctrine,Request $request){
+        $professeur = new Professeur();
+        $form = $this->createForm(ProfesseurType::class, $professeur);
+        $form->handleRequest($request);
+    
+        if ($form->isSubmitted() && $form->isValid()) {
+    
+                $professeur = $form->getData();
+                
+                $entityManager = $doctrine->getManager();
+                $entityManager->persist($professeur);
+                $entityManager->flush();
+    
+            return $this->render('professeur/consulter.html.twig', ['professeur' => $professeur,]);
+        }
+        else
+            {
+                return $this->render('professeur/ajouter.html.twig', array('form' => $form->createView(),));
+        }
     }
 }
