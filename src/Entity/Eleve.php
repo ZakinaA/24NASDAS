@@ -44,14 +44,15 @@ class Eleve
      */
     #[ORM\OneToMany(targetEntity: Inscription::class, mappedBy: 'eleve')]
     private Collection $inscriptions;
+  
+    #[ORM\ManyToOne(inversedBy: 'eleves')]
+    private ?Responsable $responsable = null;
+
     /**
      * @var Collection<int, ContratPret>
      */
     #[ORM\OneToMany(targetEntity: ContratPret::class, mappedBy: 'eleve')]
     private Collection $contratPrets;
-
-    #[ORM\ManyToOne(inversedBy: 'eleves')]
-    private ?Responsable $responsable = null;
 
     public function __construct()
     {
@@ -199,6 +200,36 @@ class Eleve
     public function setResponsable(?Responsable $responsable): static
     {
         $this->responsable = $responsable;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ContratPret>
+     */
+    public function getContratPrets(): Collection
+    {
+        return $this->contratPrets;
+    }
+
+    public function addContratPret(ContratPret $contratPret): static
+    {
+        if (!$this->contratPrets->contains($contratPret)) {
+            $this->contratPrets->add($contratPret);
+            $contratPret->setEleve($this);
+        }
+
+        return $this;
+    }
+
+    public function removeContratPret(ContratPret $contratPret): static
+    {
+        if ($this->contratPrets->removeElement($contratPret)) {
+            // set the owning side to null (unless already changed)
+            if ($contratPret->getEleve() === $this) {
+                $contratPret->setEleve(null);
+            }
+        }
 
         return $this;
     }

@@ -29,11 +29,11 @@ class ContratPret
     #[ORM\Column]
     private ?float $quotite = null;
 
-    #[ORM\ManyToOne(inversedBy: 'contratPrets')]
-    private ?Eleve $eleve = null;
-
     #[ORM\ManyToOne]
     private ?Instrument $instrument = null;
+
+    #[ORM\ManyToOne(inversedBy: 'contratPrets')]
+    private ?Eleve $eleve = null;
 
     public function getId(): ?int
     {
@@ -100,17 +100,6 @@ class ContratPret
         return $this;
     }
 
-    public function getEleve(): ?Eleve
-    {
-        return $this->eleve;
-    }
-
-    public function setEleve(?Eleve $eleve): static
-    {
-        $this->eleve = $eleve;
-
-        return $this;
-    }
 
     public function getInstrument(): ?Instrument
     {
@@ -120,6 +109,18 @@ class ContratPret
     public function setInstrument(?Instrument $instrument): static
     {
         $this->instrument = $instrument;
+
+        return $this;
+    }
+
+    public function getEleve(): ?Eleve
+    {
+        return $this->eleve;
+    }
+
+    public function setEleve(?Eleve $eleve): static
+    {
+        $this->eleve = $eleve;
 
         return $this;
     }
