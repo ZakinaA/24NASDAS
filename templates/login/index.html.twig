@@ -1,35 +1,60 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}Log in!{% endblock %}
-
-{% block body %}
-    <form method="post">
-        {% if error %}
-            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-        {% endif %}
-
-        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-        <label for="username">Email</label>
-        <input type="email" value="{{ last_username }}" name="_username" id="username" class="form-control" autocomplete="email" required autofocus>
-        <label for="password">Password</label>
-        <input type="password" name="_password" id="password" class="form-control" autocomplete="current-password" required>
-
-        <input type="hidden" name="_csrf_token"
-               value="{{ csrf_token('authenticate') }}"
-        >
-
-        {#
-            Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-            See https://symfony.com/doc/current/security/remember_me.html
-
-            <div class="checkbox mb-3">
-                <input type="checkbox" name="_remember_me" id="_remember_me">
-                <label for="_remember_me">Remember me</label>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion - EMUSIC</title>
+    <link rel="stylesheet" href="css/login.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Left Panel -->
+        <div class="left-panel">
+            <div class="logo">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 24 24" fill="currentColor" class="size-6">
+                    <path fill-rule="evenodd" d="M4.5 9.75a6 6 0 0 1 11.573-2.226 3.75 3.75 0 0 1 4.133 4.303A4.5 4.5 0 0 1 18 20.25H6.75a5.25 5.25 0 0 1-2.23-10.004 6.072 6.072 0 0 1-.02-.496Z" clip-rule="evenodd" />
+                </svg>
+                <span>EMUSIC</span>
             </div>
-        #}
+            <div class="carousel">
+                <div class="carousel-slide">
+                    <img src="images/login1.jpg" alt="Image 1">
+                    <img src="images/login2.jpg" alt="Image 2">
+                    <img src="images/login3.png" alt="Image 3">
+                </div>
+            </div>
+        </div>
 
-        <button class="btn btn-lg btn-primary" type="submit">
-            Sign in
-        </button>
-    </form>
-{% endblock %}
+        <!-- Right Panel -->
+        <div class="right-panel">
+            <h1>Connexion</h1>
+            <p>Vous n'avez pas de compte ? <a class="inscrire" href="{{ path('app_register')}}">S'inscrire</a></p>
+            <form method="post">
+                {% if error %}
+                    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                {% endif %}
+                
+                <input type="email" placeholder="Email" value="{{ last_username }}" name="_username" id="username" class="form-control" autocomplete="email" required autofocus>
+                <div class="password-group">
+                    <input type="password" placeholder="Mot de passe" name="_password" id="password" class="form-control" autocomplete="current-password" required>
+                </div>
+                
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                <button type="submit" class="btn">Se connecter</button>
+            </form>
+        </div>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+        const carousel = document.querySelector(".carousel-slide");
+        let index = 0;
+        const slides = carousel.children.length;
+
+        setInterval(() => {
+            index = (index + 1) % slides;
+            carousel.style.transform = `translateX(-${index * 100}%)`; // Déplace l'image suivante
+            }, 4000); // Change d'image toutes les 3 secondes
+        });
+    </script>
+</body>
+</html>
