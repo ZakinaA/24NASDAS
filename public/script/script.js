@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         if (data.cours.length > 0) {
                             data.cours.forEach(c => {
                                 const card = document.createElement('a');
-                                card.href = '/cours/' + c.id;
+                                card.href = '24NASDAS/public/cours/' + c.id;
                                 card.classList.add('card-link');
                                 card.innerHTML = `
                                     <div class="card">
