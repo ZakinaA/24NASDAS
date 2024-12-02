@@ -1,0 +1,15 @@
+{# templates/eleve/mes_eleves.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes Élèves{% endblock %}
+
+{% block body %}
+<h1>Mes Élèves</h1>
+<ul>
+    {% for eleve in eleves %}
+        <li>{{ eleve.nom }} {{ eleve.prenom }}</li>
+    {% else %}
+        <li>Aucun élève trouvé.</li>
+    {% endfor %}
+</ul>
+{% endblock %}

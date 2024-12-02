@@ -12,6 +12,8 @@ use App\Form\EleveType;
 use App\Entity\Cours;
 use App\Entity\Inscription;
 use App\Form\EleveModifierType;
+use App\Repository\EleveRepository;
+use Doctrine\ORM\Mapping as ORM;
 
 class EleveController extends AbstractController
 {
@@ -32,6 +34,28 @@ class EleveController extends AbstractController
             'pEleves' => $eleves,]);	
             
     }
+
+    
+    #[Route('/mes-eleves', name: 'mes_eleves')]
+    public function listerMesEleves(EleveRepository $eleveRepository): Response
+    {
+        // Récupérer l'utilisateur connecté
+        $user = $this->getUser();
+
+        // Vérifier si l'utilisateur a un responsable associé
+        $responsable = $user->getResponsable();
+        if (!$responsable) {
+            throw $this->createAccessDeniedException("Aucun responsable associé à cet utilisateur.");
+        }
+
+        // Récupérer les élèves du responsable
+        $eleves = $eleveRepository->findBy(['responsable' => $responsable]);
+
+        return $this->render('eleve/mes_eleves.html.twig', [
+            'eleves' => $eleves,
+        ]);
+    }
+
 
     public function consulterEleve(ManagerRegistry $doctrine, Request $request, int $id): Response
     {
