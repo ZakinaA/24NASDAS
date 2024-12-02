@@ -1,21 +1,4 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        
-    </head>
-    <body>       
-		<h5>PAGE D'AJOUT D'UN CONTRAT DE PRET</h5>
-
-    <table >
-        <tr><td>Id : </td><td>{{cp.id}} </td></tr>
-        <tr><td>Date d'emprunt : </td><td>{{contrat_pret.date_debut}}</td>
-        <tr><td>Date de retour prévus : </td><td>{{contrat_pret.date_fin}}</td>
-        <tr><td>Description : </td><td>{{contrat_pret.description}}</td>
-        <tr><td>prix : </td><td>{{contrat_pret.prix}}</td>
-        <tr><td>quotité : </td><td>{{contrat_pret.quotite}}</td>
-
-    </table>
-	
-	 
-    </body>
-</html>
+{# templates/contratPret/ajouter.html.twig #}
+{{ form_start(form) }}
+{{ form_widget(form) }}
+{{ form_end(form) }}
