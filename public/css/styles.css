@@ -39,10 +39,12 @@ body {
     list-style-type: none;
     padding: 0;
     flex-grow: 1;
+    text-decoration: none;
 }
 
 .menu-item {
-    padding: 14px 0; /* Espace en haut et en bas seulement */
+    text-decoration: none;
+    padding: 14px 0; 
     font-size: 0.9em;
     color: #a0a1a3;
     display: flex;
@@ -51,14 +53,30 @@ body {
     margin-bottom: 15px;
     border-radius: 8px;
     transition: 0.2s;
-    padding-left: 20px; /* Décalage des textes vers la droite */    
+    padding-left: 20px;   
 }
 
 .menu-item:hover {
     background-color: #313237;
     color: #FFFFFF;
     border-radius: 17px;
-    padding: 14px; /* Uniforme autour de l'élément pendant le hover */
+    padding: 14px; 
+}
+
+.menu-item a {
+    display: flex; 
+    align-items: center;
+    text-decoration: none; /* Enlève le soulignement */
+    color: inherit; /* Hérite de la couleur de l'élément parent (menu-item) */
+}
+
+.menu-item a:focus, .menu-item a:active {
+    text-decoration: none; /* Enlève le soulignement au focus et au clic */
+    outline: none; /* Enlève le contour violet au focus */
+}
+
+.menu-item:hover a {
+    color: #FFFFFF; 
 }
 
 
@@ -95,8 +113,8 @@ body {
 .top-bar {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-}
+    justify-content:flex-end
+};
 
 .search-container {
     position: relative;
@@ -104,17 +122,26 @@ body {
 }
 
 .search-bar {
-    width: 100%;
+    width: 25%;
     padding: 15px 10px 15px 20px;
     background-color: #181b22;
     border: none;
     border-radius: 25px;
     color: #a0a1a3;
+    position: absolute;
+    margin-top: -70px;
+    height: 45px;
+}
+
+#search-bar::placeholder {
+    font-size: 1.1em; /* Ajustez la taille selon vos besoins */
+    color: #a0a1a3; /* Vous pouvez également ajuster la couleur si nécessaire */
 }
 
 .search-icon {
     position: absolute;
-    top: 50%;
+    top: 4.5%;
+    left: 38%;
     right: 15px;
     transform: translateY(-50%);
     width: 20px;
@@ -151,7 +178,7 @@ body {
     border-radius: 6px;
     font-size: 0.7em;
     margin-top: 3px;
-    align-self: flex-start; /* Indépendant de la largeur du nom */
+    align-self: flex-start;
 }
 
 .settings-icon {
@@ -164,11 +191,11 @@ body {
     background-color: #333333;
     border-radius: 50%;
     cursor: pointer;
-    transition: transform 0.3s ease; /* Ajout de la transition de la rotation */
+    transition: transform 0.3s ease; 
 }
 
 .settings-icon:hover {
-    transform: rotate(120deg); /* Rotation de 360 degrés */
+    transform: rotate(120deg); 
 }
 
 .settings-icon .icon {
@@ -190,7 +217,104 @@ li a {
     text-decoration: none;
 }
 
+a {
+    text-decoration: none; 
+    color: inherit; 
+}
+
 .deconnecter {
     color: #a0a1a3;
     text-decoration: none;
 }
+
+
+.card-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); 
+    gap: 20px; 
+    margin-top: 20px; /
+}
+
+.card {
+    border-radius: 20px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    text-align: center;
+    width: 370px;
+    height: 220px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+    background-color: #181b22;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card-img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+
+}
+
+.card h3 {
+    font-size: 1.2em;
+    margin-top: 15px;
+    color: white;
+    font-weight: normal;
+    text-align: center;
+}
+
+.admin-actions {
+    margin-top: 10px;
+}
+
+.admin-actions .btn {
+    display: inline-block;
+    background-color: black;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    margin: 5px;
+}
+
+.admin-actions .btn:hover {
+    background-color: #444;
+}
+
+.delete {
+    background-color: #313237;
+}
+
+.edit {
+    background-color: blue;
+}
+
+.add {
+    background-color: green;
+}
+
+.bouton .btn {
+    background-color: black;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    display: inline-block;
+    text-align: center;
+}
+
+.content {
+    margin-left: -20px;
+    margin-top: 5px;
+}
+
+.card-container a {
+    text-decoration: none;
+}
+
+

@@ -53,6 +53,7 @@ class EleveController extends AbstractController
 
         return $this->render('eleve/mes_eleves.html.twig', [
             'eleves' => $eleves,
+            'responsable' => $responsable, 
         ]);
     }
 
