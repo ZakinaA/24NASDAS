@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        {% block stylesheets %}{% endblock %}
+    </head>
+    <body>
+        {% block body %}{% endblock %}
+        {% block javascripts %}{% endblock %}
+		
+		LISTE DES INTERVENTIONS</br>
+		<table>
+
+		<tr>
+		<td>Id</td>
+        <td>Numéro de série</td>
+        <td>Instrument</td>
+		<td>Date de début</td>
+		<td>Date de fin</td>
+		<td>Descriptif</td>
+		<td>Prix</td>
+
+		</tr>
+		{% for it in pIntervention %}
+		
+		<tr>
+			<td><a href="{{ path('app_intervention_consulter', { 'id': it.id }) }}">{{ it.id }}</a></td>
+            <td>{{ it.instrument.numSerie}}</td>
+			<td>{{ it.instrument.TypeInstrument.libelle}}</td>
+			<td>{{ it.dateDebut|date('d-m-Y')}}</td>
+			<td>{{ it.dateFin|date('d-m-Y')}}</td>
+			<td>{{ it.descriptif}}</td>
+			<td>{{ it.prix}}</td>
+			<td>
+				<a href="{{ path('app_intervention_supprimer', { 'id': it.id }) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette intervention ?');">
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="black" viewBox="0 0 24 24" stroke-width="2" class="icon icon-tabler icon-tabler-trash">
+						<path stroke-linecap="round" stroke-linejoin="round" d="M3 6h18M9 6V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M10 11v6M14 11v6M5 6l1 14h12l1-14"></path>
+					</svg>
+				</a>
+        	</td>
+			<td>
+				<a href="{{ path('app_intervention_modifier', { 'id': it.id }) }}">
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="black" viewBox="0 0 24 24" stroke-width="2" class="icon icon-tabler icon-tabler-pencil">
+						<path stroke-linecap="round" stroke-linejoin="round" d="M13 3l8 8-10 10H3v-8L13 3z"></path>
+					</svg>
+				</a>
+			</td>
+		</tr>
+	{% else %}
+		<tr>
+		<td>Aucune intervention n'a été trouvé.</td>
+		</tr>
+	{% endfor %}
+</table>
+	<div class="bouton">
+    <a href="{{ path('app_intervention_ajouter') }}" style="
+        display: inline-block;
+        background-color: black;
+        color: white;
+        padding: 10px 10px;
+        text-decoration: none;
+        border-radius: 5px;
+        font-size: 16px;
+        text-align: center;
+        cursor: pointer;" >
+        Ajouter une intervention
+    </a>
+</div>
+
+	
+	 
+    </body>
+</html>
