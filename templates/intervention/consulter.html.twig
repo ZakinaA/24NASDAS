@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        
+    </head>
+    <body>       
+		<h5>PAGE DE CONSULTATION D'UNE INTERVENTION</h5>
+
+    <table >
+        <tr><td>Id</td><td>{{intervention.id}}</td></tr>
+        <tr><td>Numéro de série</td><td>{{intervention.id}}</td>
+        <tr><td>Instrument</td><td>{{intervention.instrument.TypeInstrument.libelle}}</td>
+		<tr><td>Date de début</td>
+		<tr><td>Date de fin</td>
+		<tr><td>Descriptif</td>
+		<tr><td>Prix</td>
+
+    </table>
+	<div class="bouton">
+    <a href="{{ path('app_intervention_lister') }}" style="
+        display: inline-block;
+        background-color: black;
+        color: white;
+        padding: 10px 10px;
+        text-decoration: none;
+        border-radius: 5px;
+        font-size: 16px;
+        text-align: center;
+        cursor: pointer;" >
+        Retour a la liste
+    </a>
+</div>
+    </body>
+</html>
