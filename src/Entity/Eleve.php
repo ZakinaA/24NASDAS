@@ -54,6 +54,9 @@ class Eleve
     #[ORM\OneToMany(targetEntity: ContratPret::class, mappedBy: 'eleve')]
     private Collection $contratPrets;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $cheminImage = null;
+
     public function __construct()
     {
         $this->inscriptions = new ArrayCollection();
@@ -230,6 +233,18 @@ class Eleve
                 $contratPret->setEleve(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCheminImage(): ?string
+    {
+        return $this->cheminImage;
+    }
+
+    public function setCheminImage(?string $cheminImage): static
+    {
+        $this->cheminImage = $cheminImage;
 
         return $this;
     }
