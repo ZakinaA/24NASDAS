@@ -1,17 +1,23 @@
-{# templates/eleve/mes_eleves.html.twig #}
 {% extends 'accueil/accueil_uti.html.twig' %}
 
 {% block title %}Mes Élèves{% endblock %}
 
 {% block body %}
 <div class="content">
-    <h1>Mes Élèves</h1>
-    <ul>
+    <div class="eleves-container">
         {% for eleve in eleves %}
-            <li>{{ eleve.nom }} {{ eleve.prenom }}</li>
+            <a href="{{ path('app_eleve_consulter', {'id': eleve.id}) }}" class="eleve-card-link">
+                <div class="eleve-card">
+                    {% set image_url = eleve.cheminImage is not empty ? eleve.cheminImage : 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y' %}
+                    <img src="{{ asset(image_url) }}" alt="Image de {{ eleve.nom }} {{ eleve.prenom }}" class="eleve-image">
+                    <div class="eleve-info">
+                        <p class="eleve-nom">{{ eleve.nom }} {{ eleve.prenom }}</p>
+                    </div>
+                </div>
+            </a>
         {% else %}
-            <li>Aucun élève trouvé.</li>
+            <p>Aucun élève trouvé.</p>
         {% endfor %}
-    </ul>
+    </div>
 </div>
 {% endblock %}
