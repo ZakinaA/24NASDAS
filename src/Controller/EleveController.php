@@ -102,6 +102,7 @@ class EleveController extends AbstractController
             }
         }
 
+        dump($coursInscrits);
         // Retourner la page de consultation de l'élève avec les cours disponibles et inscrits
         return $this->render('eleve/consulter.html.twig', [
             'eleve' => $eleve,
