@@ -161,6 +161,7 @@
                                 <th>Professionnel</th>
                                 <th>Descriptif</th>
                                 <th>Prix</th>
+                                <th>Interaction</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -172,6 +173,14 @@
                                     <td>Information Indisponible</td>
                                     <td>{{ intervention.descriptif }}</td>
                                     <td>{{ intervention.prix }}€</td>
+                                    
+			                        <td>
+			                        	<a href="{{ path('app_intervention_instrument_modifier', { 'id': instrument.id }) }}">
+			                        		<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="black" viewBox="0 0 24 24" stroke-width="2" class="icon icon-tabler icon-tabler-pencil">
+			                        			<path stroke-linecap="round" stroke-linejoin="round" d="M13 3l8 8-10 10H3v-8L13 3z"></path>
+			                        		</svg>
+			                        	</a>
+		                        	</td>
                                 </tr>
                             {% endfor %}
                         </tbody>
@@ -187,6 +196,20 @@
                     <p>Aucune image disponible</p>
                 {% endif %}
             </div>
+        </div>
+        <div class="bouton">
+            <a href="{{ path('app_intervention_instrument_ajouter', { 'id': instrument.id }) }}" style="
+                display: inline-block;
+                background-color: black;
+                color: white;
+                padding: 10px 10px;
+                text-decoration: none;
+                border-radius: 5px;
+                font-size: 16px;
+                text-align: center;
+                cursor: pointer;" >
+                Ajouter une intervention
+            </a>
         </div>
     </body>
 </html>
