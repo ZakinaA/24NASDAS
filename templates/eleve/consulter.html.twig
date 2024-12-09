@@ -37,17 +37,19 @@
                 </tr>
             </thead>
             <tbody>
-                {% for cours in coursInscrits %}
-                    <tr>
-                        <td>{{ cours.libelle }}</td>
-                        <td>{{ cours.professeur.nom }}</td>
-                        <td>{{ cours.heureDebut|date('H:i') }} - {{ cours.heureFin|date('H:i') }}</td>
-                    </tr>
+                {% if coursInscrits is defined and coursInscrits is not empty %}
+                    <tbody>
+                        {% for cours in coursInscrits %}
+                            <tr>
+                                <td>{{ cours.libelle }}</td>
+                                <td>{{ cours.professeur.nom }}</td>
+                                <td>{{ cours.heureDebut|date('H:i') }} - {{ cours.heureFin|date('H:i') }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
                 {% else %}
-                    <tr>
-                        <td colspan="3">Aucun cours inscrit</td>
-                    </tr>
-                {% endfor %}
+                    <p>Aucun cours inscrit pour cet élève.</p>
+                {% endif %}
             </tbody>
         </table>
         <br>
