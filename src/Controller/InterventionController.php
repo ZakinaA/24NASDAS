@@ -12,6 +12,8 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Form\InterventionType;
 use App\Form\InterventionModifierType;
 use App\Form\InterventionInstrumentType;
+use App\Form\InterventionInstrumentModifierType;
+
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 
@@ -85,37 +87,39 @@ class InterventionController extends AbstractController
         }
     }
 
-     #[Route('/intervention/modifier/{id}', name: 'app_intervention_instrument_modifier')]
-    public function modifierInterventionByInstrument(ManagerRegistry $doctrine,Request $request, $id){
-        $instrument = $doctrine->getRepository(Instrument::class)->find($id);
+    #[Route('/intervention/modifier/{id}', name: 'app_intervention_instrument_modifier')]
 
-        if (!$instrument) {
-            throw $this->createNotFoundException('Instrument non trouvé.');
-        }
+    public function modifierIntervention(ManagerRegistry $doctrine, $id, Request $request){
 
-        $intervention = new intervention();
-        $intervention->setInstrument($instrument);
-
-        $form = $this->createForm(InterventionInstrumentType::class, $intervention);
-        $form->handleRequest($request);
+       $intervention = $doctrine->getRepository(Intervention::class)->find($id);
     
-        if ($form->isSubmitted() && $form->isValid()) {
+       if (!$intervention) {
+           throw $this->createNotFoundException('Aucune intervention trouvé avec le numéro '.$id);
+       }
+       else
+       {
+               $form = $this->createForm(InterventionInstrumentModifierType::class, $intervention);
+               $form->handleRequest($request);
     
-                $intervention = $form->getData();
+               if ($form->isSubmitted() && $form->isValid()) {
     
-                $entityManager = $doctrine->getManager();
-                $entityManager->persist($intervention);
-                $entityManager->flush();
-    
-            return $this->render('intervention/consulter.html.twig', ['intervention' => $intervention,]);
-        }
-        else
-            {
-                return $this->render('intervention/modifier.html.twig', array('form' => $form->createView(),));
-        }
+                    $intervention = $form->getData();
+                    $entityManager = $doctrine->getManager();
+                    $entityManager->persist($intervention);
+                    $entityManager->flush();
+                    return $this->render('intervention/consulter.html.twig', ['intervention' => $intervention,]);
+              }
+              else{
+                   return $this->render('intervention/ajouter.html.twig', array('form' => $form->createView(),));
+              }
+           }
     }
 
+
+
+
     
+
      #[Route('/intervention/supprimer/{id}', name: 'app_intervention_supprimer')]
      public function supprimerIntervention(ManagerRegistry $doctrine, int $id): Response
     {
@@ -132,39 +136,6 @@ class InterventionController extends AbstractController
         return $this->redirectToRoute('app_intervention_lister');
     }
 
- 
-    
-    
-    
-    
-    
-    #[Route('/intervention/modifier/{id}', name: 'app_intervention_modifier')]
-    public function modifierIntervention(ManagerRegistry $doctrine, $id, Request $request){
- 
-        $intervention = $doctrine->getRepository(Intervention::class)->find($id);
-     
-        if (!$intervention) {
-            throw $this->createNotFoundException('Aucun intervention trouvé avec le numéro '.$id);
-        }
-        else
-        {
-                $form = $this->createForm(InterventionModifierType::class, $intervention);
-                $form->handleRequest($request);
-     
-                if ($form->isSubmitted() && $form->isValid()) {
-     
-                     $intervention = $form->getData();
-                     $entityManager = $doctrine->getManager();
-                     $entityManager->persist($intervention);
-                     $entityManager->flush();
-                     return $this->render('intervention/consulter.html.twig', ['intervention' => $intervention,]);
-               }
-               else{
-                    return $this->render('intervention/ajouter.html.twig', array('form' => $form->createView(),));
-               }
-            }
-     }
-    
      #[Route('/intervention/ajouter', name: 'app_intervention_ajouter')]
 
      public function ajouterIntervention(ManagerRegistry $doctrine,Request $request){
@@ -187,7 +158,7 @@ class InterventionController extends AbstractController
                  return $this->render('intervention/ajouter.html.twig', array('form' => $form->createView(),));
          }
      }
-    
+
     
 
 }
