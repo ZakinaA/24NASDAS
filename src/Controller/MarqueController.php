@@ -25,11 +25,15 @@ class MarqueController extends AbstractController
     #[Route('/marque/lister', name: 'app_marque_lister')]
     public function listerMarque(ManagerRegistry $doctrine){
 
+        $user = $this->getUser();
+
         $repository = $doctrine->getRepository(Marque::class);
+        $responsable = $user->getResponsable();
 
         $marque= $repository->findAll();
         return $this->render('marque/lister.html.twig', [
-            'pMarque' => $marque,]);	
+            'pMarque' => $marque,
+            'responsable' => $responsable]);	
             
     }
     /*
