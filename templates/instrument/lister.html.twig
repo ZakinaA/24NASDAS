@@ -1,49 +1,59 @@
 {% extends 'accueil/accueil_uti.html.twig' %}
-
 {% block body %}
 <div class="content">
-    <h1>Liste des Instruments</h1>
-    <table>
-        {% for i in pInstruments %}
+    <table class="table">
+        <thead class="table-header">
             <tr>
-                <td>
-                    <a href="{{ path('app_instrument_consulter', { 'id': i.id }) }}">
-                        {{ i.TypeInstrument.libelle }}
-                    </a>
-                </td>
-                <td>-</td>
-                <td>
-                    <a href="{{ path('app_instrument_consulter', { 'id': i.id }) }}">
-                        {{ i.NumSerie }}
-                    </a>
-                </td>
+                <th class="table-header-cell">Type d'Instrument</th>
+                <th class="table-header-cell">Numéro de Série</th>
+                <th class="table-header-cell">Date d'Achat</th>
+                <th class="table-header-cell">Prix d'Achat</th>
+                <th class="table-header-cell">Modèle</th>
+                <th class="table-header-cell">Marque</th>
                 {% if is_granted('ROLE_ADMIN') %}
-                    <td>
-                        <a href="{{ path('app_instrument_supprimer', { 'id': i.id }) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet instrument ?');">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="black" viewBox="0 0 24 24" stroke-width="2" class="icon icon-tabler icon-tabler-trash">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 6h18M9 6V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M10 11v6M14 11v6M5 6l1 14h12l1-14"></path>
-                            </svg>
-                        </a>
-                    </td>
-                    <td>
-                        <a href="{{ path('app_instrument_modifier', { 'id': i.id }) }}">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="black" viewBox="0 0 24 24" stroke-width="2" class="icon icon-tabler icon-tabler-pencil">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M13 3l8 8-10 10H3v-8L13 3z"></path>
-                            </svg>
-                        </a>
-                    </td>
+                    <th class="table-header-cell">Actions</th>
                 {% endif %}
             </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">Aucun instrument n'a été trouvé.</td>
-            </tr>
-        {% endfor %}
+        </thead>
+        <tbody class="color-table">
+            {% for i in pInstruments %}
+                <tr class="table-row">
+                    <td class="table-cell">{{ i.TypeInstrument.libelle }}</td>
+                    <td class="table-cell">
+                        <!-- Lien autour du numéro de série -->
+                        <a href="{{ path('app_instrument_consulter', { 'id': i.id }) }}" class="instrument-link">
+                            {{ i.NumSerie }}
+                        </a>
+                    </td>
+                    <td class="table-cell">{{ i.dateAchat ? i.dateAchat|date('d/m/Y') : 'Non renseignée' }}</td>
+                    <td class="table-cell">{{ i.prixAchat ? i.prixAchat|number_format(2, '.', ',') : 'Non renseigné' }}</td>
+                    <td class="table-cell">{{ i.modele.nom ? i.modele.nom : 'Non renseigné' }}</td>
+                    <td class="table-cell">{{ i.marque.libelle ? i.marque.libelle : 'Non renseignée' }}</td>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <td class="table-cell">
+                            <div class="actions-menu">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="white" viewBox="0 0 24 24" stroke-width="2" class="icon">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01"></path>
+                                </svg>
+                                <div class="actions-dropdown">
+                                    <a href="{{ path('app_instrument_modifier', { 'id': i.id }) }}">Modifier</a>
+                                    <a href="{{ path('app_instrument_supprimer', { 'id': i.id }) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet instrument ?');">Supprimer</a>
+                                </div>
+                            </div>
+                        </td>
+                    {% endif %}
+                </tr>
+            {% else %}
+                <tr class="table-row">
+                    <td class="table-cell" colspan="8">Aucun instrument n'a été trouvé.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
     </table>
 
     {% if is_granted('ROLE_ADMIN') %}
         <div class="bouton">
-            <a href="{{ path('app_instrument_ajouter') }}">Ajouter un instrument</a>
+            <a href="{{ path('app_instrument_ajouter') }}" class="btn">Ajouter un instrument</a>
         </div>
     {% endif %}
 </div>
