@@ -92,6 +92,8 @@ class InterventionController extends AbstractController
     public function modifierIntervention(ManagerRegistry $doctrine, $id, Request $request){
 
        $intervention = $doctrine->getRepository(Intervention::class)->find($id);
+       $instrument = $intervention->getInstrument();
+
     
        if (!$intervention) {
            throw $this->createNotFoundException('Aucune intervention trouvé avec le numéro '.$id);
@@ -102,15 +104,27 @@ class InterventionController extends AbstractController
                $form->handleRequest($request);
     
                if ($form->isSubmitted() && $form->isValid()) {
-    
                     $intervention = $form->getData();
                     $entityManager = $doctrine->getManager();
                     $entityManager->persist($intervention);
                     $entityManager->flush();
-                    return $this->render('intervention/consulter.html.twig', ['intervention' => $intervention,]);
+
+                    // Vérification et formatage de la date d'achat
+                    $formattedDateAchat = null;
+                    if ($instrument->getDateAchat() !== null) {
+                    $formattedDateAchat = $instrument->getDateAchat()->format('d/m/Y'); // Formater la date au format 'YYYY-MM-DD'
+                    } else {
+                    $formattedDateAchat = "Date non définie"; // Si la date n'est pas définie
+                    }
+                    // parametres a supr
+                    return $this->render('instrument/consulter.html.twig', [
+                        'instrument' => $instrument,
+                        'formattedDateAchat' => $formattedDateAchat,
+                        'intervention' => $intervention,
+                    ]);
               }
               else{
-                   return $this->render('intervention/ajouter.html.twig', array('form' => $form->createView(),));
+                    return $this->render('intervention/ajouter.html.twig', array('form' => $form->createView(),));
               }
            }
     }
@@ -120,7 +134,7 @@ class InterventionController extends AbstractController
 
     
 
-     #[Route('/intervention/supprimer/{id}', name: 'app_intervention_supprimer')]
+     #[Route('/intervention/supprimer/{id}', name: 'app_intervention_instrument_supprimer')]
      public function supprimerIntervention(ManagerRegistry $doctrine, int $id): Response
     {
         $intervention = $doctrine->getRepository(Intervention::class)->find($id);
@@ -133,31 +147,8 @@ class InterventionController extends AbstractController
         $entityManager->remove($intervention); 
         $entityManager->flush();
 
-        return $this->redirectToRoute('app_intervention_lister');
+        return $this->render('intervention/consulter.html.twig', ['intervention' => $intervention,]);
     }
-
-     #[Route('/intervention/ajouter', name: 'app_intervention_ajouter')]
-
-     public function ajouterIntervention(ManagerRegistry $doctrine,Request $request){
-         $intervention = new intervention();
-         $form = $this->createForm(InterventionType::class, $intervention);
-         $form->handleRequest($request);
-     
-         if ($form->isSubmitted() && $form->isValid()) {
-     
-                 $intervention = $form->getData();
-     
-                 $entityManager = $doctrine->getManager();
-                 $entityManager->persist($intervention);
-                 $entityManager->flush();
-     
-             return $this->render('intervention/consulter.html.twig', ['intervention' => $intervention,]);
-         }
-         else
-             {
-                 return $this->render('intervention/ajouter.html.twig', array('form' => $form->createView(),));
-         }
-     }
 
     
 
