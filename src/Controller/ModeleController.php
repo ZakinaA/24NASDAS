@@ -25,13 +25,22 @@ class ModeleController extends AbstractController
     #[Route('/modele/lister', name: 'app_modele_lister')]
     public function listerModele(ManagerRegistry $doctrine){
 
+        $user = $this->getUser();
+
+        // Vérifier si l'utilisateur a un responsable associé
+        $responsable = $user->getResponsable();
+
         $repository = $doctrine->getRepository(Modele::class);
 
         $modele= $repository->findAll();
         return $this->render('modele/lister.html.twig', [
-            'pModele' => $modele,]);	
+            'pModele' => $modele,
+            'responsable' => $responsable, 
+        ]);	
             
     }
+
+
 
     /*
     #[Route('/marque/consulter/{id}', name: 'app_marque_consulter')]

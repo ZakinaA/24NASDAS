@@ -57,7 +57,6 @@ class EleveController extends AbstractController
         ]);
     }
 
-
     public function consulterEleve(ManagerRegistry $doctrine, Request $request, int $id): Response
     {
         // Récupérer l'élève par son ID

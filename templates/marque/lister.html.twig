@@ -1,52 +1,50 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Emusic - MARQUES{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-		
-		<h1>LISTE DES MARQUES</h1></br>
-		<table>
-		{% for i in pMarque %}
-		<tr>
-			<td>{{ i.libelle }}</td>
-			<td>
-				<a href="{{ path('app_marque_supprimer', {'id': i.id}) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette marque ?');">
-					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="black" viewBox="0 0 24 24" stroke-width="2" class="icon icon-tabler icon-tabler-trash">
-						<path stroke-linecap="round" stroke-linejoin="round" d="M3 6h18M9 6V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M10 11v6M14 11v6M5 6l1 14h12l1-14"></path>
-					</svg>
-				</a>
-        	</td>
-			<td>
-				<a href="{{ path('app_marque_modifier', {'id': i.id}) }}">
-					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="black" viewBox="0 0 24 24" stroke-width="2" class="icon icon-tabler icon-tabler-pencil">
-						<path stroke-linecap="round" stroke-linejoin="round" d="M13 3l8 8-10 10H3v-8L13 3z"></path>
-					</svg>
-				</a>
-			</td>
-	{% else %}
-		<tr>
-		<td>Aucune marque n'a été trouvé.</td>
-		</tr>
-	{% endfor %}
-</table>
-	<div class="bouton">
-    <a href="ajouter" style="
-        display: inline-block;
-        background-color: black;
-        color: white;
-        padding: 10px 10px;
-        text-decoration: none;
-        border-radius: 5px;
-        font-size: 16px;
-        text-align: center;
-        cursor: pointer;" >
-        Ajouter une marque
-    </a>
-</div>
-    </body>
-</html>
+{% extends 'accueil/accueil_admin.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+{% endblock %}
+
+{% block title %}Emusic - MARQUES{% endblock %}
+
+{% block body %}
+    <h1>LISTE DES MARQUES</h1></br>
+    <table>
+        {% for i in pMarque %}
+        <tr>
+            <td>{{ i.libelle }}</td>
+            <td>
+                <a href="{{ path('app_marque_supprimer', {'id': i.id}) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette marque ?');">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="white" viewBox="0 0 24 24" stroke-width="2" class="icon icon-tabler icon-tabler-trash">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 6h18M9 6V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M10 11v6M14 11v6M5 6l1 14h12l1-14"></path>
+                    </svg>
+                </a>
+            </td>
+            <td>
+                <a href="{{ path('app_marque_modifier', {'id': i.id}) }}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="white" viewBox="0 0 24 24" stroke-width="2" class="icon icon-tabler icon-tabler-pencil">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13 3l8 8-10 10H3v-8L13 3z"></path>
+                    </svg>
+                </a>
+            </td>
+        {% else %}
+        <tr>
+            <td>Aucune marque n'a été trouvé.</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <div class="bouton">
+        <a href="ajouter" style="
+            display: inline-block;
+            background-color: black;
+            color: white;
+            padding: 10px 10px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+            text-align: center;
+            cursor: pointer;" >
+            Ajouter une marque
+        </a>
+    </div>
+{% endblock %}
