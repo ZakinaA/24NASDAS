@@ -108,6 +108,7 @@ class EleveController extends AbstractController
             'eleve' => $eleve,
             'coursDisponibles' => $coursDisponibles, // Passer la variable des cours disponibles
             'coursInscrits' => $coursInscrits, // Passer les cours auxquels l'élève est inscrit
+            'inscriptions' => $inscriptions
         ]);
     }
 

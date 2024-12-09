@@ -85,4 +85,20 @@ class InscriptionController extends AbstractController
         ]);
     }
 
+    #[Route('/inscription/supprimer/{id}', name: 'app_inscription_supprimer')]
+    public function supprimerInscription(ManagerRegistry $doctrine, int $id): Response
+    {
+        $inscription = $doctrine->getRepository(Inscription::class)->find($id);
+
+        if (!$inscription) {
+            throw $this->createNotFoundException('Aucun inscription trouvé avec l\'ID '.$id);
+        }
+
+        $entityManager = $doctrine->getManager();
+        $entityManager->remove($inscription); 
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_eleve_lister');
+    }
+
 }
