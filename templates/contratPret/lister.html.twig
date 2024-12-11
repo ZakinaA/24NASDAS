@@ -1,75 +1,58 @@
-<!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}{% endblock %}
     </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-		
-		LISTE DES CONTRATS</br>
-		<table>
-
-		<tr>
-		<td>Id</td>
-		<td>Description</td>
-		<td>Prenom</td>
-		<td>Nom</td>
-		<td>Type d'instrument</td>
-		<td>Numéro de série</td>
-		<td>Prix(en euro)</td>
-		<td>Quotite(en euro)</td>
-		</tr>
-		{% for i in pContratsPret %}
-		
-		<tr>
-			<td><a href="{{ path('app_contratPret_consulter', { 'id': i.id }) }}">{{ i.id }}</a></td>
-			<td>{{ i.description }}</td>
-			<td>{{ i.eleve.prenom}}</td>
-			<td>{{ i.eleve.nom}}</td>
-			<td>{{ i.instrument.TypeInstrument.libelle}}</td>
-			<td>{{ i.instrument.numSerie}}</td>
-			<td>{{ i.prix}}</td>
-			<td>{{ i.quotite}}</td>
-			<td>
-				<a href="{{ path('app_contratPret_supprimer', { 'id': i.id }) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce contrat ?');">
-					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="black" viewBox="0 0 24 24" stroke-width="2" class="icon icon-tabler icon-tabler-trash">
-						<path stroke-linecap="round" stroke-linejoin="round" d="M3 6h18M9 6V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M10 11v6M14 11v6M5 6l1 14h12l1-14"></path>
-					</svg>
-				</a>
-        	</td>
-			<td>
-				<a href="{{ path('app_contratPret_modifier', { 'id': i.id }) }}">
-					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="black" viewBox="0 0 24 24" stroke-width="2" class="icon icon-tabler icon-tabler-pencil">
-						<path stroke-linecap="round" stroke-linejoin="round" d="M13 3l8 8-10 10H3v-8L13 3z"></path>
-					</svg>
-				</a>
-			</td>
-		</tr>
-	{% else %}
-		<tr>
-		<td>Aucun contrat n'a été trouvé.</td>
-		</tr>
-	{% endfor %}
-</table>
-	<div class="bouton">
-    <a href="{{ path('app_contratPret_ajouter') }}" style="
-        display: inline-block;
-        background-color: black;
-        color: white;
-        padding: 10px 10px;
-        text-decoration: none;
-        border-radius: 5px;
-        font-size: 16px;
-        text-align: center;
-        cursor: pointer;" >
-        Ajouter un Contrat
-    </a>
-</div>
-
-	
-	 
-    </body>
+    <div class="content">
+    	<table class="table">
+        	<thead class="table-header">
+				<tr>
+					<th class="table-header-cell">Id</th>
+					<th class="table-header-cell">Description</th>
+					<th class="table-header-cell">Prenom</th>
+					<th class="table-header-cell">Nom</th>
+					<th class="table-header-cell">Type d'instrument</th>
+					<th class="table-header-cell">Numéro de série</th>
+					<th class="table-header-cell">Prix(en euro)</th>
+					<th class="table-header-cell">Quotite(en euro)</th>
+				</tr>
+        	</thead>
+			<tbody class="color-table">
+				{% for i in pContratsPret %}
+					<tr class="table-row">
+						<td class="table-cell"><a href="{{ path('app_contratPret_consulter', { 'id': i.id }) }}">{{ i.id }}</a></td>
+						<td class="table-cell">{{ i.description }}</td>
+						<td class="table-cell">{{ i.eleve.prenom}}</td>
+						<td class="table-cell">{{ i.eleve.nom}}</td>
+						<td class="table-cell">{{ i.instrument.TypeInstrument.libelle}}</td>
+						<td class="table-cell">{{ i.instrument.numSerie}}</td>
+						<td class="table-cell">{{ i.prix}}</td>
+						<td class="table-cell">{{ i.quotite}}</td>
+						<td class="actions-menu">
+							<a href="{{ path('app_contratPret_supprimer', { 'id': i.id }) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce contrat ?');">
+								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="black" viewBox="0 0 24 24" stroke-width="2" class="icon icon-tabler icon-tabler-trash">
+									<path stroke-linecap="round" stroke-linejoin="round" d="M3 6h18M9 6V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M10 11v6M14 11v6M5 6l1 14h12l1-14"></path>
+								</svg>
+							</a>
+        				</td>
+						<td class="actions-menu">
+							<a href="{{ path('app_contratPret_modifier', { 'id': i.id }) }}">
+								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="black" viewBox="0 0 24 24" stroke-width="2" class="icon icon-tabler icon-tabler-pencil">
+									<path stroke-linecap="round" stroke-linejoin="round" d="M13 3l8 8-10 10H3v-8L13 3z"></path>
+								</svg>
+							</a>
+						</td>
+					</tr>
+				{% else %}
+					<tr class="table-row">
+						<td class="table-cell" colspan="8">Aucun contrat n'a été trouvé.</td>
+					</tr>
+				{% endfor %}
+        	</tbody>
+    	</table>
+		<div class="bouton">
+            <a href="{{ path('app_instrument_ajouter') }}" class="btn">Ajouter un contrat</a>
+        </div>
+	</div>
 </html>
