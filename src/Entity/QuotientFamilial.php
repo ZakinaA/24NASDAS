@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\TypeCoursRepository;
+use App\Repository\QuotientFamilialRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: TypeCoursRepository::class)]
-class TypeCours
+#[ORM\Entity(repositoryClass: QuotientFamilialRepository::class)]
+class QuotientFamilial
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -18,21 +18,24 @@ class TypeCours
     #[ORM\Column(length: 255)]
     private ?string $libelle = null;
 
+    #[ORM\Column]
+    private ?int $quotientMini = null;
+
     /**
-     * @var Collection<int, Cours>
+     * @var Collection<int, Responsable>
      */
-    #[ORM\OneToMany(targetEntity: Cours::class, mappedBy: 'typeCours')]
-    private Collection $cours;
+    #[ORM\OneToMany(targetEntity: Responsable::class, mappedBy: 'quotientFamilial')]
+    private Collection $responsables;
 
     /**
      * @var Collection<int, Tarif>
      */
-    #[ORM\OneToMany(targetEntity: Tarif::class, mappedBy: 'typeCours')]
+    #[ORM\OneToMany(targetEntity: Tarif::class, mappedBy: 'quotientFamilial')]
     private Collection $tarifs;
 
     public function __construct()
     {
-        $this->cours = new ArrayCollection();
+        $this->responsables = new ArrayCollection();
         $this->tarifs = new ArrayCollection();
     }
 
@@ -53,30 +56,42 @@ class TypeCours
         return $this;
     }
 
-    /**
-     * @return Collection<int, Cours>
-     */
-    public function getCours(): Collection
+    public function getQuotientMini(): ?int
     {
-        return $this->cours;
+        return $this->quotientMini;
     }
 
-    public function addCour(Cours $cour): static
+    public function setQuotientMini(int $quotientMini): static
     {
-        if (!$this->cours->contains($cour)) {
-            $this->cours->add($cour);
-            $cour->setTypeCours($this);
+        $this->quotientMini = $quotientMini;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Responsable>
+     */
+    public function getResponsables(): Collection
+    {
+        return $this->responsables;
+    }
+
+    public function addResponsable(Responsable $responsable): static
+    {
+        if (!$this->responsables->contains($responsable)) {
+            $this->responsables->add($responsable);
+            $responsable->setQuotientFamilial($this);
         }
 
         return $this;
     }
 
-    public function removeCour(Cours $cour): static
+    public function removeResponsable(Responsable $responsable): static
     {
-        if ($this->cours->removeElement($cour)) {
+        if ($this->responsables->removeElement($responsable)) {
             // set the owning side to null (unless already changed)
-            if ($cour->getTypeCours() === $this) {
-                $cour->setTypeCours(null);
+            if ($responsable->getQuotientFamilial() === $this) {
+                $responsable->setQuotientFamilial(null);
             }
         }
 
@@ -95,7 +110,7 @@ class TypeCours
     {
         if (!$this->tarifs->contains($tarif)) {
             $this->tarifs->add($tarif);
-            $tarif->setTypeCours($this);
+            $tarif->setQuotientFamilial($this);
         }
 
         return $this;
@@ -105,8 +120,8 @@ class TypeCours
     {
         if ($this->tarifs->removeElement($tarif)) {
             // set the owning side to null (unless already changed)
-            if ($tarif->getTypeCours() === $this) {
-                $tarif->setTypeCours(null);
+            if ($tarif->getQuotientFamilial() === $this) {
+                $tarif->setQuotientFamilial(null);
             }
         }
 

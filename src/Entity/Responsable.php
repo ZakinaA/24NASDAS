@@ -45,6 +45,9 @@ class Responsable
     #[ORM\OneToOne(inversedBy: 'responsable', cascade: ['persist', 'remove'])]
     private ?User $compte = null;
 
+    #[ORM\ManyToOne(inversedBy: 'responsables')]
+    private ?QuotientFamilial $quotientFamilial = null;
+
     public function __construct()
     {
         $this->eleves = new ArrayCollection();
@@ -177,6 +180,18 @@ class Responsable
     public function setCompte(?User $compte): self
     {
         $this->compte = $compte;
+
+        return $this;
+    }
+
+    public function getQuotientFamilial(): ?QuotientFamilial
+    {
+        return $this->quotientFamilial;
+    }
+
+    public function setQuotientFamilial(?QuotientFamilial $quotientFamilial): static
+    {
+        $this->quotientFamilial = $quotientFamilial;
 
         return $this;
     }
