@@ -60,6 +60,11 @@ class EleveController extends AbstractController
     public function consulterEleve(ManagerRegistry $doctrine, Request $request, int $id): Response
     {
         // Récupérer l'élève par son ID
+        $user = $this->getUser();
+
+        // Vérifier si l'utilisateur a un responsable associé
+        $responsable = $user->getResponsable();
+
         $eleve = $doctrine->getRepository(Eleve::class)->find($id);
 
         if (!$eleve) {
@@ -107,7 +112,8 @@ class EleveController extends AbstractController
             'eleve' => $eleve,
             'coursDisponibles' => $coursDisponibles, // Passer la variable des cours disponibles
             'coursInscrits' => $coursInscrits, // Passer les cours auxquels l'élève est inscrit
-            'inscriptions' => $inscriptions
+            'inscriptions' => $inscriptions,
+            'responsable' => $responsable
         ]);
     }
 

@@ -1,23 +1,46 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        
-    </head>
-    <body>       
-		<h5>PAGE DE CONSULTATION D'UN COURS</h5>
+{% extends 'accueil/accueil_uti.html.twig' %}
 
-    <table >
-        <tr><td>Id : </td><td>{{cours.id}} </td></tr>
-        <tr><td>Libelle : </td><td>{{cours.libelle}}</td>
-        <tr><td>Age Minimum : </td><td>{{ cours.ageMini }}</td></tr></tr>
-        <tr><td>Heure de début : </td><td>{{ cours.heureDebut|date('H:i') }}</td></tr></tr>
-        <tr><td>Heure de fin : </td><td>{{ cours.heureFin|date('H:i') }}</td></tr></tr>
-        <tr><td>Nom du professeur :</td><td>{{ cours.professeur.nom }}</td></tr></tr>
-        <tr><td>Type de cours :</td><td>{{ cours.typeCours.libelle }}</td></tr></tr>
-        <tr><td>Type d'instrument :</td><td>{{ cours.typeInstrument.libelle }}</td></tr></tr>
-        <tr><td>Jours :</td><td>{{ cours.jour.libelle }}</td></tr></tr>
+{% block title %}Consultation d'un Cours{% endblock %}
+
+{% block body %}
+    <h5>PAGE DE CONSULTATION D'UN COURS</h5>
+
+    <table>
+        <tr>
+            <td><strong>Id :</strong></td>
+            <td>{{ cours.id }}</td>
+        </tr>
+        <tr>
+            <td><strong>Libelle :</strong></td>
+            <td>{{ cours.libelle }}</td>
+        </tr>
+        <tr>
+            <td><strong>Age Minimum :</strong></td>
+            <td>{{ cours.ageMini }}</td>
+        </tr>
+        <tr>
+            <td><strong>Heure de début :</strong></td>
+            <td>{{ cours.heureDebut|date('H:i') }}</td>
+        </tr>
+        <tr>
+            <td><strong>Heure de fin :</strong></td>
+            <td>{{ cours.heureFin|date('H:i') }}</td>
+        </tr>
+        <tr>
+            <td><strong>Nom du professeur :</strong></td>
+            <td>{{ cours.professeur.nom }}</td>
+        </tr>
+        <tr>
+            <td><strong>Type de cours :</strong></td>
+            <td>{{ cours.typeCours.libelle }}</td>
+        </tr>
+        <tr>
+            <td><strong>Type d'instrument :</strong></td>
+            <td>{{ cours.typeInstrument.libelle }}</td>
+        </tr>
+        <tr>
+            <td><strong>Jours :</strong></td>
+            <td>{{ cours.jour.libelle }}</td>
+        </tr>
     </table>
-	
-	 
-    </body>
-</html>
+{% endblock %}
