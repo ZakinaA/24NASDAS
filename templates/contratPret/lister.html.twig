@@ -22,11 +22,11 @@
 				{% for i in pContratsPret %}
 					<tr class="table-row">
 						<td class="table-cell"><a href="{{ path('app_contratPret_consulter', { 'id': i.id }) }}">{{ i.id }}</a></td>
-						<td class="table-cell">{{ i.description }}</td>
 						<td class="table-cell">{{ i.eleve.prenom}}</td>
 						<td class="table-cell">{{ i.eleve.nom}}</td>
 						<td class="table-cell">{{ i.instrument.TypeInstrument.libelle}}</td>
 						<td class="table-cell">{{ i.instrument.numSerie}}</td>
+						<td class="table-cell">{{ i.description }}</td>
 						<td class="table-cell">{{ i.prix}}</td>
 						<td class="table-cell">{{ i.quotite}}</td>
 						<td class="actions-menu">
