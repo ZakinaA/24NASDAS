@@ -43,6 +43,11 @@ class InstrumentController extends AbstractController
 
     public function consulterInstrument(ManagerRegistry $doctrine, int $id)
     {
+        $user = $this->getUser();
+
+        // Vérifier si l'utilisateur a un responsable associé
+        $responsable = $user->getResponsable();
+        
         // Récupérer l'instrument par son ID
         $instrument = $doctrine->getRepository(Instrument::class)->find($id);
 
@@ -67,6 +72,7 @@ class InstrumentController extends AbstractController
             'instrument' => $instrument,
             'formattedDateAchat' => $formattedDateAchat,
             'interventions' => $interventions,
+            'responsable' => $responsable
         ]);
     }
 
