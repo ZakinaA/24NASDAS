@@ -2,15 +2,15 @@
 
 namespace App\Form;
 
+use App\Entity\QuotientFamilial;
 use App\Entity\Responsable;
 use App\Entity\User;
-use App\Entity\QuotientFamilial;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ResponsableType extends AbstractType
+class ResponsableModifierType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -27,6 +27,10 @@ class ResponsableType extends AbstractType
                 'choice_label' => 'id',
             ])
         ;
+    }
+    
+    public function getParent(){
+        return ResponsableType::class;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
