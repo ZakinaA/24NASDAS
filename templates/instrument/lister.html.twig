@@ -1,51 +1,53 @@
 {% extends 'accueil/accueil_uti.html.twig' %}
+
 {% block body %}
 <div class="content">
     <table class="table">
-        <thead class="table-header">
+        <thead>
             <tr>
-                <th class="table-header-cell">Type d'Instrument</th>
-                <th class="table-header-cell">Numéro de Série</th>
-                <th class="table-header-cell">Date d'Achat</th>
-                <th class="table-header-cell">Prix d'Achat</th>
-                <th class="table-header-cell">Modèle</th>
-                <th class="table-header-cell">Marque</th>
+                <th>Type d'Instrument</th>
+                <th>Numéro de Série</th>
+                <th>Date d'Achat</th>
+                <th>Prix d'Achat</th>
+                <th>Modèle</th>
+                <th>Marque</th>
                 {% if is_granted('ROLE_ADMIN') %}
-                    <th class="table-header-cell">Actions</th>
+                    <th>Actions</th>
                 {% endif %}
             </tr>
         </thead>
-        <tbody class="color-table">
+        <tbody>
             {% for i in pInstruments %}
-                <tr class="table-row">
-                    <td class="table-cell">{{ i.TypeInstrument.libelle }}</td>
-                    <td class="table-cell">
-                        <!-- Lien autour du numéro de série -->
-                        <a href="{{ path('app_instrument_consulter', { 'id': i.id }) }}" class="instrument-link">
-                            {{ i.NumSerie }}
-                        </a>
+                <tr class="row">
+                    <td>{{ i.TypeInstrument.libelle }}</td>
+                    <td>
+                        <span class="block">
+                            <a href="{{ path('app_instrument_consulter', { 'id': i.id }) }}" class="instrument-link">
+                                {{ i.NumSerie }}
+                            </a>
+                        </span>
                     </td>
-                    <td class="table-cell">{{ i.dateAchat ? i.dateAchat|date('d/m/Y') : 'Non renseignée' }}</td>
-                    <td class="table-cell">{{ i.prixAchat ? i.prixAchat|number_format(2, '.', ',') : 'Non renseigné' }}</td>
-                    <td class="table-cell">{{ i.modele.nom ? i.modele.nom : 'Non renseigné' }}</td>
-                    <td class="table-cell">{{ i.marque.libelle ? i.marque.libelle : 'Non renseignée' }}</td>
+                    <td><span class="bold">{{ i.dateAchat ? i.dateAchat|date('d/m/Y') : 'Non renseignée' }}</span></td>
+                    <td><span class="green">{{ i.prixAchat ? i.prixAchat|number_format(2, '.', ',') : 'Non renseigné' }}</span></td>
+                    <td><span class="underline">{{ i.modele.nom ? i.modele.nom : 'Non renseigné' }}</span></td>
+                    <td>{{ i.marque.libelle ? i.marque.libelle : 'Non renseignée' }}</td>
                     {% if is_granted('ROLE_ADMIN') %}
-                        <td class="table-cell">
-                            <div class="actions-menu">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="white" viewBox="0 0 24 24" stroke-width="2" class="icon">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01"></path>
-                                </svg>
-                                <div class="actions-dropdown">
-                                    <a href="{{ path('app_instrument_modifier', { 'id': i.id }) }}">Modifier</a>
-                                    <a href="{{ path('app_instrument_supprimer', { 'id': i.id }) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet instrument ?');">Supprimer</a>
+                        <td>
+                            <div class="table-data-feature">
+                                <div class="item">
+                                    <a href="{{ path('app_instrument_modifier', { 'id': i.id }) }}" class="zmdi zmdi-edit"></a>
+                                </div>
+                                <div class="item">
+                                    <a href="{{ path('app_instrument_supprimer', { 'id': i.id }) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet instrument ?');" class="zmdi zmdi-delete"></a>
                                 </div>
                             </div>
                         </td>
                     {% endif %}
                 </tr>
+                <tr class="spacer"></tr>
             {% else %}
-                <tr class="table-row">
-                    <td class="table-cell" colspan="8">Aucun instrument n'a été trouvé.</td>
+                <tr>
+                    <td colspan="7">Aucun instrument n'a été trouvé.</td>
                 </tr>
             {% endfor %}
         </tbody>
