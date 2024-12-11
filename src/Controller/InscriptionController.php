@@ -85,20 +85,42 @@ class InscriptionController extends AbstractController
         ]);
     }
 
-    #[Route('/inscription/supprimer/{id}', name: 'app_inscription_supprimer')]
-    public function supprimerInscription(ManagerRegistry $doctrine, int $id): Response
-    {
-        $inscription = $doctrine->getRepository(Inscription::class)->find($id);
-
-        if (!$inscription) {
-            throw $this->createNotFoundException('Aucun inscription trouvé avec l\'ID '.$id);
+    #[Route('/desinscrire/{eleveId}/{coursId}', name: 'app_desinscription', methods: ['POST', 'GET'])]
+    public function desinscrireEleve(
+        int $eleveId,
+        int $coursId,
+        ManagerRegistry $doctrine
+    ): Response {
+        $entityManager = $doctrine->getManager();
+        
+        // Récupérer l'élève par son ID
+        $eleve = $entityManager->getRepository(Eleve::class)->find($eleveId);
+        if (!$eleve) {
+            throw $this->createNotFoundException('Élève introuvable');
         }
 
-        $entityManager = $doctrine->getManager();
-        $entityManager->remove($inscription); 
-        $entityManager->flush();
+        // Récupérer le cours par son ID
+        $cours = $entityManager->getRepository(Cours::class)->find($coursId);
+        if (!$cours) {
+            throw $this->createNotFoundException('Cours introuvable');
+        }
 
-        return $this->redirectToRoute('app_eleve_lister');
+        // Récupérer l'inscription de l'élève au cours spécifié
+        $inscription = $entityManager->getRepository(Inscription::class)
+            ->findOneBy(['eleve' => $eleve, 'cours' => $cours]);
+
+        if (!$inscription) {
+            $this->addFlash('error', 'L\'élève n\'est pas inscrit à ce cours.');
+        } else {
+            // Si l'inscription existe, la supprimer
+            $entityManager->remove($inscription);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'L\'élève a été désinscrit du cours.');
+        }
+
+        // Rediriger vers la consultation de l'élève
+        return $this->redirectToRoute('app_eleve_consulter', ['id' => $eleveId]);
     }
 
 }
