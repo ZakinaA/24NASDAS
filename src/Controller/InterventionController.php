@@ -134,8 +134,8 @@ class InterventionController extends AbstractController
 
     
 
-     #[Route('/intervention/supprimer/{id}', name: 'app_intervention_instrument_supprimer')]
-     public function supprimerIntervention(ManagerRegistry $doctrine, int $id): Response
+    #[Route('/intervention/supprimer/{id}', name: 'app_intervention_instrument_supprimer')]
+    public function supprimerIntervention(ManagerRegistry $doctrine, int $id): Response
     {
         $intervention = $doctrine->getRepository(Intervention::class)->find($id);
 

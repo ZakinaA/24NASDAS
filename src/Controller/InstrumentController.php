@@ -65,8 +65,6 @@ class InstrumentController extends AbstractController
         // Passer l'instrument et la date formatée à la vue
         return $this->render('instrument/consulter.html.twig', [
             'instrument' => $instrument,
-            'formattedDateAchat' => $formattedDateAchat,
-            'interventions' => $interventions,
         ]);
     }
 
