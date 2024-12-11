@@ -26,7 +26,7 @@ class ContratPretType extends AbstractType
             ->add('Quotite', MoneyType::class,)
 
             ->add('Eleve', EntityType::class, array('class' => 'App\Entity\Eleve','choice_label' => 'prenom' ))
-            ->add('Instrument', EntityType::class, array('class' => 'App\Entity\Instrument','choice_label' => 'numSerie' ))
+            ->add('Instrument', EntityType::class, array('class' => 'App\Entity\Instrument','choice_label' => 'numSerie'  /*'class' => 'App\Entity\TypeInstrument','choice_label' => 'libelle*/ ))
 
             ->add('enregistrer', SubmitType::class, [
                 'label' => 'Nouveaux Contrat de pret'

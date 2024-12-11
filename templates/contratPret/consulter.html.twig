@@ -8,14 +8,74 @@
 
     <table >
         <tr><td>Id : </td><td>{{contratPret.id}} </td></tr>
+        <tr><td>Nom : </td><td>{{contratPret.eleve.nom}} </td></tr>
+        <tr><td>prenom : </td><td>{{contratPret.eleve.prenom}} </td></tr>
         <tr><td>Date d'emprunt : </td> <td>{{ contratPret.dateDebut|date('d-m-Y') }}</td>
         <tr><td>Date de retour prévus : </td><td>{{ contratPret.dateFin|date('d-m-Y') }}</td>
         <tr><td>Description : </td><td>{{contratPret.description}}</td>
         <tr><td>prix : </td><td>{{contratPret.prix}}</td>
         <tr><td>quotité : </td><td>{{contratPret.quotite}}</td>
-
     </table>
-	<div class="bouton">
+
+
+    <div>
+        <h4>Instrument Concerné</h4>
+    <tbody>
+        <div class="container">
+            <div class="details">
+
+                <table>
+                    <tr>
+                        <td><strong>Numéro de série :</strong></td>
+    	        		<td class="table-cell">{{ contratPret.instrument.numSerie}}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Type d'instrument :</strong></td>
+                        <td class="table-cell">{{ contratPret.instrument.TypeInstrument.libelle}}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Modéle :</strong></td>
+                        <td class="table-cell">{{ contratPret.instrument.modele.nom}}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Couleur :</strong></td>
+                        <td class="table-cell">{{ contratPret.instrument.couleur.libelle}}</td>
+                    </tr>
+		        	<tr>
+                        <td><strong>Date d'achat :</strong></td>
+    	        		<td class="table-cell">{{ contratPret.instrument.dateAchat|date('d-m-Y') }}</td>
+                    </tr>
+                    <tr>
+    	        		<td><strong>Prix d'achat :</strong></td>
+    	        		<td class="table-cell">{{ contratPret.instrument.prixAchat}} €</td>
+                    </tr>
+                    
+                </table>
+                <div class="image-container">
+                {% if contratPret.instrument.cheminImage %}
+                    <img src="{{ asset('images/' ~ contratPret.instrument.cheminImage) }}" alt="Image de l'instrument">
+                {% else %}
+                    <p>Aucune image disponible</p>
+                {% endif %}
+            </div>
+        </div>
+        <div class="bouton">
+    <a href="{{ path('app_instrument_consulter', { 'id': contratPret.instrument.id }) }}" style="
+        display: inline-block;
+        background-color: black;
+        color: white;
+        padding: 10px 10px;
+        text-decoration: none;
+        border-radius: 5px;
+        font-size: 16px;
+        text-align: center;
+        cursor: pointer;" >
+       Consulter l'instrument
+    </a>
+    </div>
+    </tbody>
+
+    <div class="bouton">
     <a href="{{ path('app_contratPret_lister') }}" style="
         display: inline-block;
         background-color: black;
@@ -28,6 +88,5 @@
         cursor: pointer;" >
         Retour a la liste
     </a>
-</div>
-    </body>
+    </div>
 </html>
