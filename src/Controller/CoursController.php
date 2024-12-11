@@ -66,6 +66,10 @@ class CoursController extends AbstractController
 
     public function consulterCours(ManagerRegistry $doctrine, int $id){
 
+        $user = $this->getUser();
+
+        $responsable = $user->getResponsable();
+
 		$cours= $doctrine->getRepository(Cours::class)->find($id);
 
 		if (!$cours) {
@@ -75,7 +79,8 @@ class CoursController extends AbstractController
 		}
 
 		return $this->render('cours/consulter.html.twig', [
-            'cours' => $cours,]);
+            'cours' => $cours,
+            'responsable' => $responsable]);
 	}
 
     public function ajouterCours(ManagerRegistry $doctrine,Request $request){

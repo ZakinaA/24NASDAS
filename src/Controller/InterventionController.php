@@ -70,7 +70,13 @@ class InterventionController extends AbstractController
 
         $form = $this->createForm(InterventionInstrumentType::class, $intervention);
         $form->handleRequest($request);
-    
+        // Vérification et formatage de la date d'achat
+        $formattedDateAchat = null;
+        if ($instrument->getDateAchat() !== null) {
+        $formattedDateAchat = $instrument->getDateAchat()->format('d/m/Y'); // Formater la date au format 'YYYY-MM-DD'
+        } else {
+        $formattedDateAchat = "Date non définie"; // Si la date n'est pas définie
+        }
         if ($form->isSubmitted() && $form->isValid()) {
     
                 $intervention = $form->getData();
@@ -79,8 +85,11 @@ class InterventionController extends AbstractController
                 $entityManager->persist($intervention);
                 $entityManager->flush();
     
-            return $this->render('intervention/consulter.html.twig', ['intervention' => $intervention,]);
-        }
+                return $this->render('instrument/consulter.html.twig', [
+                    'instrument' => $instrument,
+                    'formattedDateAchat' => $formattedDateAchat,
+                    'intervention' => $intervention,
+                ]);        }
         else
             {
                 return $this->render('intervention/ajouter.html.twig', array('form' => $form->createView(),));
@@ -138,6 +147,7 @@ class InterventionController extends AbstractController
     public function supprimerIntervention(ManagerRegistry $doctrine, int $id): Response
     {
         $intervention = $doctrine->getRepository(Intervention::class)->find($id);
+        $instrument = $intervention->getInstrument();
 
         if (!$intervention) {
             throw $this->createNotFoundException('Aucune intervention trouvé avec l\'ID '.$id);
@@ -147,8 +157,19 @@ class InterventionController extends AbstractController
         $entityManager->remove($intervention); 
         $entityManager->flush();
 
-        return $this->render('intervention/consulter.html.twig', ['intervention' => $intervention,]);
-    }
+        // Vérification et formatage de la date d'achat
+        $formattedDateAchat = null;
+        if ($instrument->getDateAchat() !== null) {
+        $formattedDateAchat = $instrument->getDateAchat()->format('d/m/Y'); // Formater la date au format 'YYYY-MM-DD'
+        } else {
+        $formattedDateAchat = "Date non définie"; // Si la date n'est pas définie
+        }
+        // parametres a supr
+        return $this->render('instrument/consulter.html.twig', [
+        'instrument' => $instrument,
+        'formattedDateAchat' => $formattedDateAchat,
+        'intervention' => $intervention,
+    ]);    }
 
     
 

@@ -1,9 +1,7 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Consultation de l'élève</title>
-    </head>
-    <body>       
+{% extends 'accueil/accueil_uti.html.twig' %}
+
+{% block body %}
+    <div class="content">
         <h5>PAGE DE CONSULTATION D'UN ELEVE</h5>
 
         <table>
@@ -17,17 +15,17 @@
             <tr><td>Téléphone :</td><td>{{ eleve.tel }}</td></tr>
             <tr><td>Email :</td><td>{{ eleve.mail }}</td></tr>
             <tr><td>Responsable :</td>
-            <td>
-                {% if eleve.responsable is not null and eleve.responsable.nom is not empty and eleve.responsable.prenom is not empty %}
-                    {{ eleve.responsable.nom }} {{ eleve.responsable.prenom }}
-                {% else %}
-                    Aucun
-                {% endif %}
-            </td>
+                <td>
+                    {% if eleve.responsable is not null and eleve.responsable.nom is not empty and eleve.responsable.prenom is not empty %}
+                        {{ eleve.responsable.nom }} {{ eleve.responsable.prenom }}
+                    {% else %}
+                        Aucun
+                    {% endif %}
+                </td>
             </tr>
         </table>
 
-                <h5>COURS AUXQUELS CET ELEVE EST INSCRIT :</h5>
+        <h5>COURS AUXQUELS CET ELEVE EST INSCRIT :</h5>
         <table>
             <thead>
                 <tr>
@@ -37,20 +35,26 @@
                     <th></th>
                 </tr>
             </thead>
-        <tbody> 
-            {% for inscription in inscriptions %} 
-                <tr> 
-                    <td>{{ inscription.cours.libelle }}</td>
-                    <td>{{ inscription.cours.professeur.nom }}</td>
-                    <td>{{ inscription.cours.heureDebut|date('H:i') }} - {{ inscription.cours.heureFin|date('H:i') }}</td>
-                    <td> <a href="{{ path('app_inscription_supprimer', { 'id': inscription.id }) }}" onclick="return confirm('Êtes-vous sûr de vouloir vous désinscrire de ce cours ?');"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="black" viewBox="0 0 24 24" stroke-width="2" class="icon icon-tabler icon-tabler-trash"> <path stroke-linecap="round" stroke-linejoin="round" d="M3 6h18M9 6V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M10 11v6M14 11v6M5 6l1 14h12l1-14"></path> </svg> </a> </td>
-                </tr> 
-            {% else %}
-                <tr> 
-                <td colspan="3">Aucun cours inscrit</td>
-                </tr>
-            {% endfor %}
-        </tbody>
+            <tbody> 
+                {% for inscription in inscriptions %} 
+                    <tr> 
+                        <td>{{ inscription.cours.libelle }}</td>
+                        <td>{{ inscription.cours.professeur.nom }}</td>
+                        <td>{{ inscription.cours.heureDebut|date('H:i') }} - {{ inscription.cours.heureFin|date('H:i') }}</td>
+                        <td> 
+                            <a href="{{ path('app_inscription_supprimer', { 'id': inscription.id }) }}" onclick="return confirm('Êtes-vous sûr de vouloir vous désinscrire de ce cours ?');"> 
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="black" viewBox="0 0 24 24" stroke-width="2" class="icon icon-tabler icon-tabler-trash"> 
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 6h18M9 6V4a2 2 0 0 1 2-2h2a 2 2 0 0 1 2 2v2M10 11v6M14 11v6M5 6l1 14h12l1-14"></path> 
+                                </svg> 
+                            </a> 
+                        </td>
+                    </tr> 
+                {% else %}
+                    <tr> 
+                        <td colspan="3">Aucun cours inscrit</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
         </table>
         <br>
 
@@ -58,5 +62,5 @@
         <form action="{{ path('app_inscription', { 'eleveId': eleve.id }) }}" method="get">
             <button type="submit">S'inscrire à un ou plusieurs cours</button>
         </form>
-    </body>
-</html>
+    </div>
+{% endblock %}
