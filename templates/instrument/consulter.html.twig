@@ -89,7 +89,7 @@
             <table>
                 <tr>
                     <td><strong>Date d'achat :</strong></td>
-                    <td>{{ formattedDateAchat }}</td>
+                    <td>{{ instrument.dateAchat|date('d-M-y') }}</td>
                 </tr>
                 <tr>
                     <td><strong>Prix Achat :</strong></td>
@@ -234,10 +234,22 @@
                 {% else %}
                     <p>Aucune image disponible</p>
                 {% endif %}
-                        {% endfor %}
         </div>
 
         <div class="bouton">
+            <a href="{{ path('app_intervention_instrument_ajouter', { 'id': instrument.id }) }}" style="
+                display: inline-block;
+                background-color: black;
+                color: white;
+                padding: 10px 10px;
+                text-decoration: none;
+                border-radius: 5px;
+                font-size: 16px;
+                text-align: center;
+                cursor: pointer;" >
+                Ajouter une Intervention
+            </a>
+            <br>
             <a href="{{ path('app_accessoire_instrument_ajouter', { 'id': instrument.id }) }}" style="
                 display: inline-block;
                 background-color: black;

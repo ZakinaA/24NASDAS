@@ -30,6 +30,11 @@ class AccessoireController extends AbstractController
         // Récupérer l'instrument à partir de l'ID
         $instrument = $doctrine->getRepository(Instrument::class)->find($id);
 
+        $user = $this->getUser();
+
+        // Vérifier si l'utilisateur a un responsable associé
+        $responsable = $user->getResponsable();
+
         if (!$instrument) {
             throw $this->createNotFoundException('Instrument non trouvé.');
         }
@@ -55,6 +60,7 @@ class AccessoireController extends AbstractController
             // Rediriger ou afficher la vue avec l'accessoire
             return $this->render('instrument/consulter.html.twig', [
                 'instrument' => $instrument,
+                'responsable' => $responsable,
             ]);
         } else {
             // Rendu du formulaire si il n'est pas soumis ou valide
@@ -69,6 +75,11 @@ class AccessoireController extends AbstractController
 
        // Trouver l'accessoire par son ID
         $accessoire = $doctrine->getRepository(Accessoire::class)->find($id);
+
+        $user = $this->getUser();
+
+        // Vérifier si l'utilisateur a un responsable associé
+        $responsable = $user->getResponsable();
         
         // Vérifier que l'accessoire existe
         if (!$accessoire) {
@@ -100,6 +111,7 @@ class AccessoireController extends AbstractController
             // Retourner la vue en passant le premier instrument de la collection
             return $this->render('instrument/consulter.html.twig', [
                 'instrument' => $instrument,
+                'responsable' => $responsable,
             ]);
         } else {
             // Afficher le formulaire s'il n'est pas soumis ou valide
@@ -114,6 +126,11 @@ class AccessoireController extends AbstractController
     {
         // Trouver l'accessoire avec l'ID
         $accessoire = $doctrine->getRepository(Accessoire::class)->find($id);
+
+        $user = $this->getUser();
+
+        // Vérifier si l'utilisateur a un responsable associé
+        $responsable = $user->getResponsable();
 
         if (!$accessoire) {
             throw $this->createNotFoundException('Aucun accessoire trouvé avec l\'ID '.$id);
@@ -137,6 +154,6 @@ class AccessoireController extends AbstractController
         $entityManager->flush();
 
         // Retourner une réponse, avec l'instrument et sa date d'achat si nécessaire
-        return $this->render('instrument/consulter.html.twig', ['instrument' => $instrument]);
+        return $this->render('instrument/consulter.html.twig', ['instrument' => $instrument, 'responsable' => $responsable,]);
     }
 }

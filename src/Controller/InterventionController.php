@@ -61,6 +61,11 @@ class InterventionController extends AbstractController
     public function ajouterInterventionByInstrument(ManagerRegistry $doctrine,Request $request, $id){
         $instrument = $doctrine->getRepository(Instrument::class)->find($id);
 
+        $user = $this->getUser();
+
+        // Vérifier si l'utilisateur a un responsable associé
+        $responsable = $user->getResponsable();
+
         if (!$instrument) {
             throw $this->createNotFoundException('Instrument non trouvé.');
         }
@@ -70,13 +75,7 @@ class InterventionController extends AbstractController
 
         $form = $this->createForm(InterventionInstrumentType::class, $intervention);
         $form->handleRequest($request);
-        // Vérification et formatage de la date d'achat
-        $formattedDateAchat = null;
-        if ($instrument->getDateAchat() !== null) {
-        $formattedDateAchat = $instrument->getDateAchat()->format('d/m/Y'); // Formater la date au format 'YYYY-MM-DD'
-        } else {
-        $formattedDateAchat = "Date non définie"; // Si la date n'est pas définie
-        }
+    
         if ($form->isSubmitted() && $form->isValid()) {
     
                 $intervention = $form->getData();
@@ -85,11 +84,8 @@ class InterventionController extends AbstractController
                 $entityManager->persist($intervention);
                 $entityManager->flush();
     
-                return $this->render('instrument/consulter.html.twig', [
-                    'instrument' => $instrument,
-                    'formattedDateAchat' => $formattedDateAchat,
-                    'intervention' => $intervention,
-                ]);        }
+            return $this->render('instrument/consulter.html.twig', ['intervention' => $intervention,'responsable' => $responsable,'instrument' => $instrument]);
+        }
         else
             {
                 return $this->render('intervention/ajouter.html.twig', array('form' => $form->createView(),));
@@ -100,15 +96,19 @@ class InterventionController extends AbstractController
 
     public function modifierIntervention(ManagerRegistry $doctrine, $id, Request $request){
 
-       $intervention = $doctrine->getRepository(Intervention::class)->find($id);
-       $instrument = $intervention->getInstrument();
+        $user = $this->getUser();
 
+        // Vérifier si l'utilisateur a un responsable associé
+        $responsable = $user->getResponsable();
+
+       $intervention = $doctrine->getRepository(Intervention::class)->find($id);
     
        if (!$intervention) {
            throw $this->createNotFoundException('Aucune intervention trouvé avec le numéro '.$id);
        }
        else
        {
+               $instrument = $intervention->getInstrument();
                $form = $this->createForm(InterventionInstrumentModifierType::class, $intervention);
                $form->handleRequest($request);
     
@@ -118,18 +118,10 @@ class InterventionController extends AbstractController
                     $entityManager->persist($intervention);
                     $entityManager->flush();
 
-                    // Vérification et formatage de la date d'achat
-                    $formattedDateAchat = null;
-                    if ($instrument->getDateAchat() !== null) {
-                    $formattedDateAchat = $instrument->getDateAchat()->format('d/m/Y'); // Formater la date au format 'YYYY-MM-DD'
-                    } else {
-                    $formattedDateAchat = "Date non définie"; // Si la date n'est pas définie
-                    }
                     // parametres a supr
                     return $this->render('instrument/consulter.html.twig', [
                         'instrument' => $instrument,
-                        'formattedDateAchat' => $formattedDateAchat,
-                        'intervention' => $intervention,
+                        'responsable' => $responsable
                     ]);
               }
               else{
@@ -138,38 +130,28 @@ class InterventionController extends AbstractController
            }
     }
 
-
-
-
-    
-
     #[Route('/intervention/supprimer/{id}', name: 'app_intervention_instrument_supprimer')]
     public function supprimerIntervention(ManagerRegistry $doctrine, int $id): Response
     {
         $intervention = $doctrine->getRepository(Intervention::class)->find($id);
-        $instrument = $intervention->getInstrument();
+
+        $user = $this->getUser();
+
+        // Vérifier si l'utilisateur a un responsable associé
+        $responsable = $user->getResponsable();
 
         if (!$intervention) {
             throw $this->createNotFoundException('Aucune intervention trouvé avec l\'ID '.$id);
         }
 
+        $instrument = $intervention->getInstrument();
+
         $entityManager = $doctrine->getManager();
         $entityManager->remove($intervention); 
         $entityManager->flush();
 
-        // Vérification et formatage de la date d'achat
-        $formattedDateAchat = null;
-        if ($instrument->getDateAchat() !== null) {
-        $formattedDateAchat = $instrument->getDateAchat()->format('d/m/Y'); // Formater la date au format 'YYYY-MM-DD'
-        } else {
-        $formattedDateAchat = "Date non définie"; // Si la date n'est pas définie
-        }
-        // parametres a supr
-        return $this->render('instrument/consulter.html.twig', [
-        'instrument' => $instrument,
-        'formattedDateAchat' => $formattedDateAchat,
-        'intervention' => $intervention,
-    ]);    }
+        return $this->render('instrument/consulter.html.twig', ['intervention' => $intervention,'responsable' => $responsable,'instrument' => $instrument,]);
+    }
 
     
 
