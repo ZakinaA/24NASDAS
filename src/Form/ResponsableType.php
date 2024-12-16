@@ -24,7 +24,8 @@ class ResponsableType extends AbstractType
             ->add('tel')
             ->add('quotientFamilial', EntityType::class, [
                 'class' => QuotientFamilial::class,
-                'choice_label' => 'id',
+                'placeholder' => 'Choisir un quotient familial',
+                'choice_label' => 'libelle',
             ])
         ;
     }

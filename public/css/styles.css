@@ -419,3 +419,120 @@ a {
 .color-table {
     background-color: #313237;
 }
+
+
+.consultation-container {
+    margin: 20px auto;
+    padding: 20px;
+    max-width: 800px;
+    background-color: #181b22;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);}
+
+.consultation-title {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    color: #a0a1a3;
+    margin-bottom: 20px;
+}
+
+.consultation-details {
+    margin-top: 10px;
+}
+
+.consultation-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.consultation-table th,
+.consultation-table td {
+    text-align: left;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.consultation-table th {
+    background-color: #181b22;
+    font-weight: bold;
+    color: #a0a1a3;
+}
+
+.consultation-table td {
+    color: #a0a1a3;
+}
+
+.consultation-table tr:nth-child(even) {
+    background-color: 181b22;
+}
+
+.consultation-table tr:nth-child(odd) {
+    background-color: #181b22;
+}
+
+/* Conteneur principal pour centrer la section */
+.hero-wrapper {
+    display: flex;
+    justify-content: center;   /* Centre horizontalement */
+    align-items: center;       /* Centre verticalement */
+    height: 80vh;             /* Hauteur de la fenêtre */
+    width: 100%;               /* Largeur de la fenêtre */
+    background-color: transparent; /* Optionnel : couleur de fond de la page */
+}
+
+/* Hero Section */
+.hero-container {
+    background-color: transparent;  /* Fond transparent */
+    color: white;
+    padding: 60px 30px;
+    text-align: center;
+    border-radius: 10px;
+    width: 70%;
+    max-width: 1200px;  /* Maximum width to prevent it from getting too wide */
+}
+
+.hero-container h1 {
+    font-size: 3.7rem;
+    font-weight: normal;
+    margin-bottom: 20px;
+}
+
+.hero-container p {
+    font-size: 1rem;
+    margin-bottom: 30px;
+    line-height: 1.5;
+    margin-left: auto;
+    margin-right: auto;
+    font-weight: 100;
+}
+
+.highlighted-text {
+    color: #00796b68;  /* Teal color */
+}
+
+.cta-button {
+    padding: 15px 30px;
+    background-color: #00796b68;  /* Teal color */
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.cta-button:hover {
+    background-color: #04534a68;
+}
+
+/* Responsive design adjustments */
+@media (max-width: 768px) {
+    .hero-container h1 {
+        font-size: 2rem;
+    }
+
+    .hero-container p {
+        font-size: 0.9rem;
+    }
+}

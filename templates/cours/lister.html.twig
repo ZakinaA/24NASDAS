@@ -14,26 +14,10 @@
             <div class="card">
 					<img src="{{ asset('images/' ~ c.cheminImage) }}" alt="Image du cours" class="card-img">
                 <h3>{{ c.libelle }}</h3>
-
-                <!-- Si l'utilisateur est un administrateur, afficher les options -->
-                {% if is_granted('ROLE_ADMIN') %}
-                <div class="admin-actions">
-                    <a href="{{ path('app_cours_consulter', { 'id': c.id }) }}" class="btn">Consulter</a>
-                    <a href="{{ path('app_cours_supprimer', {'id': c.id}) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce cours ?');" class="btn delete">Supprimer</a>
-                    <a href="{{ path('app_cours_modifier', {'id': c.id}) }}" class="btn edit">Modifier</a>
-                </div>
-                {% endif %}
             </div>
         </a>
         {% endfor %}
     </div>
-
-    <!-- Option d'ajouter un cours seulement pour les administrateurs -->
-    {% if is_granted('ROLE_ADMIN') %}
-    <div class="bouton">
-        <a href="{{ path('app_cours_ajouter') }}" class="btn add">Ajouter un cours</a>
-    </div>
-    {% endif %}
 	{% block javascripts %}
     <script src="{{ asset('script/script.js') }}"></script>
 {% endblock %}
