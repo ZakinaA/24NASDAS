@@ -1,0 +1,176 @@
+{% extends 'accueil/accueil_uti.html.twig' %}
+
+{% block title %}Consultation d'un Utilisateur{% endblock %}
+
+{% block body %}
+    <style>
+        /* Styles de base pour l'alignement */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h4 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* Cadre principal pour contenir tout */
+        .container {
+            display: flex;
+            justify-content: space-between;
+            border: 2px solid #ccc;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        /* Détails et image à droite */
+        .details {
+            width: 65%;
+            padding-right: 20px;
+        }
+
+        /* Image à droite */
+        .image-container {
+            width: 30%;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .image-container img {
+            width: 100%;
+            height: auto;
+            max-width: 200px;
+            border-radius: 5px;
+        }
+
+        /* Table des informations de l'instrument */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            color:black;
+        }
+
+        /* Table des interventions */
+        .interventions {
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .interventions th, .interventions td {
+            padding: 8px;
+            text-align: left;
+        }
+
+        .interventions th {
+            background-color: #f9f9f9;
+        }
+
+        .le_seul_style_qui_na_pas_ete_genere_par_chatgpt_lol{
+            display:flex;
+            align-items:center;
+            text-align:center;
+            justify-content:center;
+        }
+
+        img {
+            max-width: 100px;    /* Largeur définie de l'image */
+        }
+    </style>
+
+    <h4>PAGE DE CONSULTATION D'UN UTILISATEUR</h4>
+
+    <!-- Conteneur principal -->
+    <div class="container">
+        <!-- Détails de l'instrument et interventions -->
+        <div class="details">
+            <table>
+                <tr>
+                    <td><strong>Compte :</strong></td>
+                    <td>{{ users.email }}</td>
+                </tr>
+            </table>
+
+            <br>
+
+            <!-- Section des interventions -->
+            <div class="interventions">
+                <h4>Responsable :</h4>
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>Nom:</th>
+                            <th>Prénom:</th>
+                            <th>Adresse:</th>
+                            <th>Téléphone:</th>
+                            <th>Quotient Familial:</th>
+                            <th>Interaction:</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{ users.responsable.nom }}</td>
+                                <td>{{ users.responsable.prenom }}</td>
+                                <td>{{ users.responsable.numRue }}{{ users.responsable.rue }},{{ users.responsable.copos }}{{ users.responsable.ville }}</td>
+                                <td>{{ users.responsable.tel }}</td>
+                                
+                                <td>
+                                {% if users.responsable.quotientFamilial is not null %}
+                                    {{ users.responsable.quotientFamilial.libelle }} - {{ users.responsable.quotientFamilial.quotientMini }}
+                                {% else %}
+                                    /
+                                {% endif %}
+                                </td>
+                                
+                                <td>
+                                    <a href="{{ path('app_responsable_user_modifier', { 'id': users.responsable.id }) }}">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="white" viewBox="0 0 24 24" stroke-width="2" class="icon icon-tabler icon-tabler-pencil">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M13 3l8 8-10 10H3v-8L13 3z"></path>
+                                        </svg>
+                                    </a>
+                                </td>
+                            </tr>
+                    </tbody>
+                </table>
+                <br>
+                <table>
+                                        <div class="le_seul_style_qui_na_pas_ete_genere_par_chatgpt_lol"><h4>Élève(s) :</h4></div>
+                                        <thead>
+                                            <tr>
+                                                <th>Nom:</th>
+                                                <th>Prenom:</th>
+                                                <th>Photo:</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for eleve in users.responsable.getEleves() %}
+                                                <tr>
+                                                    <td>{{ eleve.nom }}</td>
+                                                    <td>{{ eleve.prenom }}</td>
+                                                    <td>
+                                                        {% set image_url = eleve.cheminImage is not empty ? eleve.cheminImage : 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y' %}
+                                                        <img src="{{ asset(image_url) }}" alt="Image de {{ eleve.nom }} {{ eleve.prenom }}" class="eleve-image">
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+            </div>
+    </body>
+</html>
+{% endblock %}

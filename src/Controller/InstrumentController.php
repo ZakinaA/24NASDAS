@@ -95,6 +95,11 @@ class InstrumentController extends AbstractController
 
     #[Route('/instrument/ajouter', name: 'app_instrument_ajouter')]
     public function ajouterInstrument(ManagerRegistry $doctrine,Request $request){
+        $user = $this->getUser();
+
+        // Vérifier si l'utilisateur a un responsable associé
+        $responsable = $user->getResponsable();
+
         $instrument = new instrument();
         $form = $this->createForm(InstrumentType::class, $instrument);
         $form->handleRequest($request);
@@ -109,7 +114,7 @@ class InstrumentController extends AbstractController
                 $entityManager->persist($instrument);
                 $entityManager->flush();
     
-            return $this->render('instrument/consulter.html.twig', ['instrument' => $instrument,'formattedDate' => $formattedDate,]);
+            return $this->render('instrument/consulter.html.twig', ['instrument' => $instrument,'formattedDate' => $formattedDate,'responsable' => $responsable]);
         }
         else
             {

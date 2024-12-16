@@ -33,6 +33,21 @@
                     <td><span class="underline">{{ i.modele.nom ? i.modele.nom : 'Non renseigné' }}</span></td>
                     <td>{{ i.marque.libelle ? i.marque.libelle : 'Non renseignée' }}</td>
                     <td>{{ i.couleur.libelle ? i.couleur.libelle : 'Non renseignée' }}
+                    <td><span class="underline">{{ i.modele.nom ?? 'Non renseigné' }}</span></td>
+                    <td><span class="underline">{{ i.marque.libelle ?? 'Non renseigné' }}</span></td>
+                    <td><span class="underline">{{ i.couleur.libelle  ?? 'Non renseigné' }}</span></td>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <td>
+                            <div class="table-data-feature">
+                                <div class="item">
+                                    <a href="{{ path('app_instrument_modifier', { 'id': i.id }) }}" class="zmdi zmdi-edit"></a>
+                                </div>
+                                <div class="item">
+                                    <a href="{{ path('app_instrument_supprimer', { 'id': i.id }) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet instrument ?');" class="zmdi zmdi-delete"></a>
+                                </div>
+                            </div>
+                        </td>
+                    {% endif %}
                 </tr>
                 <tr class="spacer"></tr>
             {% else %}
