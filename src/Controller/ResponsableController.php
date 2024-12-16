@@ -89,27 +89,4 @@ class ResponsableController extends AbstractController
               }
            }
     }
-
-    #[Route('/responsable/supprimer/{id}', name: 'app_responsable_user_supprimer')]
-    public function supprimerResponsable(ManagerRegistry $doctrine, int $id): Response
-    {
-        $responsables = $doctrine->getRepository(User::class)->find($id);
-
-        $user = $this->getUser();
-
-        // Vérifier si l'utilisateur a un responsable associé
-        $responsable = $user->getResponsable();
-
-        if (!$responsables) {
-            throw $this->createNotFoundException('Aucun Responsable trouvé avec l\'ID '.$id);
-        }
-
-        $users = $responsables->getCompte();
-
-        $entityManager = $doctrine->getManager();
-        $entityManager->remove($responsables); 
-        $entityManager->flush();
-
-        return $this->render('user/consulter.html.twig', ['responsables' => $responsables,'responsable' => $responsable,'users' => $users,]);
-    }
 }

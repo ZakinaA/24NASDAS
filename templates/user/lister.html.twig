@@ -20,7 +20,17 @@
         <table>
             {% for u in pUsers %}
                 <tr>
-                    <td>{{ u.email }}</td>
+                    <td><a href="{{ path('app_user_consulter', { 'id': u.id }) }}" class="instrument-link">{{ u.email }}</a></td>
+                    <td>
+                        <div class="table-data-feature">
+                            <div class="item">
+                                <a href="{{ path('app_user_modifier', { 'id': u.id }) }}" class="zmdi zmdi-edit">Modifier</a>
+                            </div>
+                            <div class="item">
+                                <a href="{{ path('app_user_supprimer', { 'id': u.id }) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?');" class="zmdi zmdi-delete">Supprimer</a>
+                            </div>
+                        </div>
+                    </td>
                 </tr>
             {% else %}
                 <tr>
