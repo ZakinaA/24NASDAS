@@ -1,0 +1,36 @@
+{% extends 'accueil/accueil_admin.html.twig' %}
+
+{% block title %}Welcome!{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div>
+        {% if app.user %}
+            <div class="mb-3">
+                You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+            </div>
+        {% endif %}
+    
+        <br>
+    
+        <h2>LISTE DES UTILISATEURS</h2>
+        <table>
+            {% for u in pUsers %}
+                <tr>
+                    <td>{{ u.email }}</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td>Aucun utilisateur n'a été trouvé.</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {# Ajoutez ici vos scripts JavaScript, si nécessaire #}
+{% endblock %}
