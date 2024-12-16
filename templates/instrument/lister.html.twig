@@ -30,9 +30,9 @@
                     </td>
                     <td><span class="bold">{{ i.dateAchat ? i.dateAchat|date('d/m/Y') : 'Non renseignée' }}</span></td>
                     <td><span class="green">{{ i.prixAchat ? i.prixAchat|number_format(2, '.', ',') : 'Non renseigné' }}</span></td>
-                    <td><span class="underline">{{ i.modele.nom ? i.modele.nom : 'Non renseigné' }}</span></td>
-                    <td>{{ i.marque.libelle ? i.marque.libelle : 'Non renseignée' }}</td>
-                    <td>{{ i.couleur.libelle ? i.couleur.libelle : 'Non renseignée' }}
+                    <td><span class="underline">{{ i.modele.nom ?? 'Non renseigné' }}</span></td>
+                    <td><span class="underline">{{ i.marque.libelle ?? 'Non renseigné' }}</span></td>
+                    <td><span class="underline">{{ i.couleur.libelle  ?? 'Non renseigné' }}</span></td>
                     {% if is_granted('ROLE_ADMIN') %}
                         <td>
                             <div class="table-data-feature">
