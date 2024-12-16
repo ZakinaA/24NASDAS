@@ -2,6 +2,9 @@
 
 {% block body %}
 <div class="content">
+    <h1 style="margin-left:30px;">LISTE DES INSTRUMENTS</h1>
+    <br>
+
     <table class="table">
         <thead>
             <tr>
@@ -12,9 +15,6 @@
                 <th>Modèle</th>
                 <th>Marque</th>
                 <th>Couleur</th>
-                {% if is_granted('ROLE_ADMIN') %}
-                    <th>Actions</th>
-                {% endif %}
             </tr>
         </thead>
         <tbody>
@@ -30,6 +30,9 @@
                     </td>
                     <td><span class="bold">{{ i.dateAchat ? i.dateAchat|date('d/m/Y') : 'Non renseignée' }}</span></td>
                     <td><span class="green">{{ i.prixAchat ? i.prixAchat|number_format(2, '.', ',') : 'Non renseigné' }}</span></td>
+                    <td><span class="underline">{{ i.modele.nom ? i.modele.nom : 'Non renseigné' }}</span></td>
+                    <td>{{ i.marque.libelle ? i.marque.libelle : 'Non renseignée' }}</td>
+                    <td>{{ i.couleur.libelle ? i.couleur.libelle : 'Non renseignée' }}
                     <td><span class="underline">{{ i.modele.nom ?? 'Non renseigné' }}</span></td>
                     <td><span class="underline">{{ i.marque.libelle ?? 'Non renseigné' }}</span></td>
                     <td><span class="underline">{{ i.couleur.libelle  ?? 'Non renseigné' }}</span></td>
@@ -54,11 +57,5 @@
             {% endfor %}
         </tbody>
     </table>
-
-    {% if is_granted('ROLE_ADMIN') %}
-        <div class="bouton">
-            <a href="{{ path('app_instrument_ajouter') }}" class="btn">Ajouter un instrument</a>
-        </div>
-    {% endif %}
 </div>
 {% endblock %}

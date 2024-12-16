@@ -28,6 +28,8 @@ class RegistrationController extends AbstractController
 
             $user->setPassword($userPasswordHasher->hashPassword($user, $plainPassword));
 
+            $user->addRole('ROLE_RESPONSABLE');
+
             $responsable = $user->getResponsable(); 
             $responsable->setCompte($user); 
 

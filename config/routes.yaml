@@ -17,7 +17,7 @@ app_admin_cours_lister:
     controller: App\Controller\CoursController::listerAdminCours
 
 app_cours_consulter:
-    path: /cours/consulter/{id}
+    path: /resp/cours/consulter/{id}
     controller: App\Controller\CoursController::consulterCours
 
 app_cours_ajouter:
@@ -37,7 +37,7 @@ app_eleve_lister:
     controller: App\Controller\EleveController::listerEleves
 
 app_eleve_consulter:
-    path: /eleve/consulter/{id}
+    path: /resp/eleve/consulter/{id}
     controller: App\Controller\EleveController::consulterEleve
 
 
@@ -62,7 +62,7 @@ app_admin_instrument_lister:
     controller: App\Controller\InstrumentController::listerAdminInstrument
 
 app_instrument_consulter:
-    path: /instrument/consulter/{id}
+    path: /resp/instrument/consulter/{id}
     controller: App\Controller\InstrumentController::consulterInstrument
 
 app_logout:

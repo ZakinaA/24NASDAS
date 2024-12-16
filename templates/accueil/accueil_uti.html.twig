@@ -7,7 +7,6 @@
     {% block stylesheets %}
         <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
         <link rel="stylesheet" href="{{ asset('css/tableau.css') }}">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css">
     {% endblock %}
 </head>
 <body>
@@ -73,7 +72,7 @@
                         {% else %}
                             <span class="user-name">Utilisateur inconnu</span>
                         {% endif %}                    
-                    <span class="badge">Utilisateur</span>
+                    <span class="badge">Responsable</span>
                 </div>
                 <div class="settings-icon">
                     <a href="{{ path('responsable_modifier') }}" title="Modifier mes informations">
