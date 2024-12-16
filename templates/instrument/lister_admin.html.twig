@@ -1,7 +1,13 @@
-{% extends 'accueil/accueil_uti.html.twig' %}
+{% extends 'accueil/accueil_admin.html.twig' %}
 
 {% block body %}
 <div class="content">
+    <h1 style="margin-left:30px;">LISTE DES INSTRUMENTS</h1>
+    <br>
+                    <div class="bouton" style="float:right; margin-right:30px;">
+        <a href="{{ path('app_instrument_ajouter') }}" class="btn">Ajouter un instrument</a>
+    </div>
+    <br><br>
     <table class="table">
         <thead>
             <tr>
@@ -33,18 +39,18 @@
                     <td><span class="underline">{{ i.modele.nom ? i.modele.nom : 'Non renseigné' }}</span></td>
                     <td>{{ i.marque.libelle ? i.marque.libelle : 'Non renseignée' }}</td>
                     <td>{{ i.couleur.libelle ? i.couleur.libelle : 'Non renseignée' }}
-                    {% if is_granted('ROLE_ADMIN') %}
-                        <td>
-                            <div class="table-data-feature">
-                                <div class="item">
-                                    <a href="{{ path('app_instrument_modifier', { 'id': i.id }) }}" class="zmdi zmdi-edit"></a>
-                                </div>
-                                <div class="item">
-                                    <a href="{{ path('app_instrument_supprimer', { 'id': i.id }) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet instrument ?');" class="zmdi zmdi-delete"></a>
-                                </div>
-                            </div>
-                        </td>
-                    {% endif %}
+                    <td class="actions">
+                        <a href="{{ path('app_instrument_modifier', { 'id': i.id }) }}" class="action-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" class="icon icon-tabler icon-tabler-pencil">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M13 3l8 8-10 10H3v-8L13 3z"></path>
+                            </svg>
+                        </a>
+                        <a href="{{ path('app_instrument_supprimer', { 'id': i.id }) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce contrat ?');" class="action-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" class="icon icon-tabler icon-tabler-trash">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 6h18M9 6V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M10 11v6M14 11v6M5 6l1 14h12l1-14"></path>
+                            </svg>
+                        </a>
+                    </td>
                 </tr>
                 <tr class="spacer"></tr>
             {% else %}
@@ -54,11 +60,5 @@
             {% endfor %}
         </tbody>
     </table>
-
-    {% if is_granted('ROLE_ADMIN') %}
-        <div class="bouton">
-            <a href="{{ path('app_instrument_ajouter') }}" class="btn">Ajouter un instrument</a>
-        </div>
-    {% endif %}
 </div>
 {% endblock %}

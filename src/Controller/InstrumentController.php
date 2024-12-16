@@ -41,6 +41,23 @@ class InstrumentController extends AbstractController
             
     }
 
+    public function listerAdminInstrument(ManagerRegistry $doctrine){
+
+        $user = $this->getUser();
+
+        // Vérifier si l'utilisateur a un responsable associé
+        $responsable = $user->getResponsable();
+
+
+        $repository = $doctrine->getRepository(Instrument::class);
+
+        $instrument= $repository->findAll();
+        return $this->render('instrument/lister_admin.html.twig', [
+            'pInstruments' => $instrument,
+            'responsable' => $responsable, 
+        ]);	
+            
+    }
     public function consulterInstrument(ManagerRegistry $doctrine, int $id)
     {
         $user = $this->getUser();

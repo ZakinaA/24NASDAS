@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ResponsableController extends AbstractController
 {
-    #[Route(path: '/responsable/modifier', name: 'responsable_modifier')]
+    #[Route(path: '/resp/modifier', name: 'responsable_modifier')]
     public function modifierResponsable(ManagerRegistry $doctrine, Request $request): Response
     {
         // Récupérer l'utilisateur connecté

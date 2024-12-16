@@ -22,14 +22,21 @@ class ProfController extends AbstractController
         ]);
     }
 
-    #[Route('/professeur/lister', name: 'app_professeur_lister')]
+    #[Route('/admin/professeur/lister', name: 'app_professeur_lister')]
     public function listerProfesseur(ManagerRegistry $doctrine){
+
+        $user = $this->getUser();
+
+        // Vérifier si l'utilisateur a un responsable associé
+        $responsable = $user->getResponsable();
 
         $repository = $doctrine->getRepository(Professeur::class);
 
         $professeur= $repository->findAll();
         return $this->render('professeur/lister.html.twig', [
-            'pProfesseurs' => $professeur,]);	
+            'pProfesseurs' => $professeur,
+            'responsable' => $responsable, 
+        ]);	
             
     }
 

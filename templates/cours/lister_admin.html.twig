@@ -1,0 +1,45 @@
+{% extends 'accueil/accueil_admin.html.twig' %}
+
+{% block title %}Liste des Cours{% endblock %}
+
+{% block body %}
+<div class="search-container">
+	<input type="text" id="search-bar" placeholder="Rechercher un cours" class="search-bar">
+</div>
+<br>
+                    <div class="bouton" style="float:right; margin-right:30px;">
+        <a href="{{ path('app_cours_ajouter') }}" class="btn">Ajouter un cours</a>
+    </div>
+    <br><br><br>
+<div class="content">
+    <div id="cours-list" class="card-container">
+        {% for c in pCours %}
+        <a href="{{ path('app_cours_consulter', { 'id': c.id }) }}" class="card-link" data-libelle="{{ c.libelle }}">
+            <div class="card">
+					<img src="{{ asset('images/' ~ c.cheminImage) }}" alt="Image du cours" class="card-img">
+                <h3>{{ c.libelle }}</h3>
+
+                <!-- Si l'utilisateur est un administrateur, afficher les options -->
+                {% if is_granted('ROLE_ADMIN') %}
+                <div class="admin-actions">
+                    <a href="{{ path('app_cours_consulter', { 'id': c.id }) }}" class="btn">Consulter</a>
+                    <a href="{{ path('app_cours_supprimer', {'id': c.id}) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce cours ?');" class="btn delete">Supprimer</a>
+                    <a href="{{ path('app_cours_modifier', {'id': c.id}) }}" class="btn edit">Modifier</a>
+                </div>
+                {% endif %}
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+
+    <!-- Option d'ajouter un cours seulement pour les administrateurs -->
+    {% if is_granted('ROLE_ADMIN') %}
+    <div class="bouton">
+        <a href="{{ path('app_cours_ajouter') }}" class="btn add">Ajouter un cours</a>
+    </div>
+    {% endif %}
+	{% block javascripts %}
+    <script src="{{ asset('script/script.js') }}"></script>
+{% endblock %}
+</div>
+{% endblock %}
