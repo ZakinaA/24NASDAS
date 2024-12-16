@@ -24,14 +24,23 @@ class ContratPretController extends AbstractController
         ]);
     }
 
-    #[Route('/contratPret/lister', name: 'app_contratPret_lister')]
+    #[Route('/admin/contratPret/lister', name: 'app_contratPret_lister')]
     public function listerContratPret(ManagerRegistry $doctrine){
+
+        // Récupérer l'utilisateur connecté
+        $user = $this->getUser();
+
+        // Vérifier si l'utilisateur a un responsable associé
+        $responsable = $user->getResponsable();
+
 
         $repository = $doctrine->getRepository(ContratPret::class);
 
         $contratPret= $repository->findAll();
         return $this->render('contratPret/lister.html.twig', [
-            'pContratsPret' => $contratPret,]);	
+            'pContratsPret' => $contratPret,
+            'responsable' => $responsable, 
+        ]);	
             
     }
 

@@ -29,14 +29,20 @@ class EleveController extends AbstractController
 
         $repository = $doctrine->getRepository(Eleve::class);
 
+        $user = $this->getUser();
+
+        // Vérifier si l'utilisateur a un responsable associé
+        $responsable = $user->getResponsable();
+
         $eleves= $repository->findAll();
         return $this->render('eleve/lister.html.twig', [
-            'pEleves' => $eleves,]);	
+            'pEleves' => $eleves,
+            'responsable' => $responsable]);	
             
     }
 
     
-    #[Route('/mes-eleves', name: 'mes_eleves')]
+    #[Route('/resp/enfants/lister', name: 'mes_eleves')]
     public function listerMesEleves(EleveRepository $eleveRepository): Response
     {
         // Récupérer l'utilisateur connecté

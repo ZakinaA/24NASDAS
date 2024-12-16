@@ -22,7 +22,7 @@ class ModeleController extends AbstractController
         ]);
     }
 
-    #[Route('/modele/lister', name: 'app_modele_lister')]
+    #[Route('/admin/modele/lister', name: 'app_modele_lister')]
     public function listerModele(ManagerRegistry $doctrine){
 
         $user = $this->getUser();

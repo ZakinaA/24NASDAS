@@ -22,7 +22,7 @@ class MarqueController extends AbstractController
         ]);
     }
 
-    #[Route('/marque/lister', name: 'app_marque_lister')]
+    #[Route('/admin/marque/lister', name: 'app_marque_lister')]
     public function listerMarque(ManagerRegistry $doctrine){
 
         $user = $this->getUser();

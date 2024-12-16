@@ -9,8 +9,12 @@ app_cours:
     controller: App\Controller\CoursController::index
 
 app_cours_lister:
-    path: /cours/lister
+    path: /resp/cours/lister
     controller: App\Controller\CoursController::listerCours
+
+app_admin_cours_lister:
+    path: /admin/cours/lister
+    controller: App\Controller\CoursController::listerAdminCours
 
 app_cours_consulter:
     path: /cours/consulter/{id}
@@ -29,7 +33,7 @@ app_cours_modifier:
     controller: App\Controller\CoursController::modifierCours
 
 app_eleve_lister:
-    path: /eleve/lister
+    path: /admin/eleve/lister
     controller: App\Controller\EleveController::listerEleves
 
 app_eleve_consulter:
@@ -50,8 +54,12 @@ app_eleve_modifier:
     controller: App\Controller\EleveController::modifierEleve
 
 app_instrument_lister:
-    path: /instrument/lister
+    path: /resp/instrument/lister
     controller: App\Controller\InstrumentController::listerInstrument
+
+app_admin_instrument_lister:
+    path: /admin/instrument/lister
+    controller: App\Controller\InstrumentController::listerAdminInstrument
 
 app_instrument_consulter:
     path: /instrument/consulter/{id}

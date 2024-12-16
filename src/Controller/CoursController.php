@@ -39,6 +39,24 @@ class CoursController extends AbstractController
             
     }
 
+    
+    public function listerAdminCours(ManagerRegistry $doctrine){
+
+        $user = $this->getUser();
+
+        // Vérifier si l'utilisateur a un responsable associé
+        $responsable = $user->getResponsable();
+
+        $repository = $doctrine->getRepository(Cours::class);
+
+        $cours= $repository->findAll();
+        return $this->render('cours/lister_admin.html.twig', [
+            'pCours' => $cours,
+            'responsable' => $responsable, 
+        ]);	
+            
+    }
+
     #[Route('/cours/lister/json', name: 'lister_cours_json', methods: ['GET'])]
     public function listerCoursJson(ManagerRegistry $doctrine)
     {

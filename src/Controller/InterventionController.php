@@ -29,14 +29,21 @@ class InterventionController extends AbstractController
         ]);
     }
 
-    #[Route('/intervention/lister', name: 'app_intervention_lister')]
+    #[Route('/admin/intervention/lister', name: 'app_intervention_lister')]
     public function listerIntervention(ManagerRegistry $doctrine){
+
+        $user = $this->getUser();
+
+        // Vérifier si l'utilisateur a un responsable associé
+        $responsable = $user->getResponsable();
 
         $repository = $doctrine->getRepository(Intervention::class);
 
         $intervention= $repository->findAll();
         return $this->render('intervention/lister.html.twig', [
-            'pIntervention' => $intervention,]);	
+            'pIntervention' => $intervention,
+            'responsable' => $responsable, 
+        ]);	
             
     }
 

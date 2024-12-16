@@ -3,48 +3,73 @@
 {% block stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+    <style>
+        /* Style pour les rectangles des marques */
+        .marque-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .marque-box {
+            width: 200px;
+            height:60px;
+            padding: 20px;
+            background-color: #181b22;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        .marque-libelle {
+            font-size: 18px;
+            font-weight: normal;
+            color: #a0a1a3;
+            margin-bottom: 20px;
+        }
+        /* Style pour les boutons */
+        .marque-actions {
+            position: absolute;
+            bottom: 15px;
+            right: 0px;
+        }
+        .marque-actions a {
+            margin-left: 10px;
+            color: #fff;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+    </style>
 {% endblock %}
 
 {% block title %}Emusic - MARQUES{% endblock %}
 
 {% block body %}
     <h1>LISTE DES MARQUES</h1></br>
-    <table>
+    <div class="bouton" style="float:right; margin-right:100px;">
+        <a href="{{ path('app_marque_ajouter') }}" class="btn">Ajouter une marque</a>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div class="marque-container">
         {% for i in pMarque %}
-        <tr>
-            <td>{{ i.libelle }}</td>
-            <td>
-                <a href="{{ path('app_marque_supprimer', {'id': i.id}) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette marque ?');">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="white" viewBox="0 0 24 24" stroke-width="2" class="icon icon-tabler icon-tabler-trash">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 6h18M9 6V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M10 11v6M14 11v6M5 6l1 14h12l1-14"></path>
-                    </svg>
-                </a>
-            </td>
-            <td>
-                <a href="{{ path('app_marque_modifier', {'id': i.id}) }}">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="white" viewBox="0 0 24 24" stroke-width="2" class="icon icon-tabler icon-tabler-pencil">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M13 3l8 8-10 10H3v-8L13 3z"></path>
-                    </svg>
-                </a>
-            </td>
+            <div class="marque-box">
+                <div class="marque-libelle">{{ i.libelle }}</div>
+                <div class="marque-actions">
+                    <a href="{{ path('app_marque_supprimer', {'id': i.id}) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette marque ?');">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="white" viewBox="0 0 24 24" stroke-width="2" class="icon icon-tabler icon-tabler-trash">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 6h18M9 6V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M10 11v6M14 11v6M5 6l1 14h12l1-14"></path>
+                        </svg>
+                    </a>
+                    <a href="{{ path('app_marque_modifier', {'id': i.id}) }}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="white" viewBox="0 0 24 24" stroke-width="2" class="icon icon-tabler icon-tabler-pencil">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M13 3l8 8-10 10H3v-8L13 3z"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
         {% else %}
-        <tr>
-            <td>Aucune marque n'a été trouvé.</td>
-        </tr>
+            <p>Aucune marque n'a été trouvée.</p>
         {% endfor %}
-    </table>
-    <div class="bouton">
-        <a href="ajouter" style="
-            display: inline-block;
-            background-color: black;
-            color: white;
-            padding: 10px 10px;
-            text-decoration: none;
-            border-radius: 5px;
-            font-size: 16px;
-            text-align: center;
-            cursor: pointer;" >
-            Ajouter une marque
-        </a>
     </div>
 {% endblock %}

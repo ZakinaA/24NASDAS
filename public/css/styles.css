@@ -91,7 +91,6 @@ body {
     height: 25px;
 }
 
-
 .logout {
     padding-left: 20px;
     font-size: 0.9em;
@@ -299,13 +298,19 @@ a {
 }
 
 .bouton .btn {
-    background-color: black;
-    color: white;
-    padding: 10px 20px;
+    background-color: #181b22;
+    color: #b3b3b3;
+    padding: 12px 20px;
     text-decoration: none;
-    border-radius: 5px;
     display: inline-block;
     text-align: center;
+    transition: 0.2s;
+}
+
+.bouton .btn:hover {
+    background-color: #212227;
+    transition: 0.2s;
+    transform: scale(1.04);
 }
 
 .content {
@@ -410,22 +415,7 @@ a {
     text-align: left;
 }
 
-.btn {
-    display: inline-block;
-    padding: 10px 15px;
-    color: #fff;
-    background-color: #007bff;
-    text-decoration: none;
-    border-radius: 4px;
-    transition: background-color 0.3s;
-}
-
-.btn:hover {
-    background-color: #0056b3;
-}
 
 .color-table {
     background-color: #313237;
 }
-
-
