@@ -36,9 +36,9 @@
                     </td>
                     <td><span class="bold">{{ i.dateAchat ? i.dateAchat|date('d/m/Y') : 'Non renseignée' }}</span></td>
                     <td><span class="green">{{ i.prixAchat ? i.prixAchat|number_format(2, '.', ',') : 'Non renseigné' }}</span></td>
-                    <td><span class="underline">{{ i.modele.nom ? i.modele.nom : 'Non renseigné' }}</span></td>
-                    <td>{{ i.marque.libelle ? i.marque.libelle : 'Non renseignée' }}</td>
-                    <td>{{ i.couleur.libelle ? i.couleur.libelle : 'Non renseignée' }}
+                    <td><span class="underline">{{ i.modele.nom ?? 'Non renseigné' }}</span></td>
+                    <td><span class="underline">{{ i.marque.libelle ?? 'Non renseigné' }}</span></td>
+                    <td><span class="underline">{{ i.couleur.libelle  ?? 'Non renseigné' }}</span></td>
                     <td class="actions">
                         <a href="{{ path('app_instrument_modifier', { 'id': i.id }) }}" class="action-btn">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" class="icon icon-tabler icon-tabler-pencil">
