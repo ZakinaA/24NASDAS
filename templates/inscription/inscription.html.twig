@@ -88,7 +88,10 @@
         {% for cours in coursDisponibles %}
             <div class="div">
                 <input type="checkbox" id="cours_{{ cours.id }}" name="coursIds[]" value="{{ cours.id }}">
-                <label for="cours_{{ cours.id }}">{{ cours.libelle }}</label>
+                <label for="cours_{{ cours.id }}">{{ cours.libelle }} - </label>
+                <label for="cours_{{ cours.id }}">{{ cours.heureDebut|date('H:i') }} - </label>
+                <label for="cours_{{ cours.id }}">{{ cours.heureFin|date('H:i') }} -</label>
+                <label for="cours_{{ cours.id }}">{{ cours.jour.libelle }}</label>
             </div>
         {% endfor %}
         <br>
