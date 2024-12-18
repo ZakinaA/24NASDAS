@@ -10,6 +10,7 @@ use App\Entity\ContratPret;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\ContratPretType;
 use App\Form\ContratPretModifierType;
+use App\Repository\ContratPretRepository;
 
 
 
@@ -120,7 +121,26 @@ class ContratPretController extends AbstractController
 
  
     
-    
+    #[Route('/mes-contrats', name: 'mes_contrats')]
+    public function listerMesContrats(ContratPretRepository $contratRepository): Response
+    {
+        // Récupérer l'utilisateur connecté
+        $user = $this->getUser();
+
+        // Vérifier si l'utilisateur a un eleve associé
+        $eleve = $user->getEleve();
+        if (!$eleve) {
+            throw $this->createAccessDeniedException("Aucun contrat relié a cet eleve");
+        }
+
+        // Récupérer les contrats de eleve
+        $contrats = $contratRepository->findBy(['eleve' => $eleve]);
+
+        return $this->render('contrat/mes_contrats.html.twig', [
+            'contrats' => $contrats,
+            'eleve' => $eleve, 
+        ]);
+    }
     
     
     
