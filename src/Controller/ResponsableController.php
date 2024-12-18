@@ -52,7 +52,7 @@ class ResponsableController extends AbstractController
     }
 
 
-    #[Route(path: '/admin/modifier', name: 'responsable_modifier')]
+    #[Route(path: '/admin/modifier', name: 'admin_modifier')]
     public function modifierAdminResponsable(ManagerRegistry $doctrine, Request $request): Response
     {
         // Récupérer l'utilisateur connecté
