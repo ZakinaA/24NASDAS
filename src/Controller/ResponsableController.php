@@ -77,7 +77,7 @@ class ResponsableController extends AbstractController
             // Ajouter un message flash et rediriger
             $this->addFlash('success', 'Vos informations ont été mises à jour avec succès.');
 
-            return $this->redirectToRoute('responsable_modifier');
+            return $this->redirectToRoute('admin_modifier');
         }
 
         // Afficher la page avec le formulaire
