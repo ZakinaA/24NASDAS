@@ -69,6 +69,7 @@
                     <th>Libellé</th>
                     <th>Professeur</th>
                     <th>Horaires</th>
+                    <th>Jour</th>
                 </tr>
             </thead>
             <tbody>
@@ -77,6 +78,7 @@
                         <td>{{ inscription.cours.libelle }}</td>
                         <td>{{ inscription.cours.professeur.nom }}</td>
                         <td>{{ inscription.cours.heureDebut|date('H:i') }} - {{ inscription.cours.heureFin|date('H:i') }}</td>
+                        <td>{{ inscription.cours.jour.libelle }}</td>
                     </tr>
                     <tr class="spacer"></tr>
                 {% else %}

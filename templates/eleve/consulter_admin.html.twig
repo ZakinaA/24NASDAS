@@ -68,6 +68,7 @@
                     <th>Libellé</th>
                     <th>Professeur</th>
                     <th>Horaires</th>
+                    <th>Jour</th>
                     <th></th>
                 </tr>
             </thead>
@@ -77,6 +78,7 @@
                         <td>{{ inscription.cours.libelle }}</td>
                         <td>{{ inscription.cours.professeur.nom }}</td>
                         <td>{{ inscription.cours.heureDebut|date('H:i') }} - {{ inscription.cours.heureFin|date('H:i') }}</td>
+                        <td>{{ inscription.cours.jour.libelle }}</td>
                         <td> 
                             <a href="{{ path('app_desinscription', { 'eleveId': inscription.eleve.id, 'coursId': inscription.cours.id }) }}" onclick="return confirm('Êtes-vous sûr de vouloir vous désinscrire de ce cours ?');"> 
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="black" viewBox="0 0 24 24" stroke-width="2" class="icon icon-tabler icon-tabler-trash"> 
