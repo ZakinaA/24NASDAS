@@ -36,13 +36,17 @@ class ProfController extends AbstractController
         return $this->render('professeur/lister.html.twig', [
             'pProfesseurs' => $professeur,
             'responsable' => $responsable, 
-        ]);	
-            
+        ]);     
     }
 
     #[Route('/professeur/consulter/{id}', name: 'app_professeur_consulter')]
     public function consulterProfesseur(ManagerRegistry $doctrine, int $id)
     {
+        $user = $this->getUser();
+
+        // Vérifier si l'utilisateur a un responsable associé
+        $responsable = $user->getResponsable();
+        
         // Récupérer l'instrument par son ID
         $professeur = $doctrine->getRepository(Professeur::class)->find($id);
 
@@ -58,11 +62,16 @@ class ProfController extends AbstractController
         return $this->render('professeur/consulter.html.twig', [
             'professeur' => $professeur,
             'cours' => $cours,
+            'responsable' => $responsable, 
         ]);
     }
 
     #[Route('/professeur/ajouter', name: 'app_professeur_ajouter')]
     public function ajouterProfesseur(ManagerRegistry $doctrine,Request $request){
+        $user = $this->getUser();
+
+        // Vérifier si l'utilisateur a un responsable associé
+        $responsable = $user->getResponsable();
         $professeur = new Professeur();
         $form = $this->createForm(ProfesseurType::class, $professeur);
         $form->handleRequest($request);
@@ -75,7 +84,7 @@ class ProfController extends AbstractController
                 $entityManager->persist($professeur);
                 $entityManager->flush();
     
-            return $this->render('professeur/consulter.html.twig', ['professeur' => $professeur,]);
+            return $this->render('professeur/consulter.html.twig', ['professeur' => $professeur,'responsable' => $responsable,]);
         }
         else
             {
@@ -85,6 +94,10 @@ class ProfController extends AbstractController
 
     #[Route('/professeur/modifier/{id}', name: 'app_professeur_modifier')]
     public function modifierProfesseur(ManagerRegistry $doctrine, $id, Request $request){
+        $user = $this->getUser();
+
+        // Vérifier si l'utilisateur a un responsable associé
+        $responsable = $user->getResponsable();
  
         $professeur = $doctrine->getRepository(Professeur::class)->find($id);
      
@@ -102,7 +115,7 @@ class ProfController extends AbstractController
                      $entityManager = $doctrine->getManager();
                      $entityManager->persist($professeur);
                      $entityManager->flush();
-                     return $this->render('professeur/consulter.html.twig', ['professeur' => $professeur,]);
+                     return $this->render('professeur/consulter.html.twig', ['professeur' => $professeur,'responsable' => $responsable,]);
                }
                else{
                     return $this->render('professeur/ajouter.html.twig', array('form' => $form->createView(),));

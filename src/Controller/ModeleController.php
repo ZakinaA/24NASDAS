@@ -63,6 +63,9 @@ class ModeleController extends AbstractController
 
     #[Route('/modele/ajouter', name: 'app_modele_ajouter')]
     public function ajouterModele(ManagerRegistry $doctrine,Request $request){
+        $user = $this->getUser();
+        $responsable = $user->getResponsable();
+
         $modele = new Modele();
         $form = $this->createForm(ModeleType::class, $modele);
         $form->handleRequest($request);
@@ -77,7 +80,7 @@ class ModeleController extends AbstractController
     
                 $repository = $doctrine->getRepository(Modele::class);
                 $modele= $repository->findAll();
-                return $this->render('modele/lister.html.twig', ['pModele' => $modele,]);
+                return $this->render('modele/lister.html.twig', ['pModele' => $modele,'responsable' => $responsable]);
         }
         else
             {
@@ -87,6 +90,9 @@ class ModeleController extends AbstractController
 
     #[Route('/modele/modifier/{id}', name: 'app_modele_modifier')]
     public function modifierModele(ManagerRegistry $doctrine, $id, Request $request){
+        $user = $this->getUser();
+        $responsable = $user->getResponsable();
+
  
         $modele = $doctrine->getRepository(Modele::class)->find($id);
      
@@ -107,7 +113,7 @@ class ModeleController extends AbstractController
 
                      $repository = $doctrine->getRepository(Modele::class);
                      $modele= $repository->findAll();
-                     return $this->render('modele/lister.html.twig', ['pModele' => $modele,]);
+                     return $this->render('modele/lister.html.twig', ['pModele' => $modele,'responsable' => $responsable]);
                }
                else{
                     return $this->render('modele/ajouter.html.twig', array('form' => $form->createView(),));

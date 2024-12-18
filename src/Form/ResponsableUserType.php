@@ -29,7 +29,7 @@ class ResponsableUserType extends AbstractType
                 'choice_label' => 'id',
             ])
             ->add('enregistrer', SubmitType::class, [
-                'label' => 'Modifier l intervention'
+                'label' => 'Modifier le responsable'
             ])
         ;
     }

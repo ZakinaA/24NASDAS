@@ -57,6 +57,10 @@ class MarqueController extends AbstractController
 
     #[Route('/marque/ajouter', name: 'app_marque_ajouter')]
     public function ajouterMarque(ManagerRegistry $doctrine,Request $request){
+        $user = $this->getUser();
+
+        // Vérifier si l'utilisateur a un responsable associé
+        $responsable = $user->getResponsable();
         $marque = new Marque();
         $form = $this->createForm(MarqueType::class, $marque);
         $form->handleRequest($request);
@@ -71,7 +75,7 @@ class MarqueController extends AbstractController
     
                 $repository = $doctrine->getRepository(Marque::class);
                 $marque= $repository->findAll();
-                return $this->render('marque/lister.html.twig', ['pMarque' => $marque,]);
+                return $this->render('marque/lister.html.twig', ['pMarque' => $marque,'responsable' => $responsable]);
         }
         else
             {
@@ -81,6 +85,10 @@ class MarqueController extends AbstractController
 
     #[Route('/marque/modifier/{id}', name: 'app_marque_modifier')]
     public function modifierMarque(ManagerRegistry $doctrine, $id, Request $request){
+        $user = $this->getUser();
+
+        // Vérifier si l'utilisateur a un responsable associé
+        $responsable = $user->getResponsable();
  
         $marque = $doctrine->getRepository(Marque::class)->find($id);
      
@@ -101,7 +109,7 @@ class MarqueController extends AbstractController
 
                      $repository = $doctrine->getRepository(Marque::class);
                      $marque= $repository->findAll();
-                     return $this->render('marque/lister.html.twig', ['pMarque' => $marque,]);
+                     return $this->render('marque/lister.html.twig', ['pMarque' => $marque,'responsable' => $responsable]);
                }
                else{
                     return $this->render('marque/ajouter.html.twig', array('form' => $form->createView(),));

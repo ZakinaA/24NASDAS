@@ -17,21 +17,8 @@ class UserModifierType extends AbstractType
     {
         $builder
             ->add('email')
-            ->add('roles', ChoiceType::class, [
-                'choices'  => [
-                    'Utilisateur' => 'ROLE_USER',
-                    'Administrateur' => 'ROLE_ADMIN',
-                ],
-                'multiple' => true,  // Permet de sélectionner plusieurs rôles
-                'expanded' => true,  // Affiche les rôles sous forme de cases à cocher
-            ])
-            ->add('password')
-            ->add('responsable', EntityType::class, [
-                'class' => Responsable::class,
-                'choice_label' => 'nom',
-            ])
             ->add('enregistrer', SubmitType::class, [
-                'label' => 'Nouvel Utilisateur'
+                'label' => 'Modifier l\'Utilisateur'
             ])
         ;
     }

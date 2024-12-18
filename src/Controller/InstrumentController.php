@@ -124,6 +124,11 @@ class InstrumentController extends AbstractController
 
     #[Route('/instrument/modifier/{id}', name: 'app_instrument_modifier')]
     public function modifierCours(ManagerRegistry $doctrine, $id, Request $request){
+
+        $user = $this->getUser();
+
+        // Vérifier si l'utilisateur a un responsable associé
+        $responsable = $user->getResponsable();
  
         $instrument = $doctrine->getRepository(Instrument::class)->find($id);
         $formattedDate = $instrument->getDateAchat()->format('Y-m-d');
@@ -142,7 +147,7 @@ class InstrumentController extends AbstractController
                      $entityManager = $doctrine->getManager();
                      $entityManager->persist($instrument);
                      $entityManager->flush();
-                     return $this->render('instrument/consulter.html.twig', ['instrument' => $instrument,'formattedDate' => $formattedDate,]);
+                     return $this->render('instrument/consulter.html.twig', ['instrument' => $instrument,'formattedDate' => $formattedDate,'responsable' => $responsable]);
                }
                else{
                     return $this->render('instrument/ajouter.html.twig', array('form' => $form->createView(),));

@@ -24,7 +24,7 @@ class InstrumentModifierType extends AbstractType
             ->add('cheminImage')
             ->add('type_instrument', EntityType::class, [
                 'class' => TypeInstrument::class,
-                'choice_label' => 'id',
+                'choice_label' => 'libelle',
             ])
             ->add('enregistrer', SubmitType::class, array('label' => 'Modifier'));
         ;
