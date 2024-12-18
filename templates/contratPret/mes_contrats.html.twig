@@ -1,0 +1,16 @@
+<div>
+    <div>
+        {% for contrat in contrats %}
+            <a href="{{ path('app_contrat_consulter', {'id': contrat.id}) }}">
+                <div>
+                    <div>
+                        <p class="contrat-id">{{ contratPret.eleve.nom }} {{ contratPret.eleve.prenom }}{{ contratPret.instrument.TypeInstrument.libelle }}</p>
+                    </div>
+                </div>
+            </a>
+        {% else %}
+            <p>Aucun contrat trouvé.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
