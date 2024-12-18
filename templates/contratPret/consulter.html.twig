@@ -1,92 +1,156 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        
-    </head>
-    <body>       
-		<h5>PAGE DE CONSULTATION D'UN CONTRAT DE PRET</h5>
+{% extends 'accueil/accueil_admin.html.twig' %}
 
-    <table >
-        <tr><td>Id : </td><td>{{contratPret.id}} </td></tr>
-        <tr><td>Nom : </td><td>{{contratPret.eleve.nom}} </td></tr>
-        <tr><td>prenom : </td><td>{{contratPret.eleve.prenom}} </td></tr>
-        <tr><td>Date d'emprunt : </td> <td>{{ contratPret.dateDebut|date('d-m-Y') }}</td>
-        <tr><td>Date de retour prévus : </td><td>{{ contratPret.dateFin|date('d-m-Y') }}</td>
-        <tr><td>Description : </td><td>{{contratPret.description}}</td>
-        <tr><td>prix : </td><td>{{contratPret.prix}}</td>
-        <tr><td>quotité : </td><td>{{contratPret.quotite}}</td>
+{% block title %}Consultation d'un Contrat de Prêt{% endblock %}
+
+{% block body %}
+    <style>
+        /* Style général de la page */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h5, h4 {
+            text-align: center;
+            color: #0b0e15;
+        }
+
+        /* Table principale */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        table td {
+            padding: 8px;
+            text-align: left;
+        }
+
+        table tr:nth-child(even) {
+            background-color: #181b22;
+        }
+
+        /* Section de l'instrument */
+        .container {
+            display: flex;
+            justify-content: space-between;
+            border: 2px solid #0b0e15;
+            padding: 20px;
+            background: #181b22;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .details {
+            display:flex;
+            width: 65%;
+            color: white;
+        }
+
+        .details table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .details table td {
+            padding: 8px;
+            text-align: left;
+        }
+
+        .details table tr:nth-child(even) {
+            background-color: #222d37;
+        }
+
+        .details strong {
+            color: #ffffff;
+        }
+
+        /* Image de l'instrument */
+        .image-container {
+            width: 30%;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .image-container img {
+            width: 100%;
+            max-width: 200px;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        /* Boutons */
+        .bouton {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .bouton a {
+            display: inline-block;
+            background-color: #181b22;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.1s;
+        }
+
+        .bouton a:hover {
+            background-color: #2c3e50;
+        }
+    </style>
+
+    <h5>PAGE DE CONSULTATION D'UN CONTRAT DE PRÊT</h5>
+
+    <table>
+        <tr><td><strong>Id : </strong></td><td>{{ contratPret.id }}</td></tr>
+        <tr><td><strong>Nom : </strong></td><td>{{ contratPret.eleve.nom }}</td></tr>
+        <tr><td><strong>Prénom : </strong></td><td>{{ contratPret.eleve.prenom }}</td></tr>
+        <tr><td><strong>Date d'emprunt : </strong></td><td>{{ contratPret.dateDebut|date('d-m-Y') }}</td></tr>
+        <tr><td><strong>Date de retour prévu : </strong></td><td>{{ contratPret.dateFin|date('d-m-Y') }}</td></tr>
+        <tr><td><strong>Description : </strong></td><td>{{ contratPret.description }}</td></tr>
+        <tr><td><strong>Prix : </strong></td><td>{{ contratPret.prix }}</td></tr>
+        <tr><td><strong>Quotité : </strong></td><td>{{ contratPret.quotite }}</td></tr>
     </table>
-
 
     <div>
         <h4>Instrument Concerné</h4>
-    <tbody>
         <div class="container">
             <div class="details">
-
                 <table>
-                    <tr>
-                        <td><strong>Numéro de série :</strong></td>
-    	        		<td class="table-cell">{{ contratPret.instrument.numSerie}}</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Type d'instrument :</strong></td>
-                        <td class="table-cell">{{ contratPret.instrument.TypeInstrument.libelle}}</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Modéle :</strong></td>
-                        <td class="table-cell">{{ contratPret.instrument.modele.nom}}</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Couleur :</strong></td>
-                        <td class="table-cell">{{ contratPret.instrument.couleur.libelle}}</td>
-                    </tr>
-		        	<tr>
-                        <td><strong>Date d'achat :</strong></td>
-    	        		<td class="table-cell">{{ contratPret.instrument.dateAchat|date('d-m-Y') }}</td>
-                    </tr>
-                    <tr>
-    	        		<td><strong>Prix d'achat :</strong></td>
-    	        		<td class="table-cell">{{ contratPret.instrument.prixAchat}} €</td>
-                    </tr>
-                    
+                    <tr><td><strong>Numéro de série :</strong></td><td>{{ contratPret.instrument.numSerie }}</td></tr>
+                    <tr><td><strong>Type d'instrument :</strong></td><td>{{ contratPret.instrument.TypeInstrument.libelle }}</td></tr>
+                    <tr><td><strong>Modèle :</strong></td><td>{{ contratPret.instrument.modele.nom }}</td></tr>
+                    <tr><td><strong>Couleur :</strong></td><td>{{ contratPret.instrument.couleur.libelle }}</td></tr>
+                    <tr><td><strong>Date d'achat :</strong></td><td>{{ contratPret.instrument.dateAchat|date('d-m-Y') }}</td></tr>
+                    <tr><td><strong>Prix d'achat :</strong></td><td>{{ contratPret.instrument.prixAchat }} €</td></tr>
                 </table>
-                <div class="image-container">
-                {% if contratPret.instrument.cheminImage %}
-                    <img src="{{ asset('images/' ~ contratPret.instrument.cheminImage) }}" alt="Image de l'instrument">
-                {% else %}
-                    <p>Aucune image disponible</p>
-                {% endif %}
+
+                <div class="image-container" style="margin-left:60px;">
+                    {% if contratPret.instrument.cheminImage %}
+                        <img src="{{ asset('images/' ~ contratPret.instrument.cheminImage) }}" alt="Image de l'instrument">
+                    {% else %}
+                        <p>Aucune image disponible</p>
+                    {% endif %}
+                </div>
             </div>
         </div>
-        <div class="bouton">
-    <a href="{{ path('app_instrument_consulter', { 'id': contratPret.instrument.id }) }}" style="
-        display: inline-block;
-        background-color: black;
-        color: white;
-        padding: 10px 10px;
-        text-decoration: none;
-        border-radius: 5px;
-        font-size: 16px;
-        text-align: center;
-        cursor: pointer;" >
-       Consulter l'instrument
-    </a>
-    </div>
-    </tbody>
 
-    <div class="bouton">
-    <a href="{{ path('app_contratPret_lister') }}" style="
-        display: inline-block;
-        background-color: black;
-        color: white;
-        padding: 10px 10px;
-        text-decoration: none;
-        border-radius: 5px;
-        font-size: 16px;
-        text-align: center;
-        cursor: pointer;" >
-        Retour a la liste
-    </a>
+        <div class="bouton">
+            <a href="{{ path('app_admin_instrument_consulter', { 'id': contratPret.instrument.id }) }}">
+                Consulter l'instrument
+            </a>
+        </div>
+
+        <div class="bouton">
+            <a href="{{ path('app_contratPret_lister') }}">
+                Retour à la liste
+            </a>
+        </div>
     </div>
-</html>
+{% endblock %}

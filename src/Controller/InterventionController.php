@@ -64,7 +64,7 @@ class InterventionController extends AbstractController
             'intervention' => $intervention,]);
 	}
 
-    #[Route('/intervention/ajouter/{id}', name: 'app_intervention_instrument_ajouter')]
+    #[Route('/admin/intervention/ajouter/{id}', name: 'app_intervention_instrument_ajouter')]
     public function ajouterInterventionByInstrument(ManagerRegistry $doctrine,Request $request, $id){
         $instrument = $doctrine->getRepository(Instrument::class)->find($id);
 
@@ -95,11 +95,11 @@ class InterventionController extends AbstractController
         }
         else
             {
-                return $this->render('intervention/ajouter.html.twig', array('form' => $form->createView(),));
+                return $this->render('intervention/ajouter.html.twig', array('form' => $form->createView(), 'responsable' => $responsable,));
         }
     }
 
-    #[Route('/intervention/modifier/{id}', name: 'app_intervention_instrument_modifier')]
+    #[Route('/admin/intervention/modifier/{id}', name: 'app_intervention_instrument_modifier')]
 
     public function modifierIntervention(ManagerRegistry $doctrine, $id, Request $request){
 
@@ -132,12 +132,12 @@ class InterventionController extends AbstractController
                     ]);
               }
               else{
-                    return $this->render('intervention/ajouter.html.twig', array('form' => $form->createView(),));
+                    return $this->render('intervention/ajouter.html.twig', array('form' => $form->createView(), 'responsable' => $responsable ));
               }
            }
     }
 
-    #[Route('/intervention/supprimer/{id}', name: 'app_intervention_instrument_supprimer')]
+    #[Route('/admin/intervention/supprimer/{id}', name: 'app_intervention_instrument_supprimer')]
     public function supprimerIntervention(ManagerRegistry $doctrine, int $id): Response
     {
         $intervention = $doctrine->getRepository(Intervention::class)->find($id);
@@ -157,7 +157,7 @@ class InterventionController extends AbstractController
         $entityManager->remove($intervention); 
         $entityManager->flush();
 
-        return $this->render('instrument/consulter.html.twig', ['intervention' => $intervention,'responsable' => $responsable,'instrument' => $instrument,]);
+        return $this->render('instrument/lister.html.twig', ['intervention' => $intervention,'responsable' => $responsable,'instrument' => $instrument,]);
     }
 
     

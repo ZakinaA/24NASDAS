@@ -93,37 +93,84 @@ class InstrumentController extends AbstractController
         ]);
     }
 
-    #[Route('/instrument/ajouter', name: 'app_instrument_ajouter')]
-    public function ajouterInstrument(ManagerRegistry $doctrine,Request $request){
+    public function consulterAdminInstrument(ManagerRegistry $doctrine, int $id)
+    {
+        $user = $this->getUser();
+
+        // Vérifier si l'utilisateur a un responsable associé
+        $responsable = $user->getResponsable();
+        
+        // Récupérer l'instrument par son ID
+        $instrument = $doctrine->getRepository(Instrument::class)->find($id);
+
+        if (!$instrument) {
+            throw $this->createNotFoundException(
+                'Aucun instrument trouvé avec le numéro ' . $id
+            );
+        }
+
+        $interventions = $instrument->getIntervention();
+
+        // Vérification et formatage de la date d'achat
+        $formattedDateAchat = null;
+        if ($instrument->getDateAchat() !== null) {
+            $formattedDateAchat = $instrument->getDateAchat()->format('d/m/Y'); // Formater la date au format 'YYYY-MM-DD'
+        } else {
+            $formattedDateAchat = "Date non définie"; // Si la date n'est pas définie
+        }
+
+        // Passer l'instrument et la date formatée à la vue
+        return $this->render('instrument/consulter_admin.html.twig', [
+            'instrument' => $instrument,
+            'formattedDateAchat' => $formattedDateAchat,
+            'interventions' => $interventions,
+            'responsable' => $responsable
+        ]);
+    }
+
+    #[Route('/admin/instrument/ajouter', name: 'app_instrument_ajouter')]
+    public function ajouterInstrument(ManagerRegistry $doctrine, Request $request)
+    {
         $user = $this->getUser();
 
         // Vérifier si l'utilisateur a un responsable associé
         $responsable = $user->getResponsable();
 
-        $instrument = new instrument();
+        $instrument = new Instrument();
         $form = $this->createForm(InstrumentType::class, $instrument);
         $form->handleRequest($request);
-    
-        if ($form->isSubmitted() && $form->isValid()) {
-    
-                $instrument = $form->getData();
 
-                $formattedDate = $instrument->getDateAchat()->format('Y-m-d');
-                
-                $entityManager = $doctrine->getManager();
-                $entityManager->persist($instrument);
-                $entityManager->flush();
-    
-            return $this->render('instrument/consulter.html.twig', ['instrument' => $instrument,'formattedDate' => $formattedDate,'responsable' => $responsable]);
-        }
-        else
-            {
-                return $this->render('instrument/ajouter.html.twig', array('form' => $form->createView(),));
+        if ($form->isSubmitted() && $form->isValid()) {
+            $instrument = $form->getData();
+            $formattedDate = $instrument->getDateAchat()->format('Y-m-d');
+
+            $entityManager = $doctrine->getManager();
+            $entityManager->persist($instrument);
+            $entityManager->flush();
+
+            // Passer "responsable" à la vue de consultation de l'instrument
+            return $this->render('instrument/consulter_admin.html.twig', [
+                'instrument' => $instrument,
+                'formattedDate' => $formattedDate,
+                'responsable' => $responsable
+            ]);
+        } else {
+            // Passer "responsable" au formulaire d'ajout d'instrument
+            return $this->render('instrument/ajouter.html.twig', [
+                'form' => $form->createView(),
+                'responsable' => $responsable // Ajout de la variable responsable
+            ]);
         }
     }
 
-    #[Route('/instrument/modifier/{id}', name: 'app_instrument_modifier')]
+
+    #[Route('/admin/instrument/modifier/{id}', name: 'app_instrument_modifier')]
     public function modifierCours(ManagerRegistry $doctrine, $id, Request $request){
+
+        $user = $this->getUser();
+
+        // Vérifier si l'utilisateur a un responsable associé
+        $responsable = $user->getResponsable();
  
         $instrument = $doctrine->getRepository(Instrument::class)->find($id);
         $formattedDate = $instrument->getDateAchat()->format('Y-m-d');
@@ -142,17 +189,18 @@ class InstrumentController extends AbstractController
                      $entityManager = $doctrine->getManager();
                      $entityManager->persist($instrument);
                      $entityManager->flush();
-                     return $this->render('instrument/consulter.html.twig', ['instrument' => $instrument,'formattedDate' => $formattedDate,]);
+                     return $this->render('instrument/consulter_admin.html.twig', ['instrument' => $instrument,'formattedDate' => $formattedDate, 'responsable' => $responsable]);
                }
                else{
-                    return $this->render('instrument/ajouter.html.twig', array('form' => $form->createView(),));
+                    return $this->render('instrument/ajouter.html.twig', array('form' => $form->createView(), 'responsable' => $responsable));
                }
             }
      }
 
-    #[Route('/instrument/supprimer/{id}', name: 'app_instrument_supprimer')]
+    #[Route('/admin/instrument/supprimer/{id}', name: 'app_instrument_supprimer')]
     public function supprimerCours(ManagerRegistry $doctrine, int $id): Response
     {
+        
         $instrument = $doctrine->getRepository(Instrument::class)->find($id);
 
         if (!$instrument) {
@@ -163,7 +211,7 @@ class InstrumentController extends AbstractController
         $entityManager->remove($instrument); 
         $entityManager->flush();
 
-        return $this->redirectToRoute('app_instrument_lister');
+        return $this->redirectToRoute('app_admin_instrument_lister');
     }
 
 }

@@ -35,6 +35,7 @@ class CoursType extends AbstractType
             ->add('typeCours', EntityType::class, array('class' => 'App\Entity\TypeCours','choice_label' => 'libelle' ))
             ->add('typeInstrument', EntityType::class, array('class' => 'App\Entity\TypeInstrument','choice_label' => 'libelle' ))
             ->add('jour', EntityType::class, array('class' => 'App\Entity\Jour','choice_label' => 'libelle' ))
+            ->add('cheminImage')
 
             ->add('enregistrer', SubmitType::class, [
                 'label' => 'Nouveaux Cours'

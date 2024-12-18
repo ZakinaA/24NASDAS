@@ -101,26 +101,54 @@ class CoursController extends AbstractController
             'responsable' => $responsable]);
 	}
 
-    public function ajouterCours(ManagerRegistry $doctrine,Request $request){
-        $cours = new cours();
+    public function consulterAdminCours(ManagerRegistry $doctrine, int $id){
+
+        $user = $this->getUser();
+
+        $responsable = $user->getResponsable();
+
+		$cours= $doctrine->getRepository(Cours::class)->find($id);
+
+		if (!$cours) {
+			throw $this->createNotFoundException(
+            'Aucun cours trouvé avec le numéro '.$id
+			);
+		}
+
+		return $this->render('cours/consulter_admin.html.twig', [
+            'cours' => $cours,
+            'responsable' => $responsable]);
+	}
+
+    public function ajouterCours(ManagerRegistry $doctrine, Request $request)
+    {
+        $user = $this->getUser();
+
+        // Vérifier si l'utilisateur a un responsable associé
+        $responsable = $user->getResponsable();
+
+        $cours = new Cours();
         $form = $this->createForm(CoursType::class, $cours);
         $form->handleRequest($request);
-    
+
         if ($form->isSubmitted() && $form->isValid()) {
-    
-                $cours = $form->getData();
-    
-                $entityManager = $doctrine->getManager();
-                $entityManager->persist($cours);
-                $entityManager->flush();
-    
-            return $this->render('cours/consulter.html.twig', ['cours' => $cours,]);
-        }
-        else
-            {
-                return $this->render('cours/ajouter.html.twig', array('form' => $form->createView(),));
+            $cours = $form->getData();
+            $entityManager = $doctrine->getManager();
+            $entityManager->persist($cours);
+            $entityManager->flush();
+
+            return $this->render('cours/consulter_admin.html.twig', [
+                'cours' => $cours,
+                'responsable' => $responsable
+            ]);
+        } else {
+            return $this->render('cours/ajouter.html.twig', [
+                'form' => $form->createView(),
+                'responsable' => $responsable  // Passez ici même si $responsable est null
+            ]);
         }
     }
+
 
     public function supprimerCours(ManagerRegistry $doctrine, int $id): Response
     {
@@ -134,10 +162,15 @@ class CoursController extends AbstractController
         $entityManager->remove($cours); 
         $entityManager->flush();
 
-        return $this->redirectToRoute('app_cours_lister');
+        return $this->redirectToRoute('app_admin_cours_lister');
     }
 
     public function modifierCours(ManagerRegistry $doctrine, $id, Request $request){
+
+        $user = $this->getUser();
+
+        // Vérifier si l'utilisateur a un responsable associé
+        $responsable = $user->getResponsable();
  
         $cours = $doctrine->getRepository(Cours::class)->find($id);
      
@@ -155,10 +188,10 @@ class CoursController extends AbstractController
                      $entityManager = $doctrine->getManager();
                      $entityManager->persist($cours);
                      $entityManager->flush();
-                     return $this->render('cours/consulter.html.twig', ['cours' => $cours,]);
+                     return $this->render('cours/consulter_admin.html.twig', ['cours' => $cours, 'responsable' => $responsable]);
                }
                else{
-                    return $this->render('cours/ajouter.html.twig', array('form' => $form->createView(),));
+                    return $this->render('cours/ajouter.html.twig', array('form' => $form->createView(), 'responsable' => $responsable));
                }
             }
      }

@@ -2,35 +2,129 @@
 
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="css/register.css">
+<style>
+    body {
+        overflow: hidden;
+        font-family: Arial, sans-serif;
+    }
+
+    .form-check {
+        display: flex;
+        align-items: center;
+    }
+
+    .form-check-label {
+        margin-top: 8px;
+        margin-left: 10px; /* Espace entre la checkbox et le label */
+    }
+
+
+</style>
+{% endblock %}
+
+{% block title %}Register - EMUSIC{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
+    <div class="container">
+        <!-- Right Panel for Registration -->
+        <div class="right-panel">
+            <h1>Inscription</h1>
+            <p>Vous avez déjà un compte ? <a class="inscrire" href="{{ path('app_login') }}">Se connecter</a></p><br>
 
-    {# Affiche les erreurs du formulaire principal #}
-    {{ form_errors(registrationForm) }}
+            {# Affiche les erreurs du formulaire principal #}
+            <div class="form-errors">
+                {{ form_errors(registrationForm) }}
+            </div>
 
-    {# Démarre le formulaire #}
-    {{ form_start(registrationForm) }}
-    
-        {# Champs pour l'utilisateur (User) #}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+            {# Démarre le formulaire #}
+            {{ form_start(registrationForm) }}
 
+            <div class="form-group">
+                {{ form_row(registrationForm.email, {
+                    'attr': {'class': 'form-control', 'placeholder': 'Email'},
+                    'label': false
+                }) }}
+            </div>
 
-        {{ form_row(registrationForm.responsable.nom) }}
-        {{ form_row(registrationForm.responsable.prenom) }}
-        {{ form_row(registrationForm.responsable.tel) }}
-        {{ form_row(registrationForm.responsable.numRue) }}
-        {{ form_row(registrationForm.responsable.rue) }}
-        {{ form_row(registrationForm.responsable.copos) }}
-        {{ form_row(registrationForm.responsable.ville) }}
+            <div class="form-group">
+                {{ form_row(registrationForm.plainPassword, {
+                    'label': 'Mot de passe',
+                    'attr': {'class': 'form-control', 'placeholder': 'Mot de passe'},
+                    'label': false
+                }) }}
+            </div>
 
-        {# Bouton pour soumettre le formulaire #}
-        <button type="submit" class="btn btn-primary">Register</button>
+            <div class="form-group">
+                {{ form_row(registrationForm.responsable.nom, {
+                    'attr': {'class': 'form-control', 'placeholder': 'Nom'},
+                    'label': false
+                }) }}
+            </div>
 
-    {{ form_end(registrationForm) }}
+            <div class="form-group">
+                {{ form_row(registrationForm.responsable.prenom, {
+                    'attr': {'class': 'form-control', 'placeholder': 'Prénom'},
+                    'label': false
+                }) }}
+            </div>
+
+            <div class="form-group">
+                {{ form_row(registrationForm.responsable.tel, {
+                    'attr': {'class': 'form-control', 'placeholder': 'Numéro de téléphone'},
+                    'label': false
+                }) }}
+            </div>
+
+            <div class="form-group">
+                {{ form_row(registrationForm.responsable.numRue, {
+                    'attr': {'class': 'form-control', 'placeholder': 'Numéro de rue'},
+                    'label': false
+                }) }}
+            </div>
+
+            <div class="form-group">
+                {{ form_row(registrationForm.responsable.rue, {
+                    'attr': {'class': 'form-control', 'placeholder': 'Rue'},
+                    'label': false
+                }) }}
+            </div>
+
+            <div class="form-group">
+                {{ form_row(registrationForm.responsable.copos, {
+                    'attr': {'class': 'form-control', 'placeholder': 'Code postal'},
+                    'label': false
+                }) }}
+            </div>
+
+            <div class="form-group">
+                {{ form_row(registrationForm.responsable.ville, {
+                    'attr': {'class': 'form-control', 'placeholder': 'Ville'},
+                    'label': false
+                }) }}
+            </div>
+
+            <div class="form-group">
+                {{ form_row(registrationForm.responsable.quotientFamilial, {
+                    'attr': {'class': 'form-control', 'placeholder': 'Ville'},
+                    'label': false
+                }) }}
+            </div>
+
+            <div class="form-group form-check">
+                {# Ajouter une classe 'form-check' et traduire le label en français #}
+                {{ form_widget(registrationForm.agreeTerms, {'attr': {'class': 'form-check-input'}}) }}
+                <label class="form-check-label" for="{{ registrationForm.agreeTerms.vars.id }}">
+                    Accepter les termes et conditions
+                </label>
+            </div>
+
+            {# Bouton pour soumettre le formulaire #}
+            <button type="submit" class="btn">S'inscrire</button>
+
+            {{ form_end(registrationForm) }}
+        </div>
+    </div>
 {% endblock %}

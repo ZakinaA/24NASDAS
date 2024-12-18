@@ -23,7 +23,7 @@
         <tbody>
             {% for it in pIntervention %}
                 <tr class="row">
-                    <td><span class="block"><a href="{{ path('app_intervention_consulter', { 'id': it.id }) }}">{{ it.id }}</a></span></td>
+                    <td><span class="block">{{ it.id }}</a></span></td>
                     <td>{{ it.instrument.numSerie }}</td>
                     <td><span class="bold">{{ it.instrument.TypeInstrument.libelle }}</span></td>
                     <td>{{ it.dateDebut|date('d-m-Y') }}</td>

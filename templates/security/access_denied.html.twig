@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Access Denied{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="alert alert-danger access-denied-container">
+            <h1>Accès refusé</h1>
+            <p>Vous n'avez pas la permission d'accèder a cette page.</p>
+        </div>
+    </div>
+
+    <style>
+        body {
+            overflow: hidden;
+        }
+        /* Make the container take up the full viewport height */
+        .container {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Center the alert box and apply a white background with padding */
+        .access-denied-container {
+            padding: 20px;
+            text-align: center;
+            width: 80%;
+            max-width: 1100px;
+        }
+
+        /* Optional: style for the header and message */
+        .access-denied-container h1 {
+            font-size:50px;
+            font-family: Arial, sans-serif;
+            color: #e74c3c;
+        }
+
+        .access-denied-container p {
+            font-family: Arial, sans-serif;
+            font-size: 30px;
+            color: white;
+            font-weight:bold;
+        }
+    </style>
+{% endblock %}

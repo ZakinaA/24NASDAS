@@ -1,4 +1,4 @@
-{% extends 'accueil/accueil_uti.html.twig' %}
+{% extends 'accueil/accueil_admin.html.twig' %}
 
 {% block title %}Consultation d'un Instrument{% endblock %}
 
@@ -164,6 +164,7 @@
                             <th>Professionnel</th>
                             <th>Descriptif</th>
                             <th>Prix</th>
+                            <th>Interaction</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -175,6 +176,19 @@
                                 <td>Information Indisponible</td>
                                 <td>{{ intervention.descriptif }}</td>
                                 <td>{{ intervention.prix }}€</td>
+                                
+                                <td>
+                                    <a href="{{ path('app_intervention_instrument_modifier', { 'id': intervention.id }) }}">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="white" viewBox="0 0 24 24" stroke-width="2" class="icon icon-tabler icon-tabler-pencil">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M13 3l8 8-10 10H3v-8L13 3z"></path>
+                                        </svg>
+                                    </a>
+                                    <a href="{{ path('app_intervention_instrument_supprimer', { 'id': intervention.id }) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce contrat ?');">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="white" viewBox="0 0 24 24" stroke-width="2" class="icon icon-tabler icon-tabler-trash">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 6h18M9 6V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M10 11v6M14 11v6M5 6l1 14h12l1-14"></path>
+                                        </svg>
+                                    </a>
+                                </td>
                             </tr>
                             {% endfor %}
                         </tbody>
@@ -187,6 +201,7 @@
                             <tr>
                                 <th>N°</th>
                                 <th>Libelle</th>
+                                <th>Interaction</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -194,6 +209,18 @@
                                 <tr>
                                     <td>{{ accessoire.id }}</td>
                                     <td>{{ accessoire.libelle }}</td>
+                                    <td>
+			                        	<a href="{{ path('app_accessoire_instrument_modifier', { 'id': accessoire.id }) }}">
+			                        		<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="white" viewBox="0 0 24 24" stroke-width="2" class="icon icon-tabler icon-tabler-pencil">
+			                        			<path stroke-linecap="round" stroke-linejoin="round" d="M13 3l8 8-10 10H3v-8L13 3z"></path>
+			                        		</svg>
+			                        	</a>
+                                        <a href="{{ path('app_accessoire_instrument_supprimer', { 'id': accessoire.id }) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce contrat ?');">
+					                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="white" viewBox="0 0 24 24" stroke-width="2" class="icon icon-tabler icon-tabler-trash">
+						                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 6h18M9 6V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M10 11v6M14 11v6M5 6l1 14h12l1-14"></path>
+					                        </svg>
+				                        </a>
+		                        	</td>
                                 </tr>
                             {% endfor %}
                         </tbody>
@@ -208,6 +235,15 @@
                 {% else %}
                     <p>Aucune image disponible</p>
                 {% endif %}
+        </div>
+    <div style="dislay:flex;">
+        <div class="bouton" style="float:right; margin-right:30px;">
+            <a href="{{ path('app_intervention_instrument_ajouter', { 'id': instrument.id }) }}" class="btn" style="background-color:#0b0e15;">Ajouter une intervention</a>
+        </div>
+        <br>
+        <div class="bouton" style="float:right; margin-right:30px; margin-top:10px;">
+            <a href="{{ path('app_accessoire_instrument_ajouter', { 'id': instrument.id }) }}" class="btn" style="background-color:#0b0e15;">Ajouter un accessoire</a>
+        </div>
         </div>
     </body>
 </html>

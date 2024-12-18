@@ -45,10 +45,15 @@ class ContratPretController extends AbstractController
     }
 
     
-    #[Route('/contratPret/consulter/{id}', name: 'app_contratPret_consulter')]
+    #[Route('/admin/contratPret/consulter/{id}', name: 'app_contratPret_consulter')]
 
     public function consulterContratPret(ManagerRegistry $doctrine, int $id){
+        // Récupérer l'utilisateur connecté
+        $user = $this->getUser();
 
+        // Vérifier si l'utilisateur a un responsable associé
+        $responsable = $user->getResponsable();
+  
 		$contratPret= $doctrine->getRepository(ContratPret::class)->find($id);
 
 		if (!$contratPret) {
@@ -58,13 +63,21 @@ class ContratPretController extends AbstractController
 		}
 
 		return $this->render('contratPret/consulter.html.twig', [
-            'contratPret' => $contratPret,]);
+            'contratPret' => $contratPret,
+            'responsable' => $responsable, 
+        ]);
 	}
 
 
-    #[Route('/contratPret/ajouter', name: 'app_contratPret_ajouter')]
+    #[Route('/admin/contratPret/ajouter', name: 'app_contratPret_ajouter')]
 
     public function ajouterContratPret(ManagerRegistry $doctrine,Request $request){
+
+        $user = $this->getUser();
+
+        // Vérifier si l'utilisateur a un responsable associé
+        $responsable = $user->getResponsable();
+  
         $contratPret = new contratPret();
         $form = $this->createForm(ContratPretType::class, $contratPret);
         $form->handleRequest($request);
@@ -77,16 +90,21 @@ class ContratPretController extends AbstractController
                 $entityManager->persist($contratPret);
                 $entityManager->flush();
     
-            return $this->render('contratPret/consulter.html.twig', ['contratPret' => $contratPret,]);
+            return $this->render('contratPret/consulter.html.twig', ['contratPret' => $contratPret, 'responsable' => $responsable, ]);
         }
         else
             {
-                return $this->render('contratPret/ajouter.html.twig', array('form' => $form->createView(),));
+                return $this->render('contratPret/ajouter.html.twig', array('form' => $form->createView(), 'responsable' => $responsable, ));
         }
     }
 
-    #[Route('/contratPret/modifier/{id}', name: 'app_contratPret_modifier')]
+    #[Route('/admin/contratPret/modifier/{id}', name: 'app_contratPret_modifier')]
     public function modifierContratPret(ManagerRegistry $doctrine, $id, Request $request){
+
+        $user = $this->getUser();
+
+        // Vérifier si l'utilisateur a un responsable associé
+        $responsable = $user->getResponsable();
  
         $contratPret = $doctrine->getRepository(ContratPret::class)->find($id);
      
@@ -104,14 +122,14 @@ class ContratPretController extends AbstractController
                      $entityManager = $doctrine->getManager();
                      $entityManager->persist($contratPret);
                      $entityManager->flush();
-                     return $this->render('contratPret/consulter.html.twig', ['contratPret' => $contratPret,]);
+                     return $this->render('contratPret/consulter.html.twig', ['contratPret' => $contratPret, 'responsable' => $responsable,]);
                }
                else{
-                    return $this->render('contratPret/ajouter.html.twig', array('form' => $form->createView(),));
+                    return $this->render('contratPret/ajouter.html.twig', array('form' => $form->createView(), 'responsable' => $responsable,));
                }
             }
      }
-     #[Route('/contratPret/supprimer/{id}', name: 'app_contratPret_supprimer')]
+     #[Route('/admin/contratPret/supprimer/{id}', name: 'app_contratPret_supprimer')]
      public function supprimerContratPret(ManagerRegistry $doctrine, int $id): Response
     {
         $contratPret = $doctrine->getRepository(ContratPret::class)->find($id);

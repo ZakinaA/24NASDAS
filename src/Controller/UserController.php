@@ -22,7 +22,7 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/user/lister', name: 'app_user_lister')]
+    #[Route('/admin/user/lister', name: 'app_user_lister')]
     public function listerUsers(ManagerRegistry $doctrine){
 
         $repository = $doctrine->getRepository(User::class);
@@ -63,7 +63,7 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/user/modifier/{id}', name: 'app_user_modifier')]
+    #[Route('/admin/user/modifier/{id}', name: 'app_user_modifier')]
     public function modifierUser(ManagerRegistry $doctrine, $id, Request $request){
 
         $user = $this->getUser();
@@ -90,12 +90,12 @@ class UserController extends AbstractController
                      return $this->render('user/consulter.html.twig', ['users' => $users, 'responsable' => $responsable]);
                }
                else{
-                    return $this->render('user/ajouter.html.twig', array('form' => $form->createView(),));
+                    return $this->render('user/ajouter.html.twig', array('form' => $form->createView(),'responsable' => $responsable));
                }
             }
      }
 
-    #[Route('/user/supprimer/{id}', name: 'app_user_supprimer')]
+    #[Route('/admin/user/supprimer/{id}', name: 'app_user_supprimer')]
     public function supprimeruser(ManagerRegistry $doctrine, int $id): Response
     {
         $user = $doctrine->getRepository(User::class)->find($id);

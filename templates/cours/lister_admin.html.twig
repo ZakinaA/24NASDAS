@@ -2,28 +2,101 @@
 
 {% block title %}Liste des Cours{% endblock %}
 
+{% block stylesheets %}
+            <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+            <link rel="stylesheet" href="{{ asset('css/tableau.css') }}">
+    <style>
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+        }
+
+        .card-header h3 {
+            font-size: 18px;
+            color: white;
+            margin: 0;
+            margin-left: 20px;
+            white-space: nowrap; /* Empêche le titre de s'étendre sur plusieurs lignes */
+            overflow: hidden; /* Cache le texte qui dépasse */
+            text-overflow: ellipsis; /* Ajoute "..." si le texte est trop long */
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px; /* Espace entre les icônes */
+        }
+
+        .action-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: none; /* Supprime le cercle blanc */
+            cursor: pointer;
+            text-decoration: none;
+            padding: 0;
+        }
+
+        .action-btn svg {
+            color: white; /* Change la couleur de l'icône en blanc */
+            width: 20px;
+            height: 20px;
+            transition: color 0.3s ease;
+        }
+
+
+
+        .card {
+            margin-bottom: 20px;
+        }
+
+        .card-img {
+            max-width: 100%;
+            border-radius: 10px;
+        }
+    </style>
+{% endblock %}
+
 {% block body %}
 <div class="search-container">
-	<input type="text" id="search-bar" placeholder="Rechercher un cours" class="search-bar">
+    <input type="text" id="search-bar" placeholder="Rechercher un cours" class="search-bar">
 </div>
 <br>
-                    <div class="bouton" style="float:right; margin-right:30px;">
-        <a href="{{ path('app_cours_ajouter') }}" class="btn">Ajouter un cours</a>
-    </div>
-    <br><br><br>
+<div class="bouton" style="float:right; margin-right:30px;">
+    <a href="{{ path('app_cours_ajouter') }}" class="btn">Ajouter un cours</a>
+</div>
+<br><br><br>
 <div class="content">
     <div id="cours-list" class="card-container">
         {% for c in pCours %}
-        <a href="{{ path('app_cours_consulter', { 'id': c.id }) }}" class="card-link" data-libelle="{{ c.libelle }}">
-            <div class="card">
-					<img src="{{ asset('images/' ~ c.cheminImage) }}" alt="Image du cours" class="card-img">
+        <div class="card">
+            <a href="{{ path('app_admin_cours_consulter', { 'id': c.id }) }}" class="card-link" data-libelle="{{ c.libelle }}">
+                <img src="{{ asset('images/' ~ c.cheminImage) }}" alt="Image du cours" class="card-img">
+            </a>
+            <div class="card-header">
                 <h3>{{ c.libelle }}</h3>
+                <div class="action-buttons">
+                    <!-- Bouton modifier -->
+                    <a href="{{ path('app_cours_modifier', { 'id': c.id }) }}" class="action-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" class="icon icon-tabler icon-tabler-pencil">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M13 3l8 8-10 10H3v-8L13 3z"></path>
+                        </svg>
+                    </a>
+                    <!-- Bouton supprimer -->
+                    <a href="{{ path('app_cours_supprimer', { 'id': c.id }) }}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce cours ?');" class="action-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" class="icon icon-tabler icon-tabler-trash">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 6h18M9 6V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M10 11v6M14 11v6M5 6l1 14h12l1-14"></path>
+                        </svg>
+                    </a>
+                </div>
             </div>
-        </a>
+        </div>
         {% endfor %}
     </div>
-	{% block javascripts %}
-    <script src="{{ asset('script/script.js') }}"></script>
-{% endblock %}
 </div>
+
+{% block javascripts %}
+<script src="{{ asset('script/script.js') }}"></script>
+{% endblock %}
 {% endblock %}
