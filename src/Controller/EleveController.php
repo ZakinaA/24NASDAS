@@ -193,12 +193,16 @@ class EleveController extends AbstractController
 
          // Vérifier si l'utilisateur a un responsable associé
          $responsable = $user->getResponsable();
+ 
+         // Récupérer les inscriptions de l'élève et les cours auxquels il est inscrit
 
          
         $eleve = new eleve();
         $form = $this->createForm(EleveType::class, $eleve);
         $form->handleRequest($request);
     
+        $inscriptions = $doctrine->getRepository(Inscription::class)->findBy(['eleve' => $eleve]);
+
         if ($form->isSubmitted() && $form->isValid()) {
     
                 $eleve = $form->getData();
@@ -207,11 +211,12 @@ class EleveController extends AbstractController
                 $entityManager->persist($eleve);
                 $entityManager->flush();
     
-            return $this->render('eleve/consulter.html.twig', ['eleve' => $eleve, 'responsable' => $responsable]);
+            return $this->render('eleve/consulter_admin.html.twig', ['eleve' => $eleve, 'responsable' => $responsable, 'inscriptions' => $inscriptions,]);
         }
         else
             {
-                return $this->render('eleve/ajouter.html.twig', array('form' => $form->createView(), 'responsable' => $responsable));
+                return $this->render('eleve/ajouter.html.twig', array('form' => $form->createView(), 'responsable' => $responsable,'eleve' => $eleve, 'inscriptions' => $inscriptions,
+            ));
         }
     }
 
