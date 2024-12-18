@@ -1,4 +1,148 @@
 {# templates/eleve/ajouter.html.twig #}
-{{ form_start(form) }}
-{{ form_widget(form) }}
-{{ form_end(form) }}
+{% extends 'accueil/accueil_admin.html.twig' %}
+
+{% block title %}Ajouter un Nouveau Élève{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/tableau.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/modifier.css') }}">
+    <style>
+        .content {
+            padding: 20px;
+            border-radius: 8px;
+            margin: 0 auto;
+            width: 700px;
+        }
+
+        .form-container {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-title {
+            font-size: 24px;
+            color: white;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            font-weight: bold;
+            color: white;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-input, .form-select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #313237;
+            background-color: #313237;
+        }
+
+        .form-actions {
+            text-align: center;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: #0b0e15;
+            color: white;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #2c3e50;
+        }
+
+        /* Personnalisation du bouton submit généré par Symfony */
+        button[type="submit"] {
+            background-color: #00796b68;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.1s;
+        }
+
+        button[type="submit"]:hover {
+            background-color: rgba(2, 92, 81, 0.41); /* Changer la couleur au survol */
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="content">
+        <div class="form-container">
+            <h2 class="form-title">Ajouter un Nouveau Élève</h2>
+
+            {{ form_start(form, { 'attr': { 'class': 'eleve-form' } }) }}
+
+            <div class="form-group">
+                {{ form_label(form.nom, 'Nom', { 'label_attr': { 'class': 'form-label' } }) }}
+                {{ form_widget(form.nom, { 'attr': { 'class': 'form-input' } }) }}
+            </div>
+
+            <div class="form-group">
+                {{ form_label(form.prenom, 'Prénom', { 'label_attr': { 'class': 'form-label' } }) }}
+                {{ form_widget(form.prenom, { 'attr': { 'class': 'form-input' } }) }}
+            </div>
+
+            <div class="form-group">
+                {{ form_label(form.numRue, 'Numéro de Rue', { 'label_attr': { 'class': 'form-label' } }) }}
+                {{ form_widget(form.numRue, { 'attr': { 'class': 'form-input' } }) }}
+            </div>
+
+            <div class="form-group">
+                {{ form_label(form.rue, 'Rue', { 'label_attr': { 'class': 'form-label' } }) }}
+                {{ form_widget(form.rue, { 'attr': { 'class': 'form-input' } }) }}
+            </div>
+
+            <div class="form-group">
+                {{ form_label(form.copos, 'Code Postal', { 'label_attr': { 'class': 'form-label' } }) }}
+                {{ form_widget(form.copos, { 'attr': { 'class': 'form-input' } }) }}
+            </div>
+
+            <div class="form-group">
+                {{ form_label(form.ville, 'Ville', { 'label_attr': { 'class': 'form-label' } }) }}
+                {{ form_widget(form.ville, { 'attr': { 'class': 'form-input' } }) }}
+            </div>
+
+            <div class="form-group">
+                {{ form_label(form.tel, 'Téléphone', { 'label_attr': { 'class': 'form-label' } }) }}
+                {{ form_widget(form.tel, { 'attr': { 'class': 'form-input' } }) }}
+            </div>
+
+            <div class="form-group">
+                {{ form_label(form.mail, 'Email', { 'label_attr': { 'class': 'form-label' } }) }}
+                {{ form_widget(form.mail, { 'attr': { 'class': 'form-input' } }) }}
+            </div>
+
+            <div class="form-group">
+                {{ form_label(form.responsable, 'Responsable', { 'label_attr': { 'class': 'form-label' } }) }}
+                {{ form_widget(form.responsable, { 'attr': { 'class': 'form-select' } }) }}
+            </div>
+
+            <div class="form-actions">
+                {{ form_widget(form.enregistrer, { 'attr': { 'class': 'btn' } }) }}
+            </div>
+
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

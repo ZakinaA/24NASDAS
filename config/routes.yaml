@@ -20,16 +20,20 @@ app_cours_consulter:
     path: /resp/cours/consulter/{id}
     controller: App\Controller\CoursController::consulterCours
 
+app_admin_cours_consulter:
+    path: /admin/cours/consulter/{id}
+    controller: App\Controller\CoursController::consulterAdminCours
+
 app_cours_ajouter:
-    path: /cours/ajouter
+    path: /admin/cours/ajouter
     controller: App\Controller\CoursController::ajouterCours
 
 app_cours_supprimer:
-    path: /cours/supprimer/{id}
+    path: /admin/cours/supprimer/{id}
     controller: App\Controller\CoursController::supprimerCours
 
 app_cours_modifier:
-    path: /cours/modifier/{id}
+    path: /admin/cours/modifier/{id}
     controller: App\Controller\CoursController::modifierCours
 
 app_eleve_lister:
@@ -40,17 +44,21 @@ app_eleve_consulter:
     path: /resp/eleve/consulter/{id}
     controller: App\Controller\EleveController::consulterEleve
 
+app_admin_eleve_consulter:
+    path: /admin/eleve/consulter/{id}
+    controller: App\Controller\EleveController::consulterAdminEleve
+
 
 app_eleve_supprimer:
-    path: /eleve/supprimer/{id}
+    path: /admin/eleve/supprimer/{id}
     controller: App\Controller\EleveController::supprimerEleve
 
 app_eleve_ajouter:
-    path: /eleve/ajouter
+    path: /admin/eleve/ajouter
     controller: App\Controller\EleveController::ajouterEleve
 
 app_eleve_modifier:
-    path: /eleve/modifier/{id}
+    path: /admin/eleve/modifier/{id}
     controller: App\Controller\EleveController::modifierEleve
 
 app_instrument_lister:
@@ -64,6 +72,11 @@ app_admin_instrument_lister:
 app_instrument_consulter:
     path: /resp/instrument/consulter/{id}
     controller: App\Controller\InstrumentController::consulterInstrument
+
+
+app_admin_instrument_consulter:
+    path: /admin/instrument/consulter/{id}
+    controller: App\Controller\InstrumentController::consulterAdminInstrument
 
 app_logout:
     path:

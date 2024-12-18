@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="{{ asset('images/emusiclogo.png') }}">
     <title>{% block title %}EMUSIC{% endblock %}</title>
     {% block stylesheets %}
         <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
@@ -91,6 +92,14 @@
                     Interventions
                 </li>
             </a>
+            <a href="{{ path('app_user_lister') }}">           
+                <li class="menu-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                    </svg>       
+                    Utilisateurs
+                </li>
+            </a>
         </ul>
         <div class="logout">
             <svg xmlns="http://www.w3.org/2000/svg" class="icon" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -130,7 +139,7 @@
                 <div class="hero-wrapper">
                     <div class="hero-container">
                         <h1>
-                            Simplifiez la gestion<br>de votre école de musique<br>avec 
+                            Simplifiez la gestion<br>de vos cours de musique<br>avec 
                             <span class="highlighted-text">e-Music</span>
                         </h1>
                         <p>
@@ -138,7 +147,7 @@
                             Offrez une expérience personnalisée à vos élèves et optimisez<br>les processus administratifs pour mieux vous concentrer sur l'enseignement de la musique.
                         </p>
                         <br>
-                        <a  href="{{ path('app_admin_cours_lister') }}" class="cta-button">Découvrez notre cours</a>
+                        <a  href="{{ path('app_admin_cours_lister') }}" class="cta-button">Découvrez nos cours</a>
                     </div>
                 </div>
 

@@ -1,0 +1,83 @@
+
+.form-container {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 20px;
+    margin-top: -20px;
+    background-color: #181b22;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Titre du formulaire */
+.form-title {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: white;
+}
+
+/* Groupes de champs */
+.form-group {
+    margin-bottom: 15px;
+}
+
+/* Étiquettes */
+.form-label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: normal;
+    color: white;
+}
+
+/* Champs de saisie */
+.form-input, .form-select {
+    background-color: #313237;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #313237;
+    border-radius: 8px;
+    font-size: 14px;
+    color: white;
+    box-sizing: border-box;
+}
+
+.form-input:focus, .form-select:focus {
+    border-color: #313237;
+    outline: none;
+}
+
+/* Boutons d'action */
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.1s;
+}
+
+.btn-primary {
+    background-color: #00796b68;
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background-color: #01534a68;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: #fff;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}

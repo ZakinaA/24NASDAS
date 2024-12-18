@@ -31,6 +31,13 @@ class InscriptionController extends AbstractController
         $entityManager = $doctrine->getManager();
         $eleve = $entityManager->getRepository(Eleve::class)->find($eleveId);
 
+          // Récupérer l'élève par son ID
+          $user = $this->getUser();
+
+          // Vérifier si l'utilisateur a un responsable associé
+          $responsable = $user->getResponsable();
+ 
+
         if (!$eleve) {
             throw $this->createNotFoundException('Élève introuvable');
         }
@@ -76,12 +83,13 @@ class InscriptionController extends AbstractController
             $entityManager->flush();
 
             $this->addFlash('success', 'L\'élève a été inscrit aux cours sélectionnés.');
-            return $this->redirectToRoute('app_eleve_consulter', ['id' => $eleveId]);
+            return $this->redirectToRoute('app_admin_eleve_consulter', ['id' => $eleveId]);
         }
 
         return $this->render('inscription/inscription.html.twig', [
             'eleve' => $eleve,
             'coursDisponibles' => $coursDisponibles,
+            'responsable' => $responsable
         ]);
     }
 

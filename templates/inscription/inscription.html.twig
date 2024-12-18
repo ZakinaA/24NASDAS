@@ -1,24 +1,100 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Inscription aux Cours</title>
-    </head>
-    <body>
-        <h2>Inscrire {{ eleve.prenom }} {{ eleve.nom }} à des cours</h2>
+{% extends 'accueil/accueil_admin.html.twig' %}
 
-        <form action="{{ path('app_inscription', { eleveId: eleve.id }) }}" method="post">
-            <p>Sélectionnez les cours :</p>
-            
-            {% for cours in coursDisponibles %}
-                <div>
-                    <input type="checkbox" id="cours_{{ cours.id }}" name="coursIds[]" value="{{ cours.id }}">
-                    <label for="cours_{{ cours.id }}">{{ cours.libelle }}</label>
-                </div>
-            {% endfor %}
+{% block title %}Inscription aux Cours{% endblock %}
 
-            <button type="submit">S'inscrire</button>
-        </form>
+{% block stylesheets %}
+    {{ parent() }}
 
-        <a href="{{ path('app_eleve_consulter', { id: eleve.id }) }}">Retour à la page de consultation</a>
-    </body>
-</html>
+    <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+    <style>
+
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .h2 {
+            text-align: center;
+            margin-top: 20px;
+            color: white;
+        }
+
+        form {
+            max-width: 600px;
+            margin: 20px auto;
+            background: #181b22;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        form p {
+            font-size:17px;
+            font-weight: normal;
+            color: #a0a1a3;
+        }
+
+        .div {
+            margin-bottom: 10px;
+        }
+
+        input[type="checkbox"] {
+            margin-right: 10px;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background: #00796b68;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background:rgba(6, 148, 131, 0.41);
+        }
+
+        .a {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            text-decoration: none;
+            color: white;
+        }
+
+        .a:hover {
+            text-decoration: underline;
+        }
+
+        label {
+            color: #a0a1a3;
+            font-size: 17px;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <h2 class="h2" >Inscrire {{ eleve.prenom }} {{ eleve.nom }} à des cours</h2>
+
+    <form action="{{ path('app_inscription', { eleveId: eleve.id }) }}" method="post">
+        <p>Sélectionnez les cours :</p><br>
+        
+        {% for cours in coursDisponibles %}
+            <div class="div">
+                <input type="checkbox" id="cours_{{ cours.id }}" name="coursIds[]" value="{{ cours.id }}">
+                <label for="cours_{{ cours.id }}">{{ cours.libelle }}</label>
+            </div>
+        {% endfor %}
+        <br>
+
+        <button type="submit">S'inscrire</button>
+    </form>
+
+    <a  class="a" href="{{ path('app_admin_eleve_consulter', { id: eleve.id }) }}">Retour à la page de consultation</a>
+{% endblock %}

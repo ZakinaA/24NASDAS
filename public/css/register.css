@@ -1,152 +1,128 @@
-/* Global Styles */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Arial', sans-serif;
-}
+/* Container principale */
+/* Container principale */
 
 body {
-    background-color: #f4f7f6;
-    color: #333;
-    font-size: 16px;
+    overflow: hidden;
+}
+
+.container {
+    overflow: hidden; /* Cacher la barre de défilement horizontale */
+    scrollbar-width: thin; /* Taille fine pour la barre de défilement dans Firefox */
+    scrollbar-color: #0A0D12 #2c2f36; /* Couleur de la barre de défilement et de son fond (Firefox) */
     display: flex;
+    height: 100vh;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
 }
 
-h1 {
-    text-align: center;
-    color: white;
-    font-size: 2rem;
-    margin-bottom: 20px;
+/* Personnalisation de la barre de défilement sur Webkit (Chrome, Safari) */
+.container::-webkit-scrollbar {
+    width: 8px; /* Largeur de la barre de défilement */
 }
 
-/* Container */
-.container {
-    transform: scale(0.95);
-    max-width: 500px;
+.container::-webkit-scrollbar-track {
+    background: #2c2f36; /* Couleur de fond de la barre de défilement */
+    border-radius: 10px; /* Coins arrondis pour la piste */
+}
+
+.container::-webkit-scrollbar-thumb {
+    background-color: #0A0D12; /* Couleur de la barre de défilement */
+    border-radius: 10px; /* Coins arrondis pour la barre de défilement */
+    border: 2px solid #2c2f36; /* Ajoute un bord pour un effet de contraste */
+}
+
+/* Lorsque l'utilisateur survole la barre de défilement */
+.container::-webkit-scrollbar-thumb:hover {
+    background-color: #404646; /* Changer la couleur au survol */
+}
+
+
+/* Panneau droit pour le formulaire d'inscription */
+.right-panel {
     width: 100%;
-    background-color: #181b22;
+    max-width: 600px;
     padding: 30px;
+    background-color: #181b22;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-    border-radius: 10px;
+    border-radius: 15px;
+    height: 700px;
+    max-height: 90vh; /* Assure que le panneau ne dépasse pas l'écran */
+    overflow-y: auto; /* Ajoute un défilement vertical si le contenu est trop long */
 }
 
-/* Form */
-form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-form label {
-    font-size: 1rem;
-    color: white;
-    margin-bottom: 5px;
-}
-
-form input, form select {
-    padding: 12px;
-    border-radius: 20px;
-    border: 1px solid transparent;
-    font-size: 1rem;
+/* Titre du formulaire */
+.right-panel h1 {
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 20px;
     color: white;
 }
 
-form input:focus, form select:focus {
-    border-color: #252925;
-    outline: none;
-}
-
-input {
-    background-color: #313237;
-    width: 100%;
-    height: 50px;
-}
-
-/* Error messages */
-form .form-errors {
-    color: #d9534f;
-    font-size: 0.875rem;
-    margin-bottom: 10px;
-}
-
-/* Submit Button */
-button[type="submit"] {
-    padding: 14px;
-    background-color: #0A0D12;
-    border: none;
-    color: white;
-    font-size: 1rem;
-    cursor: pointer;
-    border-radius: 17px;
-    transition: background-color 0.1s ease;
-}
-
-button[type="submit"]:hover {
-    background-color: #0f1014;
-}
-
-button[type="submit"]:active {
-    background-color: #0f1014;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .container {
-        padding: 20px;
-    }
-    h1 {
-        font-size: 1.5rem;
-    }
-}
-
-/* Styling for the terms and conditions checkbox */
-input[type="checkbox"] {
-    margin-right: 10px;
-}
-
-label[for="agreeTerms"] {
-    font-size: 0.9rem;
-    color: white;
-}
-
-input::placeholder {
+/* Lien pour la connexion */
+.inscrire {
     color: #a0a1a3;
-    font-size: 14px;
-}
-
+    text-decoration: underline;
+} 
 
 p {
     color: white;
 }
 
-p a {
-    color: #a0a1a3;
+.inscrire:hover {
     text-decoration: underline;
 }
 
+/* Gestion des erreurs du formulaire */
+.form-errors {
+    color: red;
+    font-size: 14px;
+    margin-bottom: 15px;
+}
 
-form select {
-    color: #a0a1a3;
-    background-color: #313237;
+/* Formulaire et champs */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    color: white;
+    display: block;
+    margin-bottom: 5px;
+}
+
+input {
+    background-color: hsl(230, 6%, 20%);
+    color: white;
+    font-size: 15px;
+}
+
+.form-control {
+    width: 95%;
+    padding: 17px;
+    font-size: 16px;
+    border-radius: 15px;
+    border: 1px solid #313237;
+    margin-bottom: 10px;
+}
+
+.form-control:focus {
+    border-color: #313237;
+    outline: none;
+}
+
+/* Bouton de soumission */
+.btn {
     width: 100%;
+    margin-top: 20px;
+    background-color: #0A0D12;
+    color: white;
+    cursor: pointer;
+    border-radius: 17px;
+    height: 55px;
+    transition: background-color 0.1s ease;
+    border: 1px solid #0A0D12;
 }
 
-
-/* Personnaliser la case à cocher */
-input[type="checkbox"] {
-    margin-top: -33px; 
-    margin-left: 17px; /* Espacement entre la case à cocher et le texte */
-    transform: scale(0.3); /* Agrandir la case à cocher */
-    cursor: pointer; /* Pour le curseur en forme de main */
-}
-
-/* Si vous souhaitez personnaliser le texte de l'accord */
-.agreeTermsLabel {
-    font-size: 1rem;
-    color: #666; /* Couleur du texte */
-    margin-right: 10px; /* Espacement entre le texte et la case */
+.btn:hover {
+    background-color: #0d1014;
 }

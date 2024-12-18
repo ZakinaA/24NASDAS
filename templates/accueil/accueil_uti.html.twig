@@ -4,9 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}EMUSIC{% endblock %}</title>
+    <link rel="icon" type="image/png" href="{{ asset('images/emusiclogo.png') }}">
     {% block stylesheets %}
         <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
         <link rel="stylesheet" href="{{ asset('css/tableau.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/modifier.css') }}">
     {% endblock %}
 </head>
 <body>
@@ -85,7 +87,22 @@
             </div>
         </div>
         <div class="content">
-            {% block body %}{% endblock %}
+            {% block body %}
+            <div class="hero-wrapper">
+                    <div class="hero-container">
+                        <h1>
+                            Simplifiez la gestion<br>de vos cours de musique<br>avec 
+                            <span class="highlighted-text">e-Music</span>
+                        </h1>
+                        <p>
+                            Grâce à notre plateforme innovante, gérez les inscriptions, les paiements, la maintenance des<br>instruments et bien plus encore. 
+                            Offrez une expérience personnalisée à vos élèves et optimisez<br>les processus administratifs pour mieux vous concentrer sur l'enseignement de la musique.
+                        </p>
+                        <br>
+                        <a  href="{{ path('app_cours_lister') }}" class="cta-button">Découvrez nos cours</a>
+                    </div>
+                </div>
+            {% endblock %}
         </div>
     </div>
 </body>

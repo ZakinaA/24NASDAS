@@ -1,0 +1,92 @@
+{% extends 'accueil/accueil_admin.html.twig' %}
+
+{% block title %}Consultation d'un Cours{% endblock %}
+
+{% block body %}
+<div class="content">
+    <div class="consultation-container">
+        <h2 class="consultation-title">Consultation d'uu cours de {{cours.libelle}}</h2>
+
+        <div class="consultation-details">
+            <table class="consultation-table">
+                <tr>
+                    <th>Id :</th>
+                    <td>{{ cours.id }}</td>
+                </tr>
+                <tr>
+                    <th>Libellé :</th>
+                    <td>{{ cours.libelle }}</td>
+                </tr>
+                <tr>
+                    <th>Âge Minimum :</th>
+                    <td>{{ cours.ageMini }}</td>
+                </tr>
+                <tr>
+                    <th>Heure de Début :</th>
+                    <td>{{ cours.heureDebut|date('H:i') }}</td>
+                </tr>
+                <tr>
+                    <th>Heure de Fin :</th>
+                    <td>{{ cours.heureFin|date('H:i') }}</td>
+                </tr>
+                <tr>
+                    <th>Nom du Professeur :</th>
+                    <td>{{ cours.professeur.nom }}</td>
+                </tr>
+                <tr>
+                    <th>Type de Cours :</th>
+                    <td>{{ cours.typeCours.libelle }}</td>
+                </tr>
+                <tr>
+                    <th>Type d'Instrument :</th>
+                    <td>{{ cours.typeInstrument.libelle }}</td>
+                </tr>
+                <tr>
+                    <th>Jour :</th>
+                    <td>{{ cours.jour.libelle }}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="students-section">
+    <br>
+    <h3 style="margin-left:30px;">Élèves Inscrits</h3>
+    {% if cours.inscriptions|length > 0 %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Date d'Inscription</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for inscription in cours.inscriptions %}
+                    {% if inscription.eleve %}
+                        <tr class="row">
+                            <td>{{ inscription.eleve.nom }}</td>
+                            <td class="underline">{{ inscription.eleve.prenom }}</td>
+                            <td><span class="bold">{{ inscription.dateInscription|date('d/m/Y') }}</span></td>
+                        </tr>
+                        <tr class="spacer"></tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="3">Aucun élève associé.</td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td colspan="3" style="text-align: center;">Aucun élève inscrit à ce cours.</td>
+                </tr>
+            </tbody>
+        </table>
+    {% endif %}
+</div>
+
+</div>
+{% endblock %}

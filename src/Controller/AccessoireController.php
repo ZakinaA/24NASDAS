@@ -25,7 +25,7 @@ class AccessoireController extends AbstractController
         ]);
     }
 
-    #[Route('/accessoire/ajouter/{id}', name: 'app_accessoire_instrument_ajouter')]
+    #[Route('/admin/accessoire/ajouter/{id}', name: 'app_accessoire_instrument_ajouter')]
     public function ajouterAccessoireByInstrument(ManagerRegistry $doctrine,Request $request, $id){
         // Récupérer l'instrument à partir de l'ID
         $instrument = $doctrine->getRepository(Instrument::class)->find($id);
@@ -70,7 +70,7 @@ class AccessoireController extends AbstractController
         }
     }
 
-    #[Route('/accessoire/modifier/{id}', name: 'app_accessoire_instrument_modifier')]
+    #[Route('/admin/accessoire/modifier/{id}', name: 'app_accessoire_instrument_modifier')]
     public function modifierAccessoire(ManagerRegistry $doctrine, $id, Request $request){
 
        // Trouver l'accessoire par son ID
@@ -121,7 +121,7 @@ class AccessoireController extends AbstractController
         }
     }
 
-    #[Route('/accessoire/supprimer/{id}', name: 'app_accessoire_instrument_supprimer')]
+    #[Route('/admin/accessoire/supprimer/{id}', name: 'app_accessoire_instrument_supprimer')]
     public function supprimerAccessoire(ManagerRegistry $doctrine, int $id): Response
     {
         // Trouver l'accessoire avec l'ID
